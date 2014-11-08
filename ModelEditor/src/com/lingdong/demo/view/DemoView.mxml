@@ -14,14 +14,14 @@
 		<![CDATA[
 			import com.lingdong.demo.controller.DemoController;
 			import com.lingdong.demo.model.DemoModel;
+			import com.lingdong.demo.model.events.DemoModelEvent;
 			
 			private function init():void
 			{
-				DemoModel.instance.addEventListener(Event.CHANGE, onModelChange);
-				DemoModel.instance.initialize();
+				DemoModel.instance.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
 			}
 			
-			private function onModelChange(event:Event):void
+			private function onActiveThemeChange(event:Event):void
 			{
 				demoDesigner.update();
 			}

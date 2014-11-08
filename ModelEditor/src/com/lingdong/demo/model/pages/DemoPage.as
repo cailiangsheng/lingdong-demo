@@ -10,7 +10,6 @@ package com.lingdong.demo.model.pages
 	import flash.events.EventDispatcher;
 	
 	[Event(name="backgroundChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
-	[Event(name="thumbnailChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
 	[Event(name="elementsChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
 	[Event(name="childChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
 	public class DemoPage extends EventDispatcher implements IDemoConfig
@@ -42,31 +41,11 @@ package com.lingdong.demo.model.pages
 			return _thumbnail;
 		}
 		
-		public function set thumbnail(value:DemoBackground):void
-		{
-			if (_thumbnail != value)
-			{
-				_thumbnail = value;
-				
-				this.dispatchEvent(new DemoPageEvent(DemoPageEvent.THUMBNAIL_CHANGE));
-			}
-		}
+		private var _elements:DemoElements;
 		
-		private var _elements:Vector.<DemoElement>;
-		
-		public function get elements():Vector.<DemoElement>
+		public function get elements():DemoElements
 		{
 			return _elements;
-		}
-		
-		public function set elements(value:Vector.<DemoElement>):void
-		{
-			if (_elements != value)
-			{
-				_elements = value;
-				
-				this.dispatchEvent(new DemoPageEvent(DemoPageEvent.ELEMENTS_CHANGE));
-			}
 		}
 		
 		private var _child:DemoTheme;
@@ -89,8 +68,8 @@ package com.lingdong.demo.model.pages
 		public function DemoPage()
 		{
 			background = new DemoBackground();
-			thumbnail = new DemoBackground();
-			elements = new Vector.<DemoElement>();
+			_thumbnail = new DemoBackground();
+			_elements = new DemoElements();
 		}
 		
 		public function readConfig(config:Object):void
@@ -120,12 +99,10 @@ package com.lingdong.demo.model.pages
 						{
 							element.readConfig(elementConfig);
 							
-							this.elements.push(element);
+							this.elements.addElement(element);
 						}
 					}
 				}
-				
-				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 package com.lingdong.demo.model.pages
 {
 	import com.lingdong.demo.model.IDemoConfig;
+	import com.lingdong.demo.model.events.DemoThemeEvent;
+	import com.lingdong.demo.model.events.DemoPagesEvent;
 	import com.lingdong.demo.model.traits.DemoPageSize;
 	import com.lingdong.demo.model.traits.DemoShowStyle;
 	import com.lingdong.demo.service.DemoService;
@@ -8,18 +10,42 @@ package com.lingdong.demo.model.pages
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
-	[Event(name="change", type="flash.events.Event")]
+	import mx.collections.ArrayCollection;
+	import mx.events.CollectionEvent;
+	
+	[Event(name="showStyleChange", type="com.lingdong.demo.model.events.DemoThemeEvent")]
 	public class DemoTheme extends EventDispatcher implements IDemoConfig
 	{
 		public var id:String;
 		public var name:String;
-		public var pages:Vector.<DemoPage>;
-		public var showStyle:DemoShowStyle;
+		
+		private var _showStyle:String = DemoShowStyle.DEFAULT;
+		
+		public function get showStyle():String
+		{
+			return _showStyle;
+		}
+		
+		public function set showStyle(value:String):void
+		{
+			if (_showStyle != value)
+			{
+				_showStyle = value;
+				
+				this.dispatchEvent(new DemoThemeEvent(DemoThemeEvent.SHOW_STYLE_CHANGE));
+			}
+		}
+		
+		private var _pages:DemoPages;
+		
+		public function get pages():DemoPages
+		{
+			return _pages;
+		}
 		
 		public function DemoTheme()
 		{
-			showStyle = new DemoShowStyle();
-			pages = new Vector.<DemoPage>();
+			_pages = new DemoPages();
 		}
 		
 		public function readConfig(config:Object):void
@@ -28,23 +54,16 @@ package com.lingdong.demo.model.pages
 			{
 				this.id = config.id;
 				this.name = config.name;
-				this.showStyle.type = config.showStyle;
+				this.showStyle = config.showStyle;
 				
 				for each (var pageConfig:Object in config.pages)
 				{
 					var page:DemoPage = new DemoPage();
 					page.readConfig(pageConfig);
 					
-					this.pages.push(page);
+					this.pages.addPage(page);
 				}
-				
-				this.dispatchEvent(new Event(Event.CHANGE));
 			}
-		}
-		
-		public function finalize():void
-		{
-			
 		}
 	}
 }

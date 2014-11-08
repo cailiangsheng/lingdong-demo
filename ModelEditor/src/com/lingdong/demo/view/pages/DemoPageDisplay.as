@@ -113,7 +113,7 @@ package com.lingdong.demo.view.pages
 			
 			if (!page) return;
 			
-			for each (var element:DemoElement in page.elements)
+			for each (var element:DemoElement in page.elements.source)
 			{
 				var elementUI:DemoElementDisplay = DemoPoolUtil.alloc(DemoElementDisplay);
 				elementUI.element = element;

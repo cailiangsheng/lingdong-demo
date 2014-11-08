@@ -23,7 +23,7 @@
 				
 				container.removeAll();
 				
-				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages)
+				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages.source)
 				{
 					var pageComponent:DemoPageDisplay = new DemoPageDisplay();
 					pageComponent.page = page;
@@ -36,7 +36,7 @@
 			
 			private function getContainer():ViewStack
 			{
-				switch (DemoModel.instance.activeTheme.showStyle.type)
+				switch (DemoModel.instance.activeTheme.showStyle)
 				{
 					case DemoShowStyle.COVER_FLOW:
 						return coverflow;

@@ -1,0 +1,14 @@
+package com.lingdong.demo.model.events
+{
+	import flash.events.Event;
+	
+	public class DemoModelEvent extends Event
+	{
+		public static const ACTIVE_THEME_CHANGE:String = "activeThemeChange";
+		
+		public function DemoModelEvent(type:String)
+		{
+			super(type);
+		}
+	}
+}

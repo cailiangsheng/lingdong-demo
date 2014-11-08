@@ -17,7 +17,7 @@
 			{
 				this.removeAllElements();
 				
-				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages)
+				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages.source)
 				{
 					var thumbnail:DemoThumbnailDisplay = new DemoThumbnailDisplay();
 					thumbnail.thumbnail = page.thumbnail;
