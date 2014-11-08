@@ -28,6 +28,11 @@ package com.lingdong.demo.model.pages
 			_pages.removeItemAt(index);
 		}
 		
+		public function removeAllPages():void
+		{
+			_pages.removeAll();
+		}
+		
 		public function clearPages():void
 		{
 			_pages.removeAll();

@@ -89,6 +89,7 @@ package com.lingdong.demo.model.pages
 					this.child.readConfig(childConfig);
 				}
 				
+				this.elements.removeAllElements();
 				for each (var elementConfig:Object in config.elements)
 				{
 					var resource:DemoResource = DemoResource.getResource(elementConfig.type);

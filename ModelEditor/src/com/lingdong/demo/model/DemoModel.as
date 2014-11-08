@@ -56,6 +56,7 @@ package com.lingdong.demo.model
 		{
 			_pageSize = new DemoPageSize();
 			_theme = new DemoTheme();
+			
 			this.update(this.requestedThemeId);
 		}
 		
@@ -77,8 +78,12 @@ package com.lingdong.demo.model
 		
 		private function onFetchTheme(result:Object):void
 		{
-			var themeConfig:Object = JSON.parse(result.themeConfigJson);
-			theme.readConfig(themeConfig);
+			var themeConfigJson:String = result.themeConfigJson;
+			if (themeConfigJson)
+			{
+				var themeConfig:Object = JSON.parse(themeConfigJson);
+				theme.readConfig(themeConfig);
+			}
 			
 			this.activeTheme = theme;
 		}
@@ -86,6 +91,7 @@ package com.lingdong.demo.model
 		private function onFetchError(result:Object):void
 		{
 			trace("Failed to fetch theme!");
+			this.activeTheme = theme;
 		}
 	}
 }

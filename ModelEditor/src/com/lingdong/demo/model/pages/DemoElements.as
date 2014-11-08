@@ -28,6 +28,11 @@ package com.lingdong.demo.model.pages
 			_elements.removeItemAt(index);
 		}
 		
+		public function removeAllElements():void
+		{
+			_elements.removeAll();
+		}
+		
 		public function clearElements():void
 		{
 			_elements.removeAll();

@@ -1,8 +1,8 @@
 package com.lingdong.demo.model.pages
 {
 	import com.lingdong.demo.model.IDemoConfig;
-	import com.lingdong.demo.model.events.DemoThemeEvent;
 	import com.lingdong.demo.model.events.DemoPagesEvent;
+	import com.lingdong.demo.model.events.DemoThemeEvent;
 	import com.lingdong.demo.model.traits.DemoPageSize;
 	import com.lingdong.demo.model.traits.DemoShowStyle;
 	import com.lingdong.demo.service.DemoService;
@@ -46,6 +46,7 @@ package com.lingdong.demo.model.pages
 		public function DemoTheme()
 		{
 			_pages = new DemoPages();
+			_pages.addPage(new DemoPage());
 		}
 		
 		public function readConfig(config:Object):void
@@ -56,6 +57,7 @@ package com.lingdong.demo.model.pages
 				this.name = config.name;
 				this.showStyle = config.showStyle;
 				
+				this.pages.removeAllPages();
 				for each (var pageConfig:Object in config.pages)
 				{
 					var page:DemoPage = new DemoPage();
