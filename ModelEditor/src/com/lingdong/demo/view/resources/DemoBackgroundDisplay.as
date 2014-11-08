@@ -51,6 +51,7 @@ package com.lingdong.demo.view.resources
 		public function DemoBackgroundDisplay()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 		
 		private function onAddedToStage(event:Event):void
@@ -60,9 +61,14 @@ package com.lingdong.demo.view.resources
 			update();
 		}
 		
+		private function onRemovedFromStage(event:Event):void
+		{
+			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
+		}
+		
 		private function updateSize(event:ResizeEvent = null):void
 		{
-			if (!event || this.parent.width != event.oldHeight)
+			if (!event || this.parent.width != event.oldWidth)
 			{
 				this.width = this.parent.width;
 			}
@@ -110,8 +116,6 @@ package com.lingdong.demo.view.resources
 		
 		private function dispose():void
 		{
-			this.parent && this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
-			
 			this.graphics.clear();
 		}
 	}

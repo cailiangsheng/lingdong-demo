@@ -19,7 +19,6 @@ package com.lingdong.demo.util
 			var pool:Array = getPool(key);
 			if (pool.indexOf(object) < 0)
 			{
-				object.dispose();
 				pool.push(object);
 			}
 		}

@@ -68,7 +68,6 @@ package com.lingdong.demo.view.pages
 		{
 			if (page)
 			{
-				updateSize();
 				updateBackground();
 				updateElements();
 			}
@@ -78,17 +77,14 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private function updateSize(event:Event = null):void
-		{
-			var size:Point = DemoModel.instance.pageSize.getLayoutSize(this.parent.height);
-			this.width = size.x;
-			this.height = size.y;
-		}
-		
 		private function updateBackground(event:Event = null):void
-		{
+		{	
 			if (page.background)
 			{
+				var size:Point = DemoModel.instance.pageSize.getLayoutSize(this.parent.height);
+				this.width = size.x;
+				this.height = size.y;
+				
 				this.backgroundUI.background = page.background;
 			}
 			else
