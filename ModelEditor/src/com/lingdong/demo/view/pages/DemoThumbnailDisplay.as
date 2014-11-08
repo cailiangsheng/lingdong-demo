@@ -29,6 +29,8 @@ package com.lingdong.demo.view.pages
 		{
 			if (_thumbnail != value)
 			{
+				this.dispose();
+				
 				_thumbnail = value;
 				
 				this.stage && update();
@@ -40,10 +42,6 @@ package com.lingdong.demo.view.pages
 			if (thumbnail)
 			{
 				this.backgroundUI.background = thumbnail;
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		

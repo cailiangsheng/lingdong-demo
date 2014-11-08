@@ -3,8 +3,38 @@
 							xmlns:s="library://ns.adobe.com/flex/spark" 
 							xmlns:mx="library://ns.adobe.com/flex/mx" 
 							xmlns:containers="com.dougmccune.containers.*" 
-							xmlns:layouts="com.lingdong.demo.view.layouts.*">
+							xmlns:layouts="com.lingdong.demo.view.layouts.*"
+							doubleClickEnabled="true" doubleClick="onDoubleClick(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.lingdong.demo.model.DemoModel;
+			import com.lingdong.demo.view.pages.DemoPageDisplay;
+			import com.lingdong.demo.view.resources.DemoButtonDisplay;
+			private function onDoubleClick(event:MouseEvent):void
+			{
+				var buttonDisplay:DemoButtonDisplay = getDisplay(event.target, DemoButtonDisplay);
+				var pageDisplay:DemoPageDisplay = getDisplay(event.target, DemoPageDisplay);
+				if (buttonDisplay && pageDisplay)
+				{
+					DemoModel.instance.activeTheme = pageDisplay.page.child;
+				}
+			}
+			
+			private static function getDisplay(object:*, clazz:Class):*
+			{
+				while (object)
+				{
+					if (object is clazz) return object;
+					
+					object = object.parent;
+				}
+				
+				return false;
+			}
+		]]>
+	</fx:Script>
 </layouts:DemoThemePreviewer>

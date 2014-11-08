@@ -36,6 +36,8 @@ package com.lingdong.demo.view.resources
 			{
 				_video && _video.removeEventListener(DemoFileEvent.URL_CHANGE, updateURL);
 				
+				this.dispose();
+				
 				_video = value;
 				
 				this.stage && update();
@@ -54,10 +56,6 @@ package com.lingdong.demo.view.resources
 			if (video)
 			{
 				updateURL();
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		

@@ -30,6 +30,8 @@ package com.lingdong.demo.view.pages
 				_page && _page.removeEventListener(DemoPageEvent.BACKGROUND_CHANGE, updateBackground);
 				_page && _page.removeEventListener(DemoPageEvent.ELEMENTS_CHANGE, updateElements);
 				
+				this.dispose();
+				
 				_page = value;
 				
 				this.stage && update();
@@ -70,10 +72,6 @@ package com.lingdong.demo.view.pages
 			{
 				updateBackground();
 				updateElements();
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		

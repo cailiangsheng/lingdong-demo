@@ -38,6 +38,8 @@ package com.lingdong.demo.view.resources
 				_image && _image.removeEventListener(DemoImageEvent.BITMAP_DATA_CHANGE, updateBitmapData);
 				_image && _image.removeEventListener(DemoFileEvent.URL_CHANGE, updateURL);
 				
+				this.dispose();
+				
 				_image = value;
 				
 				this.stage && update();
@@ -53,10 +55,6 @@ package com.lingdong.demo.view.resources
 			{
 				updateBitmapData();
 				updateURL();
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		

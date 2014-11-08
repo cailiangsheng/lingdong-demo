@@ -30,6 +30,8 @@ package com.lingdong.demo.view.pages
 				_element && _element.removeEventListener(DemoElementEvent.DEPTH_CHANGE, updateDepth);
 				_element && _element.removeEventListener(DemoElementEvent.ROTATION_CHANGE, updateRotation);
 				
+				this.dispose();
+				
 				_element = value;
 				
 				this.stage && update();

@@ -38,6 +38,8 @@ package com.lingdong.demo.view.resources
 				_text && _text.removeEventListener(DemoTextEvent.FONT_SIZE_CHANGE, updateFontSize);
 				_text && _text.removeEventListener(DemoTextEvent.FONT_STYLE_CHANGE, updateFontStyle);
 				
+				this.dispose();
+				
 				_text = value;
 				
 				this.stage && update();
@@ -91,10 +93,6 @@ package com.lingdong.demo.view.resources
 				updateContent();
 				updateFontSize();
 				updateFontStyle();
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		

@@ -40,6 +40,8 @@ package com.lingdong.demo.view.resources
 			{
 				_background && _background.removeEventListener(DemoBackgroundEvent.COLOR_CHANGE, updateColor);
 				
+				this.dispose();
+				
 				_background = value;
 				
 				this.stage && update();
@@ -77,17 +79,15 @@ package com.lingdong.demo.view.resources
 			{
 				this.height = this.parent.height;
 			}
+			
+			updateColor();
 		}
 		
 		private function update(event:Event = null):void
 		{
-			if (background)
+			if (this.background)
 			{
 				updateSize();
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		

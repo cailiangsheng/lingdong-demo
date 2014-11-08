@@ -32,6 +32,8 @@ package com.lingdong.demo.view.pages
 				_theme && _theme.removeEventListener(DemoThemeEvent.SHOW_STYLE_CHANGE, updateShowStyle);
 				_theme && _theme.pages.removeEventListener(DemoPagesEvent.PAGES_CHANGE, updatePages);
 				
+				this.dispose();
+				
 				_theme = value;
 				
 				this.stage && this.update();
@@ -57,10 +59,6 @@ package com.lingdong.demo.view.pages
 			{
 				updateShowStyle();
 				updatePages();
-			}
-			else
-			{
-				this.dispose();
 			}
 		}
 		
