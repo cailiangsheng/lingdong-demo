@@ -22,5 +22,6 @@
 	<mx:HScrollBar id="scrollbar" width="100%" pageSize="1" 
 				   scrollPosition="{themeUI.selectedIndex}" 
 				   scroll="themeUI.selectedIndex = Math.round(scrollbar.scrollPosition)"
-				   maxScrollPosition="{themeUI.numPages - 1}"/>
+				   maxScrollPosition="{themeUI.numPages - 1}"
+				   includeInLayout="{themeUI.numPages > 1}" visible="{themeUI.numPages > 1}"/>
 </s:VGroup>
