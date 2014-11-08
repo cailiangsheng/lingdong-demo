@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100" borderStyle="inset" backgroundColor="0xcccccc" verticalAlign="middle">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.lingdong.demo.view.pages.DemoThumbnailDisplay;
+			import com.lingdong.demo.model.DemoModel;
+			import com.lingdong.demo.model.pages.DemoPage;
+			
+			public function update():void
+			{
+				this.removeAllElements();
+				
+				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages)
+				{
+					var thumbnail:DemoThumbnailDisplay = new DemoThumbnailDisplay();
+					thumbnail.thumbnail = page.thumbnail;
+					this.addElement(thumbnail);
+				}
+			}
+		]]>
+	</fx:Script>
+</mx:HBox>

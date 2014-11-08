@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:containers="com.dougmccune.containers.*"
+		 width="100%" height="100%" gap="0">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.lingdong.demo.view.pages.DemoPageDisplay;
+			import com.lingdong.demo.model.DemoModel;
+			import com.lingdong.demo.model.pages.DemoPage;
+			import com.lingdong.demo.model.traits.DemoShowStyle;
+			
+			import mx.containers.ViewStack;
+			
+			public function update():void
+			{
+				var container:ViewStack = getContainer();
+				
+				container.removeAll();
+				
+				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages)
+				{
+					var pageComponent:DemoPageDisplay = new DemoPageDisplay();
+					pageComponent.page = page;
+					container.addElement(pageComponent);
+				}
+				
+				container.selectedIndex = 0;
+				scrollbar.maxScrollPosition = container.numChildren - 1;
+			}
+			
+			private function getContainer():ViewStack
+			{
+				switch (DemoModel.instance.activeTheme.showStyle.type)
+				{
+					case DemoShowStyle.COVER_FLOW:
+						return coverflow;
+				}
+				
+				return coverflow;
+			}
+		]]>
+	</fx:Script>
+	
+	<containers:CoverFlowContainer id="coverflow" width="100%" height="100%" 
+								   borderStyle="inset" backgroundColor="0xcccccc"
+								   horizontalGap="40" segments="6" reflectionEnabled="true"/>
+	
+	<mx:HScrollBar id="scrollbar" width="100%" pageSize="1" 
+				   scrollPosition="{coverflow.selectedIndex}" 
+				   scroll="coverflow.selectedIndex = Math.round(scrollbar.scrollPosition)" />
+</s:VGroup>
