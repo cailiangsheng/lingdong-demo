@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="100%" height="100" borderStyle="inset" backgroundColor="0xcccccc" verticalAlign="middle">
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" 
+				   width="100%" height="100" 
+				   borderStyle="inset" backgroundColor="0xcccccc">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -15,15 +16,21 @@
 			
 			public function update():void
 			{
-				this.removeAllElements();
+				tileUI.removeAllElements();
 				
 				for each (var page:DemoPage in DemoModel.instance.activeTheme.pages.source)
 				{
 					var thumbnail:DemoThumbnailDisplay = new DemoThumbnailDisplay();
 					thumbnail.thumbnail = page.thumbnail;
-					this.addElement(thumbnail);
+					tileUI.addElement(thumbnail);
 				}
 			}
 		]]>
 	</fx:Script>
-</mx:HBox>
+	
+	<s:Scroller width="100%" height="100%">
+		<s:HGroup id="tileUI" height="100%" verticalAlign="middle"
+				  gap="10" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" />
+	</s:Scroller>
+	
+</s:BorderContainer>

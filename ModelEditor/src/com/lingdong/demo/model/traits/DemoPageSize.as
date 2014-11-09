@@ -7,7 +7,7 @@ package com.lingdong.demo.model.traits
 		public static const DEFAULT_WIDTH:int = 400;
 		public static const DEFAULT_HEIGHT:int = 300;
 		public static const DEFAULT_PADDING:int = 10;
-		public static const THUMBNAIL_HEIGHT:int = 60;
+		public static const THUMBNAIL_HEIGHT:int = 64;
 		
 		public var pageWidth:int = DEFAULT_WIDTH;
 		public var pageHeight:int = DEFAULT_HEIGHT;

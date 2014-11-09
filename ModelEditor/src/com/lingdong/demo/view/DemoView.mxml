@@ -23,7 +23,7 @@
 			
 			private function onActiveThemeChange(event:Event):void
 			{
-				demoDesigner.themeDesigner.themeUI.theme = DemoModel.instance.activeTheme;
+				demoDesigner.themeDesigner.themePreviewer.themeUI.theme = DemoModel.instance.activeTheme;
 				demoDesigner.thumbnailsBar.update();
 			}
 		]]>
