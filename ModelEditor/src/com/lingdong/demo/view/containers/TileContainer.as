@@ -2,8 +2,10 @@ package com.lingdong.demo.view.containers
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	import mx.containers.ViewStack;
+	import mx.core.IVisualElement;
 	
 	public class TileContainer extends ViewStack
 	{
@@ -12,6 +14,25 @@ package com.lingdong.demo.view.containers
 		public function TileContainer()
 		{
 			super();
+		}
+		
+		override public function addElement(element:IVisualElement):IVisualElement
+		{
+			element.addEventListener(MouseEvent.CLICK, onClickElement);
+			
+			return super.addElement(element);
+		}
+		
+		override public function removeElement(element:IVisualElement):IVisualElement
+		{
+			element.removeEventListener(MouseEvent.CLICK, onClickElement);
+			
+			return super.removeElement(element);
+		}
+		
+		private function onClickElement(event:MouseEvent):void
+		{
+			this.selectedIndex = this.getElementIndex(event.currentTarget as IVisualElement);
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
