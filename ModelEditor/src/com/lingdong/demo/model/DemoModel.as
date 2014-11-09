@@ -1,6 +1,8 @@
 package com.lingdong.demo.model
 {
+	import com.lingdong.demo.model.events.DemoModelEvent;
 	import com.lingdong.demo.model.events.DemoThemeEvent;
+	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.pages.DemoTheme;
 	import com.lingdong.demo.model.traits.DemoPageSize;
 	import com.lingdong.demo.service.DemoService;
@@ -11,7 +13,6 @@ package com.lingdong.demo.model
 	
 	import mx.utils.URLUtil;
 	
-	[Event(name="activeThemeChange", type="com.lingdong.demo.model.events.DemoModelEvent")]
 	public class DemoModel extends EventDispatcher
 	{
 		private static var _instance:DemoModel;
@@ -35,27 +36,21 @@ package com.lingdong.demo.model
 			return _theme;
 		}
 		
-		private var _activeTheme:DemoTheme;
+		private var _designer:DemoDesigner;
 		
-		public function get activeTheme():DemoTheme
+		public function get designer():DemoDesigner
 		{
-			return _activeTheme;
+			return _designer;
 		}
 		
-		public function set activeTheme(value:DemoTheme):void
-		{
-			if (_activeTheme != value)
-			{
-				_activeTheme = value;
-				
-				this.dispatchEvent(new DemoThemeEvent(DemoThemeEvent.ACTIVE_THEME_CHANGE));
-			}
-		}
+		private var _previewer:DemoPreviewer;
 		
 		public function DemoModel()
 		{
 			_pageSize = new DemoPageSize();
 			_theme = new DemoTheme();
+			_designer = new DemoDesigner();
+			_previewer = new DemoPreviewer();
 			
 			this.update(this.requestedThemeId);
 		}
@@ -85,13 +80,13 @@ package com.lingdong.demo.model
 				theme.readConfig(themeConfig);
 			}
 			
-			this.activeTheme = theme;
+			this.designer.activeTheme = theme;
 		}
 		
 		private function onFetchError(result:Object):void
 		{
 			trace("Failed to fetch theme!");
-			this.activeTheme = theme;
+			this.designer.activeTheme = theme;
 		}
 	}
 }

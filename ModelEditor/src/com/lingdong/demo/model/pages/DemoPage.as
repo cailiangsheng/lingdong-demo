@@ -34,9 +34,9 @@ package com.lingdong.demo.model.pages
 			}
 		}
 		
-		private var _thumbnail:DemoBackground;
+		private var _thumbnail:DemoImage;
 		
-		public function get thumbnail():DemoBackground
+		public function get thumbnail():DemoImage
 		{
 			return _thumbnail;
 		}
@@ -68,7 +68,7 @@ package com.lingdong.demo.model.pages
 		public function DemoPage()
 		{
 			background = new DemoBackground();
-			_thumbnail = new DemoBackground();
+			_thumbnail = new DemoImage();
 			_elements = new DemoElements();
 		}
 		

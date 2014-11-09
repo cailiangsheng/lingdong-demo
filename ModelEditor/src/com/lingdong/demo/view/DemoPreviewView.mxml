@@ -6,5 +6,5 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<view:DemoDesigner/>
+	<view:DemoDesignView/>
 </s:Group>

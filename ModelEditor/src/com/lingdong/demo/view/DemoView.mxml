@@ -3,31 +3,11 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 xmlns:view="com.lingdong.demo.view.*"
-		 width="100%" height="100%"
-		 creationComplete="init()">
+		 width="100%" height="100%">
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<fx:Script>
-		<![CDATA[
-			import com.lingdong.demo.controller.DemoController;
-			import com.lingdong.demo.model.DemoModel;
-			import com.lingdong.demo.model.events.DemoModelEvent;
-			
-			private function init():void
-			{
-				DemoModel.instance.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
-			}
-			
-			private function onActiveThemeChange(event:Event):void
-			{
-				demoDesigner.themeDesigner.themePreviewer.themeUI.theme = DemoModel.instance.activeTheme;
-				demoDesigner.thumbnailsBar.update();
-			}
-		]]>
-	</fx:Script>
-	
-	<view:DemoDesigner id="demoDesigner" />
+	<view:DemoDesignView />
 </s:Group>

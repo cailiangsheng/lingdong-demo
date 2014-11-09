@@ -3,19 +3,10 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx" 
 		  xmlns:pages="com.lingdong.demo.view.pages.*" 
-		  width="100%" height="100%" gap="0" resize="onResize(event)">
+		  width="100%" height="100%" gap="0">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
-	<fx:Script>
-		<![CDATA[
-			private function onResize(event:Event):void
-			{
-				trace(themeUI.height);
-			}
-		]]>
-	</fx:Script>
 	
 	<pages:DemoThemeDisplay id="themeUI" borderStyle="inset" backgroundColor="0xcccccc" />
 	

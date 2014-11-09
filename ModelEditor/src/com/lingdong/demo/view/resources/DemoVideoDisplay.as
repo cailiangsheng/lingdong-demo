@@ -107,7 +107,6 @@ package com.lingdong.demo.view.resources
 		{
 			if (_videoUI)
 			{
-				_videoUI.stop();
 				_videoUI.source = null;
 				_videoUI.removeEventListener(MouseEvent.CLICK, onVideoClick);
 				this.removeChild(_videoUI);

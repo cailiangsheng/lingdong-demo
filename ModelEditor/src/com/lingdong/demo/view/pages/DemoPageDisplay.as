@@ -56,8 +56,6 @@ package com.lingdong.demo.view.pages
 		
 		private var elementUIs:Vector.<DemoElementDisplay>;
 		
-		private var thumnailIntervalId:int;
-		
 		public function DemoPageDisplay()
 		{
 			elementUIs = new Vector.<DemoElementDisplay>();

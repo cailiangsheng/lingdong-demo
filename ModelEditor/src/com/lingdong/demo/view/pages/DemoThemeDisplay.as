@@ -1,15 +1,22 @@
 package com.lingdong.demo.view.pages
 {
+	import com.dougmccune.containers.CarouselContainer;
 	import com.dougmccune.containers.CoverFlowContainer;
+	import com.dougmccune.containers.VCoverFlowContainer;
+	import com.dougmccune.containers.VistaFlowContainer;
 	import com.lingdong.demo.model.events.DemoPagesEvent;
 	import com.lingdong.demo.model.events.DemoThemeEvent;
 	import com.lingdong.demo.model.pages.DemoPage;
 	import com.lingdong.demo.model.pages.DemoTheme;
 	import com.lingdong.demo.model.traits.DemoShowStyle;
 	import com.lingdong.demo.util.DemoPoolUtil;
+	import com.lingdong.demo.view.containers.SingleContainer;
+	import com.lingdong.demo.view.containers.TileContainer;
 	
 	import flash.events.Event;
 	
+	import mx.containers.Tile;
+	import mx.containers.VBox;
 	import mx.containers.ViewStack;
 	import mx.core.Container;
 	import mx.core.ScrollPolicy;
@@ -62,10 +69,12 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private static function getContainer(showStyle:String):ViewStack
+		protected function getContainer(showStyle:String):ViewStack
 		{
 			switch (showStyle)
 			{
+				case DemoShowStyle.SINGLE:
+					return new SingleContainer();
 				case DemoShowStyle.COVER_FLOW:
 					var coverflow:CoverFlowContainer = DemoPoolUtil.alloc(CoverFlowContainer);
 					coverflow.segments = 6;

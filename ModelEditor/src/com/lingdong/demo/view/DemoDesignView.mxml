@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  xmlns:controls="com.lingdong.demo.view.controls.*" 
+		  xmlns:pages="com.lingdong.demo.view.pages.*" 
+		  xmlns:layouts="com.lingdong.demo.view.layouts.*"
+		  xmlns:view="com.lingdong.demo.view.*"
+		  width="100%" height="100%" 
+		  paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.lingdong.demo.controller.DemoController;
+			import com.lingdong.demo.model.DemoDesigner;
+			import com.lingdong.demo.model.DemoModel;
+			import com.lingdong.demo.model.events.DemoModelEvent;
+			import com.lingdong.demo.view.pages.DemoPageDisplay;
+			import com.lingdong.demo.view.resources.DemoButtonDisplay;
+			
+			private function get designer():DemoDesigner
+			{
+				return DemoModel.instance.designer;
+			}
+			
+			override protected function initializationComplete():void
+			{
+				super.initializationComplete();
+				
+				this.designer.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
+			}
+			
+			private function onActiveThemeChange(event:Event):void
+			{
+				themeView.themeUI.theme = this.designer.activeTheme;
+				thumbnailView.themeUI.theme = this.designer.activeTheme;
+			}
+			
+			private function onDoubleClick(event:MouseEvent):void
+			{
+				var buttonDisplay:DemoButtonDisplay = getDisplay(event.target, DemoButtonDisplay);
+				var pageDisplay:DemoPageDisplay = getDisplay(event.target, DemoPageDisplay);
+				if (buttonDisplay && pageDisplay)
+				{
+					DemoModel.instance.designer.activeTheme = pageDisplay.page.child;
+				}
+			}
+			
+			private static function getDisplay(object:*, clazz:Class):*
+			{
+				while (object)
+				{
+					if (object is clazz) return object;
+					
+					object = object.parent;
+				}
+				
+				return false;
+			}
+		]]>
+	</fx:Script>
+	
+	<controls:DemoComponentsPanel />
+	
+	<s:VGroup width="100%" height="100%">
+		<controls:DemoControlBar />
+		<view:DemoThemeView id="themeView" doubleClickEnabled="true" doubleClick="onDoubleClick(event)" />
+		<view:DemoThumbnailView id="thumbnailView" height="100" />
+	</s:VGroup>
+</s:HGroup>
