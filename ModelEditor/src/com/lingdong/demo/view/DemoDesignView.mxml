@@ -36,7 +36,7 @@
 			private function onActiveThemeChange(event:Event):void
 			{
 				themeUI.theme = this.designer.activeTheme;
-				thumbnailView.themeUI.theme = this.designer.activeTheme;
+				thumbnailUI.theme = this.designer.activeTheme;
 			}
 			
 			private function onDoubleClick(event:MouseEvent):void
@@ -69,10 +69,12 @@
 		<controls:DemoControlBar />
 		
 		<s:BorderContainer width="100%" height="100%" borderStyle="inset" backgroundColor="0xcccccc">
-			<pages:DemoThemeDisplay id="themeUI" selectedIndex="{thumbnailView.themeUI.selectedIndex}"
+			<pages:DemoThemeDisplay id="themeUI" selectedIndex="{thumbnailUI.selectedIndex}"
 									doubleClickEnabled="true" doubleClick="onDoubleClick(event)" />
 		</s:BorderContainer>
 		
-		<view:DemoThumbnailView id="thumbnailView" height="100" />
+		<s:BorderContainer width="100%" height="100" borderStyle="inset" backgroundColor="0xcccccc">
+			<pages:DemoThumbnailDisplay id="thumbnailUI" selectedIndex="{themeUI.selectedIndex}" />
+		</s:BorderContainer>
 	</s:VGroup>
 </s:HGroup>
