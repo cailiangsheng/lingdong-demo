@@ -32,8 +32,7 @@ package com.lingdong.demo.view.containers
 		
 		private function onClickElement(event:MouseEvent):void
 		{
-			var newIndex:int = this.getElementIndex(event.currentTarget as IVisualElement);
-			super.commitSelectedIndex(newIndex);
+			this.selectedIndex = this.getElementIndex(event.currentTarget as IVisualElement);
 		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void

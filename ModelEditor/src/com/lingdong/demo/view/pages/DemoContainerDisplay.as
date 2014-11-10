@@ -67,6 +67,9 @@ package com.lingdong.demo.view.pages
 			if (!_containerUI)
 			{
 				_containerUI = getContainer(showStyle);
+				_containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
+				_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
+				_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 				this.addChild(_containerUI);
 			}
 			
@@ -93,10 +96,6 @@ package com.lingdong.demo.view.pages
 		{
 			if (_containerUI)
 			{
-				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
-				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
-				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
-				
 				var selectedIndex:int = _containerUI.selectedIndex;
 				var currentElements:Vector.<IVisualElement> = this.dispose();
 				
@@ -105,9 +104,6 @@ package com.lingdong.demo.view.pages
 					this.containerUI.addElement(element);
 				}
 				
-				this.containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
-				this.containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
-				this.containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 				this.containerUI.selectedIndex = selectedIndex;
 			}
 		}
@@ -118,6 +114,10 @@ package com.lingdong.demo.view.pages
 			
 			if (_containerUI)
 			{
+				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
+				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
+				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
+				
 				elements = new Vector.<IVisualElement>();
 				for (var i:int = 0; i < _containerUI.numElements; i++)
 				{
