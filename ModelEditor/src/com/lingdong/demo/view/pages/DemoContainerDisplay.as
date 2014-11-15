@@ -3,8 +3,10 @@ package com.lingdong.demo.view.pages
 	import com.lingdong.demo.model.traits.DemoShowStyle;
 	import com.lingdong.demo.util.DemoPoolUtil;
 	import com.lingdong.demo.view.containers.CoverflowContainer;
+	import com.lingdong.demo.view.containers.IDemoContainer;
 	import com.lingdong.demo.view.containers.SingleContainer;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	import mx.containers.ViewStack;
@@ -17,7 +19,7 @@ package com.lingdong.demo.view.pages
 	
 	public class DemoContainerDisplay extends UIComponent
 	{
-		protected function getContainer(showStyle:String):Container
+		protected function getContainer(showStyle:String):IDemoContainer
 		{
 			switch (showStyle)
 			{
@@ -57,9 +59,9 @@ package com.lingdong.demo.view.pages
 			this.addEventListener(ResizeEvent.RESIZE, update);
 		}
 		
-		protected var _containerUI:Container;
+		protected var _containerUI:IDemoContainer;
 		
-		protected function get containerUI():Container
+		protected function get containerUI():IDemoContainer
 		{
 			if (!_containerUI)
 			{
@@ -67,12 +69,12 @@ package com.lingdong.demo.view.pages
 				
 				if (_containerUI)
 				{
-//					_containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
+					_containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
 					_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
 					_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 					_containerUI.width = this.width;
 					_containerUI.height = this.height;
-					this.addChild(_containerUI);
+					this.addChild(_containerUI as DisplayObject);
 				}
 			}
 			
@@ -83,7 +85,7 @@ package com.lingdong.demo.view.pages
 		{
 			if (_containerUI)
 			{
-//				var selectedIndex:int = _containerUI.selectedIndex;
+				var selectedIndex:int = _containerUI.selectedIndex;
 				var currentElements:Vector.<IVisualElement> = disposeContainer();
 				
 				for each (var element:IVisualElement in currentElements)
@@ -91,7 +93,7 @@ package com.lingdong.demo.view.pages
 					this.containerUI.addElement(element);
 				}
 				
-//				this.containerUI.selectedIndex = selectedIndex;
+				this.containerUI.selectedIndex = selectedIndex;
 			}
 		}
 		
@@ -101,7 +103,7 @@ package com.lingdong.demo.view.pages
 			
 			if (_containerUI)
 			{
-//				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
+				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
 				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
 				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 				
@@ -113,7 +115,7 @@ package com.lingdong.demo.view.pages
 				}
 				
 				_containerUI.removeAllElements();
-				this.removeChild(_containerUI);
+				this.removeChild(_containerUI as DisplayObject);
 				DemoPoolUtil.free(_containerUI);
 				_containerUI = null;
 			}
@@ -140,16 +142,16 @@ package com.lingdong.demo.view.pages
 			{
 				_selectedIndex = value;
 				
-//				this.containerUI.selectedIndex = value;
+				this.containerUI.selectedIndex = value;
 				
 				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
-//		
-//		private function updateSelectedIndex(event:Event):void
-//		{
-//			this.selectedIndex = this.containerUI.selectedIndex;
-//		}
+		
+		private function updateSelectedIndex(event:Event):void
+		{
+			this.selectedIndex = this.containerUI.selectedIndex;
+		}
 		
 		private var _numElements:int;
 		

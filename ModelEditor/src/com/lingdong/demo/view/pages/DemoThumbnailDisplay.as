@@ -1,6 +1,7 @@
 package com.lingdong.demo.view.pages
 {
 	import com.lingdong.demo.util.DemoPoolUtil;
+	import com.lingdong.demo.view.containers.IDemoContainer;
 	import com.lingdong.demo.view.containers.TileContainer;
 	
 	import flash.events.Event;
@@ -16,7 +17,7 @@ package com.lingdong.demo.view.pages
 		{
 		}
 		
-		override protected function getContainer(showStyle:String):Container
+		override protected function getContainer(showStyle:String):IDemoContainer
 		{
 			return DemoPoolUtil.alloc(TileContainer);
 		}

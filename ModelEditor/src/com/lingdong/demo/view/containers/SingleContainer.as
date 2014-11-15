@@ -4,7 +4,7 @@ package com.lingdong.demo.view.containers
 	
 	import mx.containers.ViewStack;
 	
-	public class SingleContainer extends ViewStack
+	public class SingleContainer extends ViewStack implements IDemoContainer
 	{
 		public function SingleContainer()
 		{

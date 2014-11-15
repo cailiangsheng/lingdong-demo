@@ -4,7 +4,7 @@ package com.lingdong.demo.view.containers
 	
 	import flash.events.Event;
 	
-	public class CoverflowContainer extends CoverFlowContainer
+	public class CoverflowContainer extends CoverFlowContainer implements IDemoContainer
 	{
 		public function CoverflowContainer()
 		{
