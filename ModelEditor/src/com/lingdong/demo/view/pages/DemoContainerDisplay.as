@@ -42,8 +42,6 @@ package com.lingdong.demo.view.pages
 		{
 			if (_showStyle != value)
 			{
-				this.dispose();
-				
 				_showStyle = value;
 				
 				this.stage && update();
@@ -56,16 +54,7 @@ package com.lingdong.demo.view.pages
 			this.percentHeight = 100;
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, update);
-			this.addEventListener(ResizeEvent.RESIZE, updateSize);
-		}
-		
-		private function updateSize(event:ResizeEvent = null):void
-		{
-			if (this.containerUI)
-			{
-				this.containerUI.width = this.width;
-				this.containerUI.height = this.height;
-			}
+			this.addEventListener(ResizeEvent.RESIZE, update);
 		}
 		
 		protected var _containerUI:Container;
@@ -95,7 +84,7 @@ package com.lingdong.demo.view.pages
 			if (_containerUI)
 			{
 //				var selectedIndex:int = _containerUI.selectedIndex;
-				var currentElements:Vector.<IVisualElement> = this.dispose();
+				var currentElements:Vector.<IVisualElement> = disposeContainer();
 				
 				for each (var element:IVisualElement in currentElements)
 				{
@@ -106,7 +95,7 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		protected function dispose():Vector.<IVisualElement>
+		private function disposeContainer():Vector.<IVisualElement>
 		{
 			var elements:Vector.<IVisualElement> = null;
 			
@@ -130,6 +119,11 @@ package com.lingdong.demo.view.pages
 			}
 			
 			return elements;
+		}
+		
+		protected function dispose():Vector.<IVisualElement>
+		{
+			return disposeContainer();
 		}
 		
 		private var _selectedIndex:int;
