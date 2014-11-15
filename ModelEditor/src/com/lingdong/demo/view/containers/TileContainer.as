@@ -3,6 +3,8 @@ package com.lingdong.demo.view.containers
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import mx.containers.HBox;
 	import mx.containers.ViewStack;
@@ -43,15 +45,29 @@ package com.lingdong.demo.view.containers
 		
 		private function layoutChildren():void
 		{
-			var viewportHeight:Number = this.height;
-			
-			viewportHeight -= this.horizontalScrollBar ? this.horizontalScrollBar.height : 0;
+			var viewportHeight:Number = getViewportHeight();
 			
 			for (var i:int = 0, n:int = this.numChildren; i < n; i++)
 			{
 				var child:DisplayObject = this.getChildAt(i);
 				child.y = viewportHeight / 2 - child.height / 2;
 			}
+		}
+		
+		private function getViewportWidth():Number
+		{
+			var viewportWidth:Number = this.width;
+			viewportWidth -= this.verticalScrollBar ? this.verticalScrollBar.width : 0;
+			
+			return viewportWidth;
+		}
+		
+		private function getViewportHeight():Number
+		{
+			var viewportHeight:Number = this.height;
+			viewportHeight -= this.horizontalScrollBar ? this.horizontalScrollBar.height : 0;
+			
+			return viewportHeight;
 		}
 		
 		private function drawSelectedChild():void
@@ -62,13 +78,20 @@ package com.lingdong.demo.view.containers
 			{
 				var focusWeight:int = 2;
 				var selectedChild:DisplayObject = this.getChildAt(this.selectedIndex);
-				this.graphics.beginFill(this.focusColor);
-				this.graphics.drawRect(
-					selectedChild.x - focusWeight, 
-					selectedChild.y - focusWeight, 
+				
+				var focusRect:Rectangle = new Rectangle(
+					selectedChild.x - focusWeight - this.horizontalScrollPosition, 
+					selectedChild.y - focusWeight - this.verticalScrollPosition, 
 					selectedChild.width + focusWeight * 2,
-					selectedChild.height + focusWeight * 2
-				);
+					selectedChild.height + focusWeight * 2);
+				
+				var viewportRect:Rectangle = new Rectangle(0, 0, getViewportWidth(), getViewportHeight());
+				
+				var rect:Rectangle = focusRect.intersection(viewportRect);
+				
+				this.graphics.beginFill(this.focusColor);
+				this.graphics.drawRect(rect.x, rect.y, rect.width, rect.height);
+				this.graphics.endFill();
 			}
 		}
 		
