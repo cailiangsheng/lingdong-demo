@@ -13,6 +13,7 @@ package com.lingdong.demo.view.pages
 	
 	import mx.core.Container;
 	import mx.events.FlexEvent;
+	import mx.events.ResizeEvent;
 	
 	public class DemoPageDisplay extends Container
 	{
@@ -60,8 +61,28 @@ package com.lingdong.demo.view.pages
 		{
 			elementUIs = new Vector.<DemoElementDisplay>();
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, update);
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			this.addEventListener(Event.RENDER, updateThumbnail);
+		}
+		
+		private function onAddedToStage(event:Event = null):void
+		{
+			this.parent.addEventListener(ResizeEvent.RESIZE, updateSize);
+			
+			update();
+		}
+		
+		private function onRemovedFromStage(event:Event = null):void
+		{
+			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
+		}
+		
+		private function updateSize(event:Event = null):void
+		{
+			var size:Point = DemoModel.instance.pageSize.getLayoutSize(this.parent.width, this.parent.height);
+			this.width = size.x;
+			this.height = size.y;
 		}
 		
 		private function update(event:Event = null):void
@@ -77,10 +98,7 @@ package com.lingdong.demo.view.pages
 		{
 			if (page.background)
 			{
-				var size:Point = DemoModel.instance.pageSize.getLayoutSize(this.parent.height);
-				this.width = size.x;
-				this.height = size.y;
-				
+				updateSize();
 				this.backgroundUI.background = page.background;
 			}
 			else

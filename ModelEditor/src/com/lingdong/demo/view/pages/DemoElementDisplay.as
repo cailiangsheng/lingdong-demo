@@ -9,6 +9,7 @@ package com.lingdong.demo.view.pages
 	import flash.events.Event;
 	
 	import mx.core.UIComponent;
+	import mx.events.ResizeEvent;
 
 	public class DemoElementDisplay extends UIComponent
 	{
@@ -47,10 +48,23 @@ package com.lingdong.demo.view.pages
 		
 		public function DemoElementDisplay()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, update);
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 		
-		private function update(event:Event = null):void
+		private function onAddedToStage(event:Event = null):void
+		{
+			this.parent.addEventListener(ResizeEvent.RESIZE, updateSize);
+			
+			update();
+		}
+		
+		private function onRemovedFromStage(event:Event = null):void
+		{
+			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
+		}
+		
+		private function updateSize(event:Event = null):void
 		{
 			if (this.element)
 			{
@@ -58,6 +72,14 @@ package com.lingdong.demo.view.pages
 				updateY();
 				updateWidth();
 				updateHeight();
+			}
+		}
+		
+		private function update(event:Event = null):void
+		{
+			if (this.element)
+			{
+				updateSize();
 				updateDepth();
 				updateRotation();
 			}
