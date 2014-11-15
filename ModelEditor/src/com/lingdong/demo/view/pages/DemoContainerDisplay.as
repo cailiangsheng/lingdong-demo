@@ -17,6 +17,7 @@ package com.lingdong.demo.view.pages
 	import mx.events.IndexChangedEvent;
 	import mx.events.ResizeEvent;
 	
+	[Event(name="selectedIndexChange", type="flash.events.Event")]
 	public class DemoContainerDisplay extends UIComponent
 	{
 		protected function getContainer(showStyle:String):IDemoContainer
@@ -70,8 +71,6 @@ package com.lingdong.demo.view.pages
 				if (_containerUI)
 				{
 					_containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
-					_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
-					_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 					_containerUI.width = this.width;
 					_containerUI.height = this.height;
 					this.addChild(_containerUI as DisplayObject);
@@ -104,8 +103,6 @@ package com.lingdong.demo.view.pages
 			if (_containerUI)
 			{
 				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
-				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
-				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 				
 				elements = new Vector.<IVisualElement>();
 				for (var i:int = 0; i < _containerUI.numElements; i++)
@@ -130,7 +127,7 @@ package com.lingdong.demo.view.pages
 		
 		private var _selectedIndex:int;
 		
-		[Bindable]
+		[Bindable("selectedIndexChange")]
 		public function get selectedIndex():int
 		{
 			return _selectedIndex;
@@ -144,23 +141,13 @@ package com.lingdong.demo.view.pages
 				
 				this.containerUI.selectedIndex = value;
 				
-				this.dispatchEvent(new Event(Event.CHANGE));
+				this.dispatchEvent(new Event("selectedIndexChange"));
 			}
 		}
 		
 		private function updateSelectedIndex(event:Event):void
 		{
 			this.selectedIndex = this.containerUI.selectedIndex;
-		}
-		
-		private var _numElements:int;
-		
-		[Bindable]
-		public var numElements:int
-		
-		private function updateChildrenCount(event:Event):void
-		{
-			this.numElements = this.containerUI.numElements;
 		}
 	}
 }

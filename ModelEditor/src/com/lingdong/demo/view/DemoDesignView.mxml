@@ -31,12 +31,19 @@
 				super.initializationComplete();
 				
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
+				this.designer.addEventListener(DemoModelEvent.ACTIVE_PAGE_CHANGE, onActivePageChange);
 			}
 			
 			private function onActiveThemeChange(event:Event):void
 			{
 				themeUI.theme = this.designer.activeTheme;
 				thumbnailUI.theme = this.designer.activeTheme;
+			}
+			
+			private function onActivePageChange(event:Event):void
+			{
+				themeUI.selectedIndex = this.designer.activePageIndex;
+				thumbnailUI.selectedIndex = this.designer.activePageIndex;
 			}
 			
 			private function onDoubleClick(event:MouseEvent):void
@@ -58,7 +65,17 @@
 					object = object.parent;
 				}
 				
-				return false;
+				return null;
+			}
+
+			private function themeUI_selectedIndexChangeHandler(event:Event):void
+			{
+				DemoModel.instance.designer.activePageIndex = themeUI.selectedIndex;
+			}
+
+			private function thumbnailUI_selectedIndexChangeHandler(event:Event):void
+			{
+				DemoModel.instance.designer.activePageIndex = thumbnailUI.selectedIndex;
 			}
 		]]>
 	</fx:Script>
@@ -69,12 +86,14 @@
 		<controls:DemoControlBar />
 		
 		<s:BorderContainer width="100%" height="100%" borderStyle="inset" backgroundColor="0xcccccc">
-			<pages:DemoThemeDisplay id="themeUI" selectedIndex="{thumbnailUI.selectedIndex}"
+			<pages:DemoThemeDisplay id="themeUI" 
+									selectedIndexChange="themeUI_selectedIndexChangeHandler(event)"
 									doubleClickEnabled="true" doubleClick="onDoubleClick(event)" />
 		</s:BorderContainer>
 		
 		<s:BorderContainer width="100%" height="150" borderStyle="inset" backgroundColor="0xcccccc">
-			<pages:DemoThumbnailDisplay id="thumbnailUI" selectedIndex="{themeUI.selectedIndex}" />
+			<pages:DemoThumbnailDisplay id="thumbnailUI" 
+										selectedIndexChange="thumbnailUI_selectedIndexChangeHandler(event)"/>
 		</s:BorderContainer>
 	</s:VGroup>
 </s:HGroup>

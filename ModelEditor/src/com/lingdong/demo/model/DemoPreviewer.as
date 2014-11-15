@@ -44,6 +44,16 @@ package com.lingdong.demo.model
 			}
 		}
 		
+		public function get activePageIndex():int
+		{
+			return this.activeTheme.pages.getPageIndex(this.activePage);
+		}
+		
+		public function set activePageIndex(value:int):void
+		{
+			this.activePage = this.activeTheme.pages.getPageAt(value);
+		}
+		
 		public function DemoPreviewer()
 		{
 		}
