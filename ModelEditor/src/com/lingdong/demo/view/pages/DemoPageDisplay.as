@@ -80,7 +80,7 @@ package com.lingdong.demo.view.pages
 		
 		private function updateSize(event:Event = null):void
 		{
-			var size:Point = DemoModel.instance.pageSize.getLayoutSize(this.parent.width, this.parent.height);
+			var size:Point = DemoModel.instance.pageSize.getFitSize(this.parent);
 			this.width = size.x;
 			this.height = size.y;
 		}

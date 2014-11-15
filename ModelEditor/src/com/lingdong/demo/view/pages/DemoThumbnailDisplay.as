@@ -18,26 +18,7 @@ package com.lingdong.demo.view.pages
 		
 		override protected function getContainer(showStyle:String):Container
 		{
-			var container:TileContainer = DemoPoolUtil.alloc(TileContainer);
-			container.addEventListener(ResizeEvent.RESIZE, onContainerResize);
-			return container;
-		}
-		
-		private function onContainerResize(event:Event):void
-		{
-			var container:TileContainer = event.currentTarget as TileContainer;
-			this.width = container.width;
-			this.height = container.height;
-		}
-		
-		override protected function dispose():Vector.<IVisualElement>
-		{
-			if (super._containerUI)
-			{
-				_containerUI.removeEventListener(ResizeEvent.RESIZE, onContainerResize);
-			}
-			
-			return super.dispose();
+			return DemoPoolUtil.alloc(TileContainer);
 		}
 	}
 }

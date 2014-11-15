@@ -1,20 +1,31 @@
 package com.lingdong.demo.model.traits
 {
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
+	
+	import mx.core.Container;
 
 	public class DemoPageSize
 	{
 		public static const DEFAULT_WIDTH:int = 400;
 		public static const DEFAULT_HEIGHT:int = 300;
 		public static const DEFAULT_PADDING:int = 10;
-		public static const THUMBNAIL_SIZE:int = 100;
+		public static const THUMBNAIL_SIZE:int = 60;
 		
 		public var pageWidth:int = DEFAULT_WIDTH;
 		public var pageHeight:int = DEFAULT_HEIGHT;
 		public var pagePadding:int = DEFAULT_PADDING;
 		
-		public function getLayoutSize(containerWidth:Number, containerHeight:Number):Point
+		public function getFitSize(container:DisplayObjectContainer):Point
 		{
+			var containerWidth:Number = container.width;
+			var containerHeight:Number = container.height;
+			var c:Container = container as Container;
+			
+			containerWidth -= 20;//c.verticalScrollBar ? c.verticalScrollBar.width : 0;
+			containerHeight -= 40;//c.horizontalScrollBar ? c.horizontalScrollBar.height : 0;
+			
 			return getSize(containerWidth, containerHeight, true);
 		}
 		
