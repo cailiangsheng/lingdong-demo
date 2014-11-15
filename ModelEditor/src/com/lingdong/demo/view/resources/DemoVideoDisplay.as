@@ -66,14 +66,14 @@ package com.lingdong.demo.view.resources
 			if (!_videoUI)
 			{
 				_videoUI = DemoPoolUtil.alloc(VideoDisplay);
-				_videoUI.width = this.width;
-				_videoUI.height = this.height;
+				_videoUI.percentWidth = 100;
+				_videoUI.percentHeight = 100;
 				
-				videoUI.autoPlay = false;
-				videoUI.buttonMode = true;
-				videoUI.addEventListener(MouseEvent.CLICK, onVideoClick);
+				_videoUI.autoPlay = false;
+				_videoUI.buttonMode = true;
+				_videoUI.addEventListener(MouseEvent.CLICK, onVideoClick);
 				
-				this.addChild(_videoUI);
+				this.addElement(_videoUI);
 			}
 			
 			return _videoUI;
@@ -82,20 +82,6 @@ package com.lingdong.demo.view.resources
 		private function onVideoClick(event:Event):void
 		{
 			videoUI.playing ? videoUI.pause() : videoUI.play();
-		}
-		
-		override public function set width(value:Number):void
-		{
-			super.width = value;
-			
-			this.videoUI.width = value;
-		}
-		
-		override public function set height(value:Number):void
-		{
-			super.height = value;
-			
-			this.videoUI.height = value;
 		}
 		
 		private function updateURL(event:Event = null):void
@@ -109,7 +95,7 @@ package com.lingdong.demo.view.resources
 			{
 				_videoUI.source = null;
 				_videoUI.removeEventListener(MouseEvent.CLICK, onVideoClick);
-				this.removeChild(_videoUI);
+				this.removeElement(_videoUI);
 				
 				DemoPoolUtil.free(_videoUI);
 				_videoUI = null;

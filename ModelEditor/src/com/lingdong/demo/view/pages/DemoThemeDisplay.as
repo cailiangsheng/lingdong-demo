@@ -88,7 +88,7 @@ package com.lingdong.demo.view.pages
 					containerUI.addElement(pageComponent);
 				}
 				
-				this.selectedIndex = 0;
+//				this.selectedIndex = 0;
 			}
 		}
 		

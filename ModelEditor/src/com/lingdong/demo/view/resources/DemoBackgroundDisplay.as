@@ -12,6 +12,8 @@ package com.lingdong.demo.view.resources
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	import mx.events.ResizeEvent;
+	import mx.graphics.SolidColor;
+	import mx.graphics.Stroke;
 	
 	public class DemoBackgroundDisplay extends DemoImageDisplay
 	{

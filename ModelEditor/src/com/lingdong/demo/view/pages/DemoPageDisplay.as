@@ -74,7 +74,7 @@ package com.lingdong.demo.view.pages
 		}
 		
 		private function updateBackground(event:Event = null):void
-		{	
+		{
 			if (page.background)
 			{
 				var size:Point = DemoModel.instance.pageSize.getLayoutSize(this.parent.height);

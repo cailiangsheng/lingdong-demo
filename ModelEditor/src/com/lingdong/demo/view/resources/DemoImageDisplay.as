@@ -11,6 +11,8 @@ package com.lingdong.demo.view.resources
 	import mx.controls.Image;
 	import mx.core.FlexBitmap;
 	import mx.core.UIComponent;
+	
+	import spark.primitives.BitmapImage;
 
 	public class DemoImageDisplay extends DemoResourceDisplay
 	{
@@ -70,48 +72,32 @@ package com.lingdong.demo.view.resources
 			if (!_imageUI)
 			{
 				_imageUI = DemoPoolUtil.alloc(Image);
-				this.addChild(_imageUI);
+				_imageUI.percentWidth = 100;
+				_imageUI.percentHeight = 100;
+				this.addElement(_imageUI);
 			}
 			
-			_imageUI.width = this.width;
-			_imageUI.height = this.height;
 			return _imageUI;
 		}
 		
-		private var _bitmapUI:FlexBitmap;
+		private var _bitmapUI:BitmapImage;
 		
-		private function get bitmapUI():FlexBitmap
+		private function get bitmapUI():BitmapImage
 		{
 			if (!_bitmapUI)
 			{
-				_bitmapUI = DemoPoolUtil.alloc(FlexBitmap);
-				this.addChild(_bitmapUI);
+				_bitmapUI = DemoPoolUtil.alloc(BitmapImage);
+				_bitmapUI.percentWidth = 100;
+				_bitmapUI.percentHeight = 100;
+				this.addElement(_bitmapUI);
 			}
 			
-			_bitmapUI.width = this.width;
-			_bitmapUI.height = this.height;
 			return _bitmapUI;
-		}
-		
-		override public function set width(value:Number):void
-		{
-			super.width = value;
-			
-			this.imageUI.width = value;
-			this.bitmapUI.width = value;
-		}
-		
-		override public function set height(value:Number):void
-		{
-			super.height = value;
-			
-			this.imageUI.height = value;
-			this.bitmapUI.height = value;
 		}
 		
 		private function updateBitmapData(event:Event = null):void
 		{
-			this.bitmapUI.bitmapData = this.image.bitmapData;
+			this.bitmapUI.source = this.image.bitmapData;
 		}
 		
 		private function updateURL(event:Event = null):void
@@ -124,7 +110,7 @@ package com.lingdong.demo.view.resources
 			if (_imageUI)
 			{
 				_imageUI.source = null;
-				this.removeChild(_imageUI);
+				this.removeElement(_imageUI);
 				
 				DemoPoolUtil.free(_imageUI);
 				_imageUI = null;
@@ -132,8 +118,8 @@ package com.lingdong.demo.view.resources
 			
 			if (_bitmapUI)
 			{
-				_bitmapUI.bitmapData = null;
-				this.removeChild(_bitmapUI);
+				_bitmapUI.source = null;
+				this.removeElement(_bitmapUI);
 				
 				DemoPoolUtil.free(_bitmapUI);
 				_bitmapUI = null;

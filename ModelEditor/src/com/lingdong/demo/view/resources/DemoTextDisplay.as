@@ -7,8 +7,9 @@ package com.lingdong.demo.view.resources
 	
 	import flash.events.Event;
 	
-	import mx.controls.Label;
 	import mx.core.UIComponent;
+	
+	import spark.components.Label;
 
 	public class DemoTextDisplay extends DemoResourceDisplay
 	{
@@ -63,26 +64,12 @@ package com.lingdong.demo.view.resources
 			if (!_textUI)
 			{
 				_textUI = DemoPoolUtil.alloc(Label);
-				_textUI.width = this.width;
-				_textUI.height = this.height;
-				this.addChild(_textUI);
+				_textUI.percentWidth = 100;
+				_textUI.percentHeight = 100;
+				this.addElement(_textUI);
 			}
 			
 			return _textUI;
-		}
-		
-		override public function set width(value:Number):void
-		{
-			super.width = value;
-			
-			this.textUI.width = value;
-		}
-		
-		override public function set height(value:Number):void
-		{
-			super.height = value;
-			
-			this.textUI.height = value;
 		}
 		
 		private function update(event:Event = null):void
@@ -121,7 +108,7 @@ package com.lingdong.demo.view.resources
 			if (_textUI)
 			{
 				_textUI.text = "";
-				this.removeChild(_textUI);
+				this.removeElement(_textUI);
 				
 				DemoPoolUtil.free(_textUI);
 				_textUI = null;

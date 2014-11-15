@@ -1,8 +1,8 @@
 package com.lingdong.demo.view.pages
 {
-	import com.dougmccune.containers.CoverFlowContainer;
 	import com.lingdong.demo.model.traits.DemoShowStyle;
 	import com.lingdong.demo.util.DemoPoolUtil;
+	import com.lingdong.demo.view.containers.CoverflowContainer;
 	import com.lingdong.demo.view.containers.SingleContainer;
 	
 	import flash.events.Event;
@@ -13,10 +13,11 @@ package com.lingdong.demo.view.pages
 	import mx.core.UIComponent;
 	import mx.events.ChildExistenceChangedEvent;
 	import mx.events.IndexChangedEvent;
+	import mx.events.ResizeEvent;
 	
 	public class DemoContainerDisplay extends UIComponent
 	{
-		protected function getContainer(showStyle:String):ViewStack
+		protected function getContainer(showStyle:String):Container
 		{
 			switch (showStyle)
 			{
@@ -24,10 +25,7 @@ package com.lingdong.demo.view.pages
 					return DemoPoolUtil.alloc(SingleContainer);
 					
 				case DemoShowStyle.COVER_FLOW:
-					var coverflow:CoverFlowContainer = DemoPoolUtil.alloc(CoverFlowContainer);
-					coverflow.segments = 6;
-					coverflow.reflectionEnabled = true;
-					return coverflow;
+					return DemoPoolUtil.alloc(CoverflowContainer);
 			}
 			
 			return null;
@@ -58,45 +56,45 @@ package com.lingdong.demo.view.pages
 			this.percentHeight = 100;
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, update);
+			this.addEventListener(ResizeEvent.RESIZE, updateSize);
 		}
 		
-		protected var _containerUI:ViewStack;
+		private function updateSize(event:ResizeEvent = null):void
+		{
+			if (this.containerUI)
+			{
+				this.containerUI.width = this.width;
+				this.containerUI.height = this.height;
+			}
+		}
 		
-		protected function get containerUI():ViewStack
+		protected var _containerUI:Container;
+		
+		protected function get containerUI():Container
 		{
 			if (!_containerUI)
 			{
 				_containerUI = getContainer(showStyle);
-				_containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
-				_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
-				_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
-				this.addChild(_containerUI);
+				
+				if (_containerUI)
+				{
+//					_containerUI.addEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
+					_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
+					_containerUI.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
+					_containerUI.width = this.width;
+					_containerUI.height = this.height;
+					this.addChild(_containerUI);
+				}
 			}
 			
-			_containerUI.width = this.width;
-			_containerUI.height = this.height;
 			return _containerUI;
-		}
-		
-		override public function set width(value:Number):void
-		{
-			super.width = value;
-			
-			this.containerUI.width = value;
-		}
-		
-		override public function set height(value:Number):void
-		{
-			super.height = value;
-			
-			this.containerUI.height = value;
 		}
 		
 		private function update(event:Event = null):void
 		{
 			if (_containerUI)
 			{
-				var selectedIndex:int = _containerUI.selectedIndex;
+//				var selectedIndex:int = _containerUI.selectedIndex;
 				var currentElements:Vector.<IVisualElement> = this.dispose();
 				
 				for each (var element:IVisualElement in currentElements)
@@ -104,7 +102,7 @@ package com.lingdong.demo.view.pages
 					this.containerUI.addElement(element);
 				}
 				
-				this.containerUI.selectedIndex = selectedIndex;
+//				this.containerUI.selectedIndex = selectedIndex;
 			}
 		}
 		
@@ -114,7 +112,7 @@ package com.lingdong.demo.view.pages
 			
 			if (_containerUI)
 			{
-				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
+//				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
 				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_ADD, updateChildrenCount);
 				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, updateChildrenCount);
 				
@@ -148,16 +146,16 @@ package com.lingdong.demo.view.pages
 			{
 				_selectedIndex = value;
 				
-				this.containerUI.selectedIndex = value;
+//				this.containerUI.selectedIndex = value;
 				
 				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
-		
-		private function updateSelectedIndex(event:Event):void
-		{
-			this.selectedIndex = this.containerUI.selectedIndex;
-		}
+//		
+//		private function updateSelectedIndex(event:Event):void
+//		{
+//			this.selectedIndex = this.containerUI.selectedIndex;
+//		}
 		
 		private var _numElements:int;
 		

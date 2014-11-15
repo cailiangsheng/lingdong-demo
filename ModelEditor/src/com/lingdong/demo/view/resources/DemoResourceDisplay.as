@@ -5,7 +5,10 @@ package com.lingdong.demo.view.resources
 	
 	import mx.core.UIComponent;
 	
-	public class DemoResourceDisplay extends UIComponent
+	import spark.components.BorderContainer;
+	import spark.components.SkinnableContainer;
+	
+	public class DemoResourceDisplay extends SkinnableContainer
 	{
 		public static function getDisplay(type:String):DemoResourceDisplay
 		{
