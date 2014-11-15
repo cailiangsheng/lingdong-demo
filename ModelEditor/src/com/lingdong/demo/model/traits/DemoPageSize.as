@@ -12,6 +12,7 @@ package com.lingdong.demo.model.traits
 		public static const DEFAULT_HEIGHT:int = 300;
 		public static const DEFAULT_PADDING:int = 10;
 		public static const THUMBNAIL_SIZE:int = 60;
+		public static const SCROLLBAR_SIZE:int = 20;
 		
 		public var pageWidth:int = DEFAULT_WIDTH;
 		public var pageHeight:int = DEFAULT_HEIGHT;
@@ -19,12 +20,8 @@ package com.lingdong.demo.model.traits
 		
 		public function getFitSize(container:DisplayObjectContainer):Point
 		{
-			var containerWidth:Number = container.width;
-			var containerHeight:Number = container.height;
-			var c:Container = container as Container;
-			
-			containerWidth -= 20;//c.verticalScrollBar ? c.verticalScrollBar.width : 0;
-			containerHeight -= 40;//c.horizontalScrollBar ? c.horizontalScrollBar.height : 0;
+			var containerWidth:Number = container.width - SCROLLBAR_SIZE;
+			var containerHeight:Number = container.height - SCROLLBAR_SIZE;
 			
 			return getSize(containerWidth, containerHeight, true);
 		}
