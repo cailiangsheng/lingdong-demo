@@ -158,9 +158,33 @@ package com.lingdong.demo.view.containers
 				
 				_selectedIndex = value;
 				
+				scrollToSelectedChild();
+				
 				this.invalidateDisplayList();
 				
 				this.dispatchEvent(event);
+			}
+		}
+		
+		private function scrollToSelectedChild():void
+		{
+			if (this.selectedIndex >= 0)
+			{
+				var viewportWidth:Number = getViewportWidth();
+				var viewportHeight:Number = getViewportHeight();
+				var selectedChild:DisplayObject = this.getChildAt(this.selectedIndex);
+				
+				if (selectedChild.x < this.horizontalScrollPosition || 
+					selectedChild.x + selectedChild.width > this.horizontalScrollPosition + viewportWidth)
+				{
+					this.horizontalScrollPosition = selectedChild.x + selectedChild.width / 2 - viewportWidth / 2;
+				}
+				
+				if (selectedChild.y < this.verticalScrollPosition ||
+					selectedChild.y + selectedChild.height > this.verticalScrollPosition + viewportHeight)
+				{
+					this.verticalScrollPosition = selectedChild.y + selectedChild.height / 2 - viewportHeight / 2;
+				}
 			}
 		}
 	}
