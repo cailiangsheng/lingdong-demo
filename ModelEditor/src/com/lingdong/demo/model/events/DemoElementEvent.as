@@ -4,6 +4,7 @@ package com.lingdong.demo.model.events
 	
 	public class DemoElementEvent extends Event
 	{
+		public static const SELECTED_CHANGE:String = "selectedChange";
 		public static const X_CHANGE:String = "xChange";
 		public static const Y_CHANGE:String = "yChange";
 		public static const WIDTH_CHANGE:String = "widthChange";

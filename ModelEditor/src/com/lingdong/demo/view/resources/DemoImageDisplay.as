@@ -72,6 +72,7 @@ package com.lingdong.demo.view.resources
 			if (!_imageUI)
 			{
 				_imageUI = DemoPoolUtil.alloc(Image);
+				_imageUI.maintainAspectRatio = false;
 				_imageUI.percentWidth = 100;
 				_imageUI.percentHeight = 100;
 				this.addElement(_imageUI);

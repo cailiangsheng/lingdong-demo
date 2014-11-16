@@ -17,9 +17,13 @@ package com.lingdong.demo.model
 		{
 			if (_activeElement != value)
 			{
+				if (_activeElement) _activeElement.selected = false;
+				
 				_activeElement = value;
 				
-				this.dispatchEvent(new DemoModelEvent(DemoModelEvent.ACTIVE_THEME_CHANGE));
+				if (_activeElement) _activeElement.selected = true;
+				
+				this.dispatchEvent(new DemoModelEvent(DemoModelEvent.ACTIVE_ELEMENT_CHANGE));
 			}
 		}
 		

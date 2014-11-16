@@ -7,6 +7,7 @@ package com.lingdong.demo.model.pages
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
+	[Event(name="selectedChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="xChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="yChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="widthChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
@@ -15,6 +16,23 @@ package com.lingdong.demo.model.pages
 	[Event(name="rotationChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	public class DemoElement extends EventDispatcher implements IDemoConfig
 	{
+		private var _selected:Boolean;
+		
+		public function get selected():Boolean
+		{
+			return _selected;
+		}
+		
+		public function set selected(value:Boolean):void
+		{
+			if (_selected != value)
+			{
+				_selected = value;
+				
+				this.dispatchElementEvent(DemoElementEvent.SELECTED_CHANGE);
+			}
+		}
+		
 		private var _x:Number;
 		
 		public function get x():Number
