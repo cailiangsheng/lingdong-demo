@@ -74,15 +74,13 @@
 				}
 			}
 			
-			private function themeUI_clickHandler(event:MouseEvent):void
+			private function themeContainer_clickHandler(event:MouseEvent):void
 			{
-				var elementDisplay:DemoElementDisplay = getDisplay(event.target, DemoElementDisplay);
 				var pageDisplay:DemoPageDisplay = getDisplay(event.target, DemoPageDisplay);
-				if (elementDisplay && pageDisplay)
-				{
-					DemoModel.instance.designer.activePage = pageDisplay.page;
-					DemoModel.instance.designer.activeElement = elementDisplay.element;
-				}
+				DemoModel.instance.designer.activePage = pageDisplay ? pageDisplay.page : null;
+				
+				var elementDisplay:DemoElementDisplay = getDisplay(event.target, DemoElementDisplay);
+				DemoModel.instance.designer.activeElement = elementDisplay ? elementDisplay.element : null;
 			}
 
 			private function themeUI_selectedIndexChangeHandler(event:Event):void
@@ -105,11 +103,12 @@
 			<s:VGroup width="100%" height="100%">
 				<controls:DemoControlBar />
 				
-				<s:BorderContainer width="100%" height="100%" borderStyle="inset" backgroundColor="0xcccccc">
+				<s:BorderContainer width="100%" height="100%" 
+								   borderStyle="inset" backgroundColor="0xcccccc"
+								   click="themeContainer_clickHandler(event)">
 					<pages:DemoThemeDisplay id="themeUI" 
 											selectedIndexChange="themeUI_selectedIndexChangeHandler(event)"
-											doubleClickEnabled="true" doubleClick="themeUI_doubleClickHandler(event)"
-											click="themeUI_clickHandler(event)" />
+											doubleClickEnabled="true" doubleClick="themeUI_doubleClickHandler(event)" />
 				</s:BorderContainer>
 			</s:VGroup>
 			
