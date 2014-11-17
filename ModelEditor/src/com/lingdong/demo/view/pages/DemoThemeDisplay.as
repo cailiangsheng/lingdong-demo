@@ -2,6 +2,7 @@ package com.lingdong.demo.view.pages
 {
 	import com.lingdong.demo.model.events.DemoPagesEvent;
 	import com.lingdong.demo.model.events.DemoThemeEvent;
+	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.pages.DemoPage;
 	import com.lingdong.demo.model.pages.DemoTheme;
 	import com.lingdong.demo.model.traits.DemoShowStyle;
@@ -42,6 +43,57 @@ package com.lingdong.demo.view.pages
 				
 				_theme && _theme.addEventListener(DemoThemeEvent.SHOW_STYLE_CHANGE, updateShowStyle);
 				_theme && _theme.pages.addEventListener(DemoPagesEvent.PAGES_CHANGE, updatePages);
+			}
+		}
+		
+		public function get activePage():DemoPage
+		{
+			var pages:Vector.<DemoPageDisplay> = getPages();
+			if (this.selectedIndex >= 0 && this.selectedIndex < pages.length)
+			{
+				return pages[this.selectedIndex].page;
+			}
+			
+			return null;
+		}
+		
+		public function set activePage(value:DemoPage):void
+		{
+			if (this.theme && value)
+			{
+				this.selectedIndex = this.theme.pages.getPageIndex(value);
+			}
+			else
+			{
+				this.selectedIndex = -1;
+			}
+		}
+		
+		private var _activeElement:DemoElement;
+		
+		public function get activeElement():DemoElement
+		{
+			return _activeElement;
+		}
+		
+		public function set activeElement(value:DemoElement):void
+		{
+			if (_activeElement != value)
+			{
+				updateElementSelection(_activeElement, false);
+				
+				_activeElement = value;
+				
+				updateElementSelection(_activeElement, true); 
+			}
+		}
+		
+		private function updateElementSelection(element:DemoElement, selected:Boolean):void
+		{
+			var elementDisplay:DemoElementDisplay = this.getElement(element);
+			if (elementDisplay)
+			{
+				elementDisplay.selected = selected;
 			}
 		}
 		
@@ -101,6 +153,44 @@ package com.lingdong.demo.view.pages
 					var pageUI:DemoPageDisplay = DemoPageDisplay(element);
 					pageUI.page = null;
 					DemoPoolUtil.free(pageUI);
+				}
+			}
+			
+			return null;
+		}
+		
+		public function getPages():Vector.<DemoPageDisplay>
+		{
+			return Vector.<DemoPageDisplay>(super.getContents());
+		}
+		
+		public function getPage(page:DemoPage):DemoPageDisplay
+		{
+			if (page)
+			{
+				var pages:Vector.<DemoPageDisplay> = getPages();
+				for each (var pageDisplay:DemoPageDisplay in pages)
+				{
+					if (pageDisplay.page == page) return pageDisplay;
+				
+				}
+			}
+			
+			return null;
+		}
+		
+		public function getElement(element:DemoElement):DemoElementDisplay
+		{
+			if (element)
+			{
+				var pages:Vector.<DemoPageDisplay> = getPages();
+				for each (var pageDisplay:DemoPageDisplay in pages)
+				{
+					var elements:Vector.<DemoElementDisplay> = pageDisplay.getElements();
+					for each (var elementDisplay:DemoElementDisplay in elements)
+					{
+						if (elementDisplay.element == element) return elementDisplay;
+					}
 				}
 			}
 			

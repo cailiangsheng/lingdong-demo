@@ -154,5 +154,24 @@ package com.lingdong.demo.view.pages
 		{
 			page.thumbnail.draw(this, DemoModel.instance.pageSize.thumbnailSize);
 		}
+		
+		public function getElements():Vector.<DemoElementDisplay>
+		{
+			return elementUIs
+		}
+		
+		public function getElement(element:DemoElement):DemoElementDisplay
+		{
+			if (element)
+			{
+				for each (var elementDisplay:DemoElementDisplay in elementUIs)
+				{
+					if (elementDisplay.element == element) return elementDisplay;
+				
+				}
+			}
+			
+			return null;
+		}
 	}
 }

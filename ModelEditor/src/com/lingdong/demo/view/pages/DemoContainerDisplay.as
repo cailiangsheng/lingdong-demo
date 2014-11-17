@@ -96,20 +96,31 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private function disposeContainer():Vector.<IVisualElement>
+		public function getContents():Vector.<IVisualElement>
 		{
 			var elements:Vector.<IVisualElement> = null;
 			
 			if (_containerUI)
 			{
-				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
-				
 				elements = new Vector.<IVisualElement>();
 				for (var i:int = 0; i < _containerUI.numElements; i++)
 				{
 					var element:IVisualElement = _containerUI.getElementAt(i);
 					elements.push(element);
+				
 				}
+			}
+			
+			return elements;
+		}
+		
+		protected function disposeContainer():Vector.<IVisualElement>
+		{
+			var elements:Vector.<IVisualElement> = getContents();
+			
+			if (_containerUI)
+			{
+				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
 				
 				_containerUI.removeAllElements();
 				this.removeChild(_containerUI as DisplayObject);

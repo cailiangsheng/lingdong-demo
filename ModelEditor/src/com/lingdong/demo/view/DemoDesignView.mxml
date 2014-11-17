@@ -44,12 +44,13 @@
 			
 			private function onActivePageChange(event:Event):void
 			{
-				themeUI.selectedIndex = this.designer.activePageIndex;
-				thumbnailUI.selectedIndex = this.designer.activePageIndex;
+				themeUI.activePage = this.designer.activePage;
+				thumbnailUI.activePage = this.designer.activePage;
 			}
 			
 			private function onActiveElementChange(event:Event):void
 			{
+				themeUI.activeElement = this.designer.activeElement;
 			}
 			
 			private static function getDisplay(object:*, clazz:Class):*
@@ -70,7 +71,7 @@
 				var pageDisplay:DemoPageDisplay = getDisplay(event.target, DemoPageDisplay);
 				if (buttonDisplay && pageDisplay)
 				{
-					DemoModel.instance.designer.activeTheme = pageDisplay.page.child;
+					this.designer.activeTheme = pageDisplay.page.child;
 				}
 			}
 			
@@ -80,17 +81,17 @@
 				DemoModel.instance.designer.activePage = pageDisplay ? pageDisplay.page : null;
 				
 				var elementDisplay:DemoElementDisplay = getDisplay(event.target, DemoElementDisplay);
-				DemoModel.instance.designer.activeElement = elementDisplay ? elementDisplay.element : null;
+				this.designer.activeElement = elementDisplay ? elementDisplay.element : null;
 			}
 
 			private function themeUI_selectedIndexChangeHandler(event:Event):void
 			{
-				DemoModel.instance.designer.activePageIndex = themeUI.selectedIndex;
+				this.designer.activePage = themeUI.activePage;
 			}
 
 			private function thumbnailUI_selectedIndexChangeHandler(event:Event):void
 			{
-				DemoModel.instance.designer.activePageIndex = thumbnailUI.selectedIndex;
+				this.designer.activePage = thumbnailUI.activePage;
 			}
 		]]>
 	</fx:Script>

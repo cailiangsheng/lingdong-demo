@@ -17,11 +17,7 @@ package com.lingdong.demo.model
 		{
 			if (_activeElement != value)
 			{
-				if (_activeElement) _activeElement.selected = false;
-				
 				_activeElement = value;
-				
-				if (_activeElement) _activeElement.selected = true;
 				
 				this.dispatchEvent(new DemoModelEvent(DemoModelEvent.ACTIVE_ELEMENT_CHANGE));
 			}

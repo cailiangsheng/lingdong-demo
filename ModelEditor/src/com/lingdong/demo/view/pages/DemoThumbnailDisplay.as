@@ -9,6 +9,7 @@ package com.lingdong.demo.view.pages
 	import mx.containers.ViewStack;
 	import mx.core.Container;
 	import mx.core.IVisualElement;
+	import mx.events.ChildExistenceChangedEvent;
 	import mx.events.ResizeEvent;
 
 	public class DemoThumbnailDisplay extends DemoThemeDisplay
@@ -19,7 +20,37 @@ package com.lingdong.demo.view.pages
 		
 		override protected function getContainer(showStyle:String):IDemoContainer
 		{
-			return DemoPoolUtil.alloc(TileContainer);
+			var container:TileContainer = DemoPoolUtil.alloc(TileContainer);
+			container.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, onAddChild);
+			container.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, onRemoveChild);
+			return container;
+		}
+		
+		private function onAddChild(event:ChildExistenceChangedEvent):void
+		{
+			DemoPageDisplay(event.relatedObject).mouseChildren = false;
+		}
+		
+		private function onRemoveChild(event:ChildExistenceChangedEvent):void
+		{
+			DemoPageDisplay(event.relatedObject).mouseChildren = true;
+		}
+		
+		override protected function disposeContainer():Vector.<IVisualElement>
+		{
+			if (_containerUI)
+			{
+				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_ADD, onAddChild);
+				_containerUI.removeEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, onRemoveChild);
+				
+				var pages:Vector.<DemoPageDisplay> = super.getPages();
+				for each (var page:DemoPageDisplay in pages)
+				{
+					page.mouseChildren = true;
+				}
+			}
+			
+			return super.disposeContainer();
 		}
 	}
 }

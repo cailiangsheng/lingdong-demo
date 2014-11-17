@@ -25,7 +25,6 @@ package com.lingdong.demo.view.pages
 		{
 			if (_element != value)
 			{
-				_element && _element.removeEventListener(DemoElementEvent.SELECTED_CHANGE, updateSelection);
 				_element && _element.removeEventListener(DemoElementEvent.X_CHANGE, updateX);
 				_element && _element.removeEventListener(DemoElementEvent.Y_CHANGE, updateY);
 				_element && _element.removeEventListener(DemoElementEvent.WIDTH_CHANGE, updateWidth);
@@ -39,7 +38,6 @@ package com.lingdong.demo.view.pages
 				
 				this.stage && update();
 				
-				_element && _element.addEventListener(DemoElementEvent.SELECTED_CHANGE, updateSelection);
 				_element && _element.addEventListener(DemoElementEvent.X_CHANGE, updateX);
 				_element && _element.addEventListener(DemoElementEvent.Y_CHANGE, updateY);
 				_element && _element.addEventListener(DemoElementEvent.WIDTH_CHANGE, updateWidth);
@@ -82,7 +80,6 @@ package com.lingdong.demo.view.pages
 		{
 			if (this.element)
 			{
-				updateSelection();
 				updateSize();
 				updateDepth();
 				updateRotation();
@@ -106,11 +103,6 @@ package com.lingdong.demo.view.pages
 			}
 			
 			return _resourceUI;
-		}
-		
-		private function updateSelection(event:Event = null):void
-		{
-			super.selected = element.selected;
 		}
 		
 		private function updateX(event:Event = null):void
