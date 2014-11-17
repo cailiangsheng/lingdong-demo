@@ -138,6 +138,8 @@ package com.lingdong.demo.view.resources
 				_controllerUI.showNothing();
 				_controllerUI.removeEventListener(MouseEvent.CLICK, onVideoControllerClick);
 				this.removeElement(_controllerUI);
+				
+				DemoPoolUtil.free(_controllerUI);
 				_controllerUI = null;
 			}
 		}
