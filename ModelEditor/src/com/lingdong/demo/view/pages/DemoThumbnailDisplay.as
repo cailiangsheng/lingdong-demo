@@ -29,11 +29,13 @@ package com.lingdong.demo.view.pages
 		private function onAddChild(event:ChildExistenceChangedEvent):void
 		{
 			DemoPageDisplay(event.relatedObject).mouseChildren = false;
+			DemoPageDisplay(event.relatedObject).buttonMode = true;
 		}
 		
 		private function onRemoveChild(event:ChildExistenceChangedEvent):void
 		{
 			DemoPageDisplay(event.relatedObject).mouseChildren = true;
+			DemoPageDisplay(event.relatedObject).buttonMode = false;
 		}
 		
 		override protected function disposeContainer():Vector.<IVisualElement>
@@ -47,6 +49,7 @@ package com.lingdong.demo.view.pages
 				for each (var page:DemoPageDisplay in pages)
 				{
 					page.mouseChildren = true;
+					page.buttonMode = false;
 				}
 			}
 			
