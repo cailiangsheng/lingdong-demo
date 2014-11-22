@@ -12,6 +12,7 @@ package com.lingdong.demo.view.pages
 	import flash.geom.Point;
 	
 	import mx.core.Container;
+	import mx.core.ScrollPolicy;
 	import mx.events.FlexEvent;
 	import mx.events.ResizeEvent;
 	
@@ -59,6 +60,9 @@ package com.lingdong.demo.view.pages
 		
 		public function DemoPageDisplay()
 		{
+			this.horizontalScrollPolicy = ScrollPolicy.OFF;
+			this.verticalScrollPolicy = ScrollPolicy.OFF;
+			
 			elementUIs = new Vector.<DemoElementDisplay>();
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);

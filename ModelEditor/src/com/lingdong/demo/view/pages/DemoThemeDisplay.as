@@ -69,34 +69,6 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private var _activeElement:DemoElement;
-		
-		public function get activeElement():DemoElement
-		{
-			return _activeElement;
-		}
-		
-		public function set activeElement(value:DemoElement):void
-		{
-			if (_activeElement != value)
-			{
-				updateElementSelection(_activeElement, false);
-				
-				_activeElement = value;
-				
-				updateElementSelection(_activeElement, true); 
-			}
-		}
-		
-		private function updateElementSelection(element:DemoElement, selected:Boolean):void
-		{
-			var elementDisplay:DemoElementDisplay = this.getElement(element);
-			if (elementDisplay)
-			{
-				elementDisplay.selected = selected;
-			}
-		}
-		
 		public function DemoThemeDisplay()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, update);

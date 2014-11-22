@@ -1,5 +1,6 @@
 package com.lingdong.demo.view.pages
 {
+	import com.greensock.transform.TransformManager;
 	import com.lingdong.demo.model.events.DemoElementEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.resources.DemoResource;
@@ -12,8 +13,29 @@ package com.lingdong.demo.view.pages
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 
-	public class DemoElementDisplay extends DemoSelectionDisplay
+	public class DemoElementDisplay extends UIComponent
 	{
+		private static var _transformMananger:TransformManager;
+		
+		public static function get transformManager():TransformManager
+		{
+			if (!_transformMananger)
+			{
+				_transformMananger = new TransformManager();
+				_transformMananger.forceSelectionToFront = false;
+				_transformMananger.arrowKeysMove = true;
+				_transformMananger.allowMultiSelect = true;
+				_transformMananger.hideCenterHandle = true;
+				_transformMananger.allowDelete = false;
+				_transformMananger.handleFillColor = 0xFFFFFF;
+				_transformMananger.handleSize = 8;
+				_transformMananger.lineColor = 16746265;
+				_transformMananger.lockRotation = false;
+			}
+			
+			return _transformMananger;
+		}
+		
 		private var _element:DemoElement;
 		
 		public function get element():DemoElement
@@ -49,6 +71,8 @@ package com.lingdong.demo.view.pages
 		
 		public function DemoElementDisplay()
 		{
+			transformManager.addItem(this);
+			
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
@@ -84,11 +108,6 @@ package com.lingdong.demo.view.pages
 				updateDepth();
 				updateRotation();
 			}
-		}
-		
-		override protected function get selectionTarget():IVisualElement
-		{
-			return _resourceUI;
 		}
 		
 		private var _resourceUI:DemoResourceDisplay;
@@ -137,8 +156,6 @@ package com.lingdong.demo.view.pages
 		{
 			if (_resourceUI)
 			{
-				super.selected = false;
-				
 				_resourceUI.resource = null;
 				this.removeChild(_resourceUI);
 				

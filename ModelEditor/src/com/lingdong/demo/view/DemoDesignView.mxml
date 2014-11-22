@@ -33,7 +33,6 @@
 				
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_PAGE_CHANGE, onActivePageChange);
-				this.designer.addEventListener(DemoModelEvent.ACTIVE_ELEMENT_CHANGE, onActiveElementChange);
 			}
 			
 			private function onActiveThemeChange(event:Event):void
@@ -46,11 +45,6 @@
 			{
 				themeUI.activePage = this.designer.activePage;
 				thumbnailUI.activePage = this.designer.activePage;
-			}
-			
-			private function onActiveElementChange(event:Event):void
-			{
-				themeUI.activeElement = this.designer.activeElement;
 			}
 			
 			private static function getDisplay(object:*, clazz:Class):*
@@ -74,15 +68,6 @@
 					this.designer.activeTheme = pageDisplay.page.child;
 				}
 			}
-			
-			private function themeContainer_clickHandler(event:MouseEvent):void
-			{
-				var pageDisplay:DemoPageDisplay = getDisplay(event.target, DemoPageDisplay);
-				DemoModel.instance.designer.activePage = pageDisplay ? pageDisplay.page : null;
-				
-				var elementDisplay:DemoElementDisplay = getDisplay(event.target, DemoElementDisplay);
-				this.designer.activeElement = elementDisplay ? elementDisplay.element : null;
-			}
 
 			private function themeUI_selectedIndexChangeHandler(event:Event):void
 			{
@@ -105,8 +90,7 @@
 				<controls:DemoControlBar />
 				
 				<s:BorderContainer width="100%" height="100%" 
-								   borderStyle="inset" backgroundColor="0xcccccc"
-								   click="themeContainer_clickHandler(event)">
+								   borderStyle="inset" backgroundColor="0xcccccc">
 					<pages:DemoThemeDisplay id="themeUI" 
 											selectedIndexChange="themeUI_selectedIndexChangeHandler(event)"
 											doubleClickEnabled="true" doubleClick="themeUI_doubleClickHandler(event)" />
