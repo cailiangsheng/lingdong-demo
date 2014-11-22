@@ -107,11 +107,16 @@ package com.lingdong.demo.view.pages
 			{
 				for each (var page:DemoPage in theme.pages.source)
 				{
-					var pageComponent:DemoPageDisplay = DemoPoolUtil.alloc(DemoPageDisplay);
+					var pageComponent:DemoPageDisplay = allocPageDisplay();
 					pageComponent.page = page;
 					containerUI.addElement(pageComponent);
 				}
 			}
+		}
+		
+		protected function allocPageDisplay():DemoPageDisplay
+		{
+			return DemoPoolUtil.alloc(DemoPageDisplay);
 		}
 		
 		override protected function dispose():Vector.<IVisualElement>

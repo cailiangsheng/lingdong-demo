@@ -56,12 +56,13 @@ package com.lingdong.demo.view.pages
 			return _backgroundUI;
 		}
 		
-		private var elementUIs:Vector.<DemoElementDisplay>;
+		protected var elementUIs:Vector.<DemoElementDisplay>;
 		
 		public function DemoPageDisplay()
 		{
 			this.horizontalScrollPolicy = ScrollPolicy.OFF;
 			this.verticalScrollPolicy = ScrollPolicy.OFF;
+			this.clipContent = true;
 			
 			elementUIs = new Vector.<DemoElementDisplay>();
 			
@@ -82,7 +83,7 @@ package com.lingdong.demo.view.pages
 			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
 		}
 		
-		private function updateSize(event:Event = null):void
+		protected function updateSize(event:Event = null):void
 		{
 			var size:Point = DemoModel.instance.pageSize.getFitSize(this.parent);
 			this.width = size.x;
@@ -121,7 +122,7 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private function updateElements(event:Event = null):void
+		protected function updateElements(event:Event = null):void
 		{
 			clearElements();
 			
@@ -136,7 +137,7 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private function clearElements():void
+		protected function clearElements():void
 		{
 			for each (var elementUI:DemoElementDisplay in elementUIs)
 			{
@@ -148,7 +149,7 @@ package com.lingdong.demo.view.pages
 			elementUIs.length = 0;
 		}
 		
-		private function dispose():void
+		protected function dispose():void
 		{
 			removeBackground();
 			clearElements();

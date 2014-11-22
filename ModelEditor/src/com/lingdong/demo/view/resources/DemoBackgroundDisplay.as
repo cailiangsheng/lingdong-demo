@@ -109,10 +109,11 @@ package com.lingdong.demo.view.resources
 		
 		private function updateColor(event:Event = null):void
 		{
+			var lineWeight:int = 1;
 			this.graphics.clear();
-			this.graphics.lineStyle(1, 0x000000);
+			this.graphics.lineStyle(lineWeight, 0x000000);
 			this.graphics.beginFill(this.background.color);
-			this.graphics.drawRect(0, 0, this.width, this.height);
+			this.graphics.drawRect(lineWeight / 2, lineWeight / 2, this.width - lineWeight, this.height - lineWeight);
 			this.graphics.endFill();
 		}
 		

@@ -20,7 +20,7 @@ package com.lingdong.demo.view.pages
 	[Event(name="selectedIndexChange", type="flash.events.Event")]
 	public class DemoContainerDisplay extends UIComponent
 	{
-		protected function getContainer(showStyle:String):IDemoContainer
+		protected function allocContainer(showStyle:String):IDemoContainer
 		{
 			switch (showStyle)
 			{
@@ -66,7 +66,7 @@ package com.lingdong.demo.view.pages
 		{
 			if (!_containerUI)
 			{
-				_containerUI = getContainer(showStyle);
+				_containerUI = allocContainer(showStyle);
 				
 				if (_containerUI)
 				{

@@ -1,6 +1,5 @@
 package com.lingdong.demo.view.pages
 {
-	import com.greensock.transform.TransformManager;
 	import com.lingdong.demo.model.events.DemoElementEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.resources.DemoResource;
@@ -15,27 +14,6 @@ package com.lingdong.demo.view.pages
 
 	public class DemoElementDisplay extends UIComponent
 	{
-		private static var _transformMananger:TransformManager;
-		
-		public static function get transformManager():TransformManager
-		{
-			if (!_transformMananger)
-			{
-				_transformMananger = new TransformManager();
-				_transformMananger.forceSelectionToFront = false;
-				_transformMananger.arrowKeysMove = true;
-				_transformMananger.allowMultiSelect = true;
-				_transformMananger.hideCenterHandle = true;
-				_transformMananger.allowDelete = false;
-				_transformMananger.handleFillColor = 0xFFFFFF;
-				_transformMananger.handleSize = 8;
-				_transformMananger.lineColor = 16746265;
-				_transformMananger.lockRotation = false;
-			}
-			
-			return _transformMananger;
-		}
-		
 		private var _element:DemoElement;
 		
 		public function get element():DemoElement
@@ -71,8 +49,6 @@ package com.lingdong.demo.view.pages
 		
 		public function DemoElementDisplay()
 		{
-			transformManager.addItem(this);
-			
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}

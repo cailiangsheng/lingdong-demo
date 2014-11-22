@@ -18,7 +18,7 @@ package com.lingdong.demo.view.pages
 		{
 		}
 		
-		override protected function getContainer(showStyle:String):IDemoContainer
+		override protected function allocContainer(showStyle:String):IDemoContainer
 		{
 			var container:TileContainer = DemoPoolUtil.alloc(TileContainer);
 			container.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, onAddChild);
