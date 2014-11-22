@@ -10,6 +10,7 @@ package com.lingdong.demo.view.pages
 	
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import mx.core.Container;
 	import mx.core.ScrollPolicy;
@@ -83,11 +84,12 @@ package com.lingdong.demo.view.pages
 			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
 		}
 		
-		protected function updateSize(event:Event = null):void
+		private function updateSize(event:Event = null):void
 		{
 			var size:Point = DemoModel.instance.pageSize.getFitSize(this.parent);
 			this.width = size.x;
 			this.height = size.y;
+			this.scrollRect = new Rectangle(0, 0, this.width, this.height);
 		}
 		
 		private function update(event:Event = null):void
@@ -139,6 +141,8 @@ package com.lingdong.demo.view.pages
 		
 		protected function clearElements():void
 		{
+			this.scrollRect = null;
+			
 			for each (var elementUI:DemoElementDisplay in elementUIs)
 			{
 				this.removeChild(elementUI);
@@ -149,7 +153,7 @@ package com.lingdong.demo.view.pages
 			elementUIs.length = 0;
 		}
 		
-		protected function dispose():void
+		private function dispose():void
 		{
 			removeBackground();
 			clearElements();

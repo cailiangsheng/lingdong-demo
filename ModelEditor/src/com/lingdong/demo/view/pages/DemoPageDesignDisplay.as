@@ -1,36 +1,57 @@
 package com.lingdong.demo.view.pages
 {
+	import com.greensock.events.TransformEvent;
+	import com.greensock.transform.TransformItem;
 	import com.greensock.transform.TransformManager;
 	
 	import flash.events.Event;
-	import flash.geom.Rectangle;
 
 	public class DemoPageDesignDisplay extends DemoPageDisplay
 	{
-		private var _transformMananger:TransformManager;
+		private var _transformManager:TransformManager;
 		
 		private function get transformManager():TransformManager
 		{
-			if (!_transformMananger)
+			if (!_transformManager)
 			{
-				_transformMananger = new TransformManager();
-				_transformMananger.forceSelectionToFront = false;
-				_transformMananger.arrowKeysMove = true;
-				_transformMananger.allowMultiSelect = true;
-				_transformMananger.hideCenterHandle = true;
-				_transformMananger.allowDelete = false;
-				_transformMananger.handleFillColor = 0xFFFFFF;
-				_transformMananger.handleSize = 8;
-				_transformMananger.lineColor = 16746265;
-				_transformMananger.lockRotation = false;
+				_transformManager = new TransformManager();
+				_transformManager.forceSelectionToFront = false;
+				_transformManager.arrowKeysMove = true;
+				_transformManager.allowMultiSelect = true;
+				_transformManager.hideCenterHandle = true;
+				_transformManager.allowDelete = false;
+				_transformManager.handleFillColor = 0xFFFFFF;
+				_transformManager.handleSize = 8;
+				_transformManager.lineColor = 16746265;
+				_transformManager.lockRotation = false;
+				_transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_MOVE, onTransform);
+				_transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_ROTATE, onTransform);
+				_transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_SCALE, onTransform);
 			}
 			
-			return _transformMananger;
+			return _transformManager;
+		}
+		
+		private function onTransform(event:TransformEvent):void
+		{
+			for each(var item:TransformItem in event.items)
+			{
+				transformElement(item);
+			}
+		}
+		
+		private function transformElement(item:TransformItem):void
+		{
+			var elementDisplay:DemoElementDisplay = item.targetObject as DemoElementDisplay;
+			elementDisplay.element.x = item.x / this.width;
+			elementDisplay.element.y = item.y / this.height;
+			elementDisplay.element.width = elementDisplay.resourceWidth * item.scaleX / this.width;
+			elementDisplay.element.height = elementDisplay.resourceHeight * item.scaleY / this.height;
+			elementDisplay.element.rotation = item.rotation;
 		}
 		
 		public function DemoPageDesignDisplay()
 		{
-			super();
 		}
 		
 		override protected function clearElements():void
@@ -38,12 +59,6 @@ package com.lingdong.demo.view.pages
 			for each (var elementUI:DemoElementDisplay in elementUIs)
 			{
 				this.transformManager.removeItem(elementUI);
-				
-				elementUI.x = 0;
-				elementUI.y = 0;
-				elementUI.scaleX = 1;
-				elementUI.scaleY = 1;
-				elementUI.rotation = 0;
 			}
 			
 			super.clearElements();
@@ -57,20 +72,6 @@ package com.lingdong.demo.view.pages
 			{
 				this.transformManager.addItem(elementUI);
 			}
-		}
-		
-		override protected function updateSize(event:Event=null):void
-		{
-			super.updateSize(event);
-			
-			this.scrollRect = new Rectangle(0, 0, this.width, this.height);
-		}
-		
-		override protected function dispose():void
-		{
-			super.dispose();
-			
-			this.scrollRect = null;
 		}
 	}
 }

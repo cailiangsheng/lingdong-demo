@@ -86,6 +86,16 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
+		public function get resourceWidth():Number
+		{
+			return this.resourceUI.width;
+		}
+		
+		public function get resourceHeight():Number
+		{
+			return this.resourceUI.height;
+		}
+		
 		private var _resourceUI:DemoResourceDisplay;
 		
 		private function get resourceUI():DemoResourceDisplay
@@ -102,22 +112,29 @@ package com.lingdong.demo.view.pages
 		
 		private function updateX(event:Event = null):void
 		{
-			resourceUI.x = element.x * this.parent.width;
+			this.x = element.x * this.parent.width;
 		}
 		
 		private function updateY(event:Event = null):void
 		{
-			resourceUI.y = element.y * this.parent.height;
+			this.y = element.y * this.parent.height;
 		}
 		
 		private function updateWidth(event:Event = null):void
 		{
-			resourceUI.width = element.width * this.parent.width;
+			resourceUI.width = Math.abs(element.width * this.parent.width / this.scaleX);
+			this.scaleX *= sign(this.scaleX) * sign(element.width);
 		}
 		
 		private function updateHeight(event:Event = null):void
 		{
-			resourceUI.height = element.height * this.parent.height;
+			resourceUI.height = Math.abs(element.height * this.parent.height / this.scaleY);
+			this.scaleY *= sign(this.scaleY) * sign(element.height);
+		}
+		
+		private static function sign(value:Number):int
+		{
+			return value >= 0 ? 1 : -1;
 		}
 		
 		private function updateDepth(event:Event = null):void
@@ -126,10 +143,17 @@ package com.lingdong.demo.view.pages
 		
 		private function updateRotation(event:Event = null):void
 		{
+			this.rotation = element.rotation;
 		}
 		
 		private function dispose():void
 		{
+			this.x = 0;
+			this.y = 0;
+			this.scaleX = 1;
+			this.scaleY = 1;
+			this.rotation = 0;
+			
 			if (_resourceUI)
 			{
 				_resourceUI.resource = null;
