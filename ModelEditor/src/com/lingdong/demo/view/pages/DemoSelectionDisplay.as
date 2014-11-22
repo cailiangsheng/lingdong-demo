@@ -178,10 +178,17 @@ class ControlFrame extends UIComponent
 		this.bottomLeftPoint.draw();
 		this.bottomRightPoint.draw();
 		
-		this.leftPoint.draw();
-		this.rightPoint.draw();
-		this.topPoint.draw();
-		this.bottomPoint.draw();
+		if (this.height > this.leftPoint.size + this.topLeftPoint.size / 2 + this.bottomLeftPoint.size / 2)
+		{
+			this.leftPoint.draw();
+			this.rightPoint.draw();
+		}
+		
+		if (this.width > this.topPoint.size + this.topLeftPoint.size / 2 + this.bottomLeftPoint.size / 2)
+		{
+			this.topPoint.draw();
+			this.bottomPoint.draw();
+		}
 	}
 	
 	public function dispose():void
