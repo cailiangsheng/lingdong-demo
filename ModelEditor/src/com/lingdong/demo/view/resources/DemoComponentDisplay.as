@@ -1,8 +1,7 @@
-package com.lingdong.demo.view.pages
+package com.lingdong.demo.view.resources
 {
 	import com.lingdong.demo.model.resources.DemoResource;
 	import com.lingdong.demo.util.DemoPoolUtil;
-	import com.lingdong.demo.view.resources.DemoResourceDisplay;
 	
 	import flash.events.Event;
 	
@@ -58,8 +57,6 @@ package com.lingdong.demo.view.pages
 			if (_resourceUI)
 			{
 				_resourceUI.resource = null;
-				_resourceUI.percentWidth = NaN;
-				_resourceUI.percentHeight = NaN;
 				this.removeChild(_resourceUI);
 				
 				DemoPoolUtil.free(_resourceUI);

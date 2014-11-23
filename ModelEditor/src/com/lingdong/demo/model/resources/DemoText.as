@@ -2,6 +2,10 @@ package com.lingdong.demo.model.resources
 {
 	import com.lingdong.demo.model.IDemoConfig;
 	import com.lingdong.demo.model.events.DemoTextEvent;
+	
+	import flash.text.Font;
+	
+	import mx.collections.ArrayCollection;
 
 	[Event(name="contentChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	[Event(name="colorChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
@@ -9,6 +13,30 @@ package com.lingdong.demo.model.resources
 	[Event(name="fontStyleChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	public class DemoText extends DemoResource implements IDemoConfig
 	{
+		private static var _instances:ArrayCollection;
+		
+		public static function get instances():ArrayCollection
+		{
+			if (!_instances)
+			{
+				_instances = new ArrayCollection()
+				
+				var fonts:Array = Font.enumerateFonts(true);
+				for each (var font:Object in fonts)
+				{
+					var text:DemoText = new DemoText();
+					text.fontStyle = font.fontName;
+					text.content = font.fontName;
+					text.fontSize = 12;
+					text.color = 0x000000;
+					
+					_instances.addItem(text);
+				}
+			}
+			
+			return _instances;
+		}
+		
 		private var _content:String;
 		
 		public function get content():String

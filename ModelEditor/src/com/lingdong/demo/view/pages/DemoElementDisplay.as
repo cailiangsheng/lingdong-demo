@@ -11,6 +11,7 @@ package com.lingdong.demo.view.pages
 	import mx.core.IVisualElement;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
+	import com.lingdong.demo.view.resources.DemoComponentDisplay;
 
 	public class DemoElementDisplay extends DemoComponentDisplay
 	{

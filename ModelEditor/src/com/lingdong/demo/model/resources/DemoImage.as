@@ -7,10 +7,19 @@ package com.lingdong.demo.model.resources
 	import flash.display.DisplayObject;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	
+	import mx.collections.ArrayCollection;
 
 	[Event(name="bitmapDataChange", type="com.lingdong.demo.model.events.DemoImageEvent")]
 	public class DemoImage extends DemoFile implements IDemoConfig
 	{
+		private static var _instances:ArrayCollection;
+		
+		public static function get instances():ArrayCollection
+		{
+			return _instances ||= new ArrayCollection();
+		}
+		
 		private var _bitmapData:BitmapData;
 		
 		public function get bitmapData():BitmapData
@@ -31,6 +40,8 @@ package com.lingdong.demo.model.resources
 		public function DemoImage()
 		{
 			super._type = IMAGE;
+			
+			instances.addItem(this);
 		}
 		
 		override public function readConfig(config:Object):void
