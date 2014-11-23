@@ -38,6 +38,8 @@ package com.lingdong.demo.view.resources
 				_text && _text.removeEventListener(DemoTextEvent.CONTENT_CHANGE, updateContent);
 				_text && _text.removeEventListener(DemoTextEvent.FONT_SIZE_CHANGE, updateFontSize);
 				_text && _text.removeEventListener(DemoTextEvent.FONT_STYLE_CHANGE, updateFontStyle);
+				_text && _text.removeEventListener(DemoTextEvent.TEXT_ALIGN_CHANGE, updateTextAlign);
+				_text && _text.removeEventListener(DemoTextEvent.VERTICAL_ALIGN_CHANGE, updateVerticalAlign);
 				
 				this.dispose();
 				
@@ -49,6 +51,8 @@ package com.lingdong.demo.view.resources
 				_text && _text.addEventListener(DemoTextEvent.CONTENT_CHANGE, updateContent);
 				_text && _text.addEventListener(DemoTextEvent.FONT_SIZE_CHANGE, updateFontSize);
 				_text && _text.addEventListener(DemoTextEvent.FONT_STYLE_CHANGE, updateFontStyle);
+				_text && _text.addEventListener(DemoTextEvent.TEXT_ALIGN_CHANGE, updateTextAlign);
+				_text && _text.addEventListener(DemoTextEvent.VERTICAL_ALIGN_CHANGE, updateVerticalAlign);
 			}
 		}
 		
@@ -86,6 +90,8 @@ package com.lingdong.demo.view.resources
 				updateContent();
 				updateFontSize();
 				updateFontStyle();
+				updateTextAlign();
+				updateVerticalAlign();
 			}
 		}
 		
@@ -107,6 +113,16 @@ package com.lingdong.demo.view.resources
 		private function updateFontStyle(event:Event = null):void
 		{
 			this.textUI.setStyle("fontFamily", text.fontStyle);
+		}
+		
+		private function updateTextAlign(event:Event = null):void
+		{
+			this.textUI.setStyle("textAlign", text.textAlign);
+		}
+		
+		private function updateVerticalAlign(event:Event = null):void
+		{
+			this.textUI.setStyle("verticalAlign", text.verticalAlign);
 		}
 		
 		private function dispose():void

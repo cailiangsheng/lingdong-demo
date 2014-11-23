@@ -5,12 +5,17 @@ package com.lingdong.demo.model.resources
 	
 	import flash.text.Font;
 	
+	import flashx.textLayout.formats.TextAlign;
+	import flashx.textLayout.formats.VerticalAlign;
+	
 	import mx.collections.ArrayCollection;
 
 	[Event(name="contentChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	[Event(name="colorChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	[Event(name="fontSizeChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	[Event(name="fontStyleChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
+	[Event(name="textAlignChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
+	[Event(name="verticalAlignChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	public class DemoText extends DemoResource implements IDemoConfig
 	{
 		private static var _instances:ArrayCollection;
@@ -26,9 +31,11 @@ package com.lingdong.demo.model.resources
 				{
 					var text:DemoText = new DemoText();
 					text.fontStyle = font.fontName;
-					text.content = font.fontName;
-					text.fontSize = 12;
+					text.content = font.fontName + "\nAaBbCc";
+					text.fontSize = 24;
 					text.color = 0x000000;
+					text.textAlign = TextAlign.CENTER;
+					text.verticalAlign = VerticalAlign.MIDDLE;
 					
 					_instances.addItem(text);
 				}
@@ -102,6 +109,40 @@ package com.lingdong.demo.model.resources
 				_fontStyle = value;
 				
 				this.dispatchTextEvent(DemoTextEvent.FONT_STYLE_CHANGE);
+			}
+		}
+		
+		private var _textAlign:String;
+		
+		public function get textAlign():String
+		{
+			return _textAlign;
+		}
+		
+		public function set textAlign(value:String):void
+		{
+			if (_textAlign != value)
+			{
+				_textAlign = value;
+				
+				this.dispatchTextEvent(DemoTextEvent.TEXT_ALIGN_CHANGE);
+			}
+		}
+		
+		private var _verticalAlign:String;
+		
+		public function get verticalAlign():String
+		{
+			return _verticalAlign;
+		}
+		
+		public function set verticalAlign(value:String):void
+		{
+			if (_verticalAlign != value)
+			{
+				_verticalAlign = value;
+				
+				this.dispatchTextEvent(DemoTextEvent.VERTICAL_ALIGN_CHANGE);
 			}
 		}
 		
