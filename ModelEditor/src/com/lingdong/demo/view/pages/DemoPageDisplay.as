@@ -141,8 +141,6 @@ package com.lingdong.demo.view.pages
 		
 		protected function clearElements():void
 		{
-			this.scrollRect = null;
-			
 			for each (var elementUI:DemoElementDisplay in elementUIs)
 			{
 				this.removeChild(elementUI);
@@ -157,6 +155,8 @@ package com.lingdong.demo.view.pages
 		{
 			removeBackground();
 			clearElements();
+			
+			this.scrollRect = null;
 		}
 		
 		private function updateThumbnail(event:Event = null):void
