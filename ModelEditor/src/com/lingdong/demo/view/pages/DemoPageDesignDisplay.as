@@ -24,9 +24,9 @@ package com.lingdong.demo.view.pages
 				_transformManager.handleSize = 8;
 				_transformManager.lineColor = 16746265;
 				_transformManager.lockRotation = false;
-				_transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_MOVE, onTransform);
-				_transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_ROTATE, onTransform);
-				_transformManager.addEventListener(TransformEvent.FINISH_INTERACTIVE_SCALE, onTransform);
+				_transformManager.addEventListener(TransformEvent.MOVE, onTransform);
+				_transformManager.addEventListener(TransformEvent.ROTATE, onTransform);
+				_transformManager.addEventListener(TransformEvent.SCALE, onTransform);
 			}
 			
 			return _transformManager;
