@@ -73,13 +73,23 @@ package com.lingdong.demo.view.resources
 			if (!_imageUI)
 			{
 				_imageUI = DemoPoolUtil.alloc(Image);
-				_imageUI.maintainAspectRatio = false;
+				_imageUI.setStyle("horizontalAlign", "middle");
+				_imageUI.maintainAspectRatio = super.maintainAspectRatio;
 				_imageUI.percentWidth = 100;
 				_imageUI.percentHeight = 100;
 				this.addElement(_imageUI);
 			}
 			
 			return _imageUI;
+		}
+		
+		override protected function updateMaintainAspectRatio():void
+		{
+			if (_imageUI)
+			{
+				_imageUI.maintainAspectRatio = super.maintainAspectRatio;
+				_imageUI
+			}
 		}
 		
 		private var _bitmapUI:BitmapImage;

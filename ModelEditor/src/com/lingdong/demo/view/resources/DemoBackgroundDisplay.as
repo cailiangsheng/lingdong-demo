@@ -42,8 +42,6 @@ package com.lingdong.demo.view.resources
 			{
 				_background && _background.removeEventListener(DemoBackgroundEvent.COLOR_CHANGE, updateColor);
 				
-				this.dispose();
-				
 				_background = value;
 				
 				this.stage && update();
@@ -56,40 +54,27 @@ package com.lingdong.demo.view.resources
 		{
 		}
 		
-		override protected function updateSize(event:ResizeEvent=null):void
+		override protected function update(event:Event=null):void
 		{
-			super.updateSize(event);
+			super.update(event);
 			
 			updateColor();
 		}
 		
-		override public function set width(value:Number):void
+		override public function set hasBorder(value:Boolean):void
 		{
-			super.width = value;
-			
-			updateColor();
-		}
-		
-		override public function set height(value:Number):void
-		{
-			super.height = value;
-			
-			updateColor();
+			super.hasBorder = true;
 		}
 		
 		private function updateColor(event:Event = null):void
 		{
-			var lineWeight:int = 1;
-			this.graphics.clear();
-			this.graphics.lineStyle(lineWeight, 0x000000);
-			this.graphics.beginFill(this.background.color);
-			this.graphics.drawRect(lineWeight / 2, lineWeight / 2, this.width - lineWeight, this.height - lineWeight);
-			this.graphics.endFill();
-		}
-		
-		private function dispose():void
-		{
-			this.graphics.clear();
+			if (this.background)
+			{
+				this.setStyle("borderAlpha", 1);
+				this.setStyle("borderColor", 0x000000);
+				this.setStyle("backgroundAlpha", 1);
+				this.setStyle("backgroundColor", this.background.color);
+			}
 		}
 	}
 }

@@ -37,8 +37,6 @@ package com.lingdong.demo.model.resources
 		public function DemoBackground()
 		{
 			super._type = BACKGROUND;
-			
-			instances.addItem(this);
 		}
 		
 		override public function readConfig(config:Object):void
@@ -48,6 +46,11 @@ package com.lingdong.demo.model.resources
 			if (config)
 			{
 				this.color = color;
+			}
+			
+			if (this.url)
+			{
+				instances.addItem(this);
 			}
 		}
 	}

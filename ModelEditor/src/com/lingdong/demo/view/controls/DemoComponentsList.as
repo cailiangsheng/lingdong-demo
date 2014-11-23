@@ -91,29 +91,69 @@ package com.lingdong.demo.view.controls
 		private function onResourcesChange(event:CollectionEvent):void
 		{
 			this.dispose();
+			this.update();
+			return;
 			
-			update();
+			switch (event.kind)
+			{
+				case CollectionEventKind.ADD:
+					for each (var resource:DemoResource in event.items)
+					{
+						addComponent(resource);
+					}
+					break;
+				case CollectionEventKind.MOVE:
+					var components:Vector.<DemoComponentDisplay> = new Vector.<DemoComponentDisplay>();
+					for each (resource in event.items)
+					{
+						var index:int = resources.getItemIndex(resource);
+						var component:DemoComponentDisplay = disposeComponentAt(index);
+						components.push(component);
+					}
+					
+					for each (component in components)
+					{
+						this.removeElement(component);
+					}
+					break;
+			}
 		}
 		
 		private function update(event:Event = null):void
 		{
 			for each (var resource:DemoResource in this.resources)
 			{
-				var component:DemoComponentDisplay = DemoPoolUtil.alloc(DemoComponentDisplay);
-				component.width = 100;
-				component.height = 100;
-				component.resource = resource;
-				this.addElement(component);
+				addComponent(resource);
 			}
+		}
+		
+		private function addComponent(resource:DemoResource):void
+		{
+			var component:DemoComponentDisplay = DemoPoolUtil.alloc(DemoComponentDisplay);
+			component.maintainAspectRatio = true;
+			component.hasBorder = true;
+			component.buttonMode = true;
+			component.width = 160;
+			component.height = 120;
+			component.resource = resource;
+			this.addElement(component);
+		}
+		
+		private function disposeComponentAt(index:int):DemoComponentDisplay
+		{
+			var component:DemoComponentDisplay = this.getChildAt(index) as DemoComponentDisplay;
+			component.buttonMode = false;
+			component.resource = null;
+			DemoPoolUtil.free(component);
+			
+			return component;
 		}
 		
 		private function dispose():void
 		{
 			for (var i:int = 0, n:int = this.numChildren; i < n; i++)
 			{
-				var component:DemoComponentDisplay = this.getChildAt(i) as DemoComponentDisplay;
-				component.resource = null;
-				DemoPoolUtil.free(component);
+				disposeComponentAt(i);
 			}
 			
 			this.removeAllElements();

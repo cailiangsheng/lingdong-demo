@@ -71,6 +71,11 @@ package com.lingdong.demo.view.resources
 			return _textUI;
 		}
 		
+		override protected function updateMaintainAspectRatio():void
+		{
+			
+		}
+		
 		override protected function update(event:Event = null):void
 		{
 			super.update(event);

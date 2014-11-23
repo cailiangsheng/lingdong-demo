@@ -51,6 +51,11 @@ package com.lingdong.demo.model.resources
 				this.fileId = config.id;
 				this.url = config.urlBig;
 			}
+			
+			if (this.url)
+			{
+				instances.addItem(this);
+			}
 		}
 		
 		public function draw(view:DisplayObject, size:Point):void

@@ -68,7 +68,7 @@ package com.lingdong.demo.view.resources
 			if (!_videoUI)
 			{
 				_videoUI = DemoPoolUtil.alloc(VideoDisplay);
-				_videoUI.maintainAspectRatio = false;
+				_videoUI.maintainAspectRatio = super.maintainAspectRatio;
 				_videoUI.percentWidth = 100;
 				_videoUI.percentHeight = 100;
 				
@@ -81,6 +81,14 @@ package com.lingdong.demo.view.resources
 			}
 			
 			return _videoUI;
+		}
+		
+		override protected function updateMaintainAspectRatio():void
+		{
+			if (_videoUI)
+			{
+				_videoUI.maintainAspectRatio = super.maintainAspectRatio;
+			}
 		}
 		
 		private var _controllerUI:VideoPlayerController;

@@ -35,6 +35,8 @@ package com.lingdong.demo.view.resources
 			if (!_resourceUI)
 			{
 				_resourceUI = DemoResourceDisplay.getDisplay(resource.type);
+				_resourceUI.maintainAspectRatio = this.maintainAspectRatio;
+				_resourceUI.hasBorder = this.hasBorder;
 				_resourceUI.resource = resource;
 				this.addChild(_resourceUI);
 			}
@@ -56,11 +58,53 @@ package com.lingdong.demo.view.resources
 		{
 			if (_resourceUI)
 			{
+				_resourceUI.maintainAspectRatio = false;
+				_resourceUI.hasBorder = false;
 				_resourceUI.resource = null;
 				this.removeChild(_resourceUI);
 				
 				DemoPoolUtil.free(_resourceUI);
 				_resourceUI = null;
+			}
+		}
+		
+		private var _maintainAspectRatio:Boolean;
+		
+		public function get maintainAspectRatio():Boolean
+		{
+			return _maintainAspectRatio;
+		}
+		
+		public function set maintainAspectRatio(value:Boolean):void
+		{
+			if (_maintainAspectRatio != value)
+			{
+				_maintainAspectRatio = value;
+				
+				if (_resourceUI)
+				{
+					_resourceUI.maintainAspectRatio = this.maintainAspectRatio;
+				}
+			}
+		}
+		
+		private var _hasBorder:Boolean;
+		
+		public function get hasBorder():Boolean
+		{
+			return _hasBorder;
+		}
+		
+		public function set hasBorder(value:Boolean):void
+		{
+			if (_hasBorder != value)
+			{
+				_hasBorder = value;
+				
+				if (_resourceUI)
+				{
+					_resourceUI.hasBorder = this.hasBorder;
+				}
 			}
 		}
 	}

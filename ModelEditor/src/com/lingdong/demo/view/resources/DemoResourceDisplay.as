@@ -11,7 +11,7 @@ package com.lingdong.demo.view.resources
 	import spark.components.BorderContainer;
 	import spark.components.SkinnableContainer;
 	
-	public class DemoResourceDisplay extends SkinnableContainer
+	public class DemoResourceDisplay extends BorderContainer
 	{
 		public static function getDisplay(type:String):DemoResourceDisplay
 		{
@@ -48,8 +48,31 @@ package com.lingdong.demo.view.resources
 			throw new Error("to be override");
 		}
 		
+		public function get hasBorder():Boolean
+		{
+			return this.getStyle("borderAlpha");
+		}
+		
+		public function set hasBorder(value:Boolean):void
+		{
+			this.setStyle("borderAlpha", value ? 1 : 0);
+		}
+		
+		public function get hasBackground():Boolean
+		{
+			return this.getStyle("backgroundAlpha");
+		}
+		
+		public function set hasBackground(value:Boolean):void
+		{
+			this.setStyle("backgroundAlpha", value ? 1 : 0);
+		}
+		
 		public function DemoResourceDisplay()
 		{
+			this.hasBorder = false;
+			this.hasBackground = false;
+			
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
@@ -85,6 +108,28 @@ package com.lingdong.demo.view.resources
 			{
 				this.height = this.parent.height;
 			}
+		}
+		
+		private var _maintainAspectRatio:Boolean;
+		
+		public function get maintainAspectRatio():Boolean
+		{
+			return _maintainAspectRatio;
+		}
+		
+		public function set maintainAspectRatio(value:Boolean):void
+		{
+			if (_maintainAspectRatio != value)
+			{
+				_maintainAspectRatio = value;
+				
+				updateMaintainAspectRatio();
+			}
+		}
+		
+		protected function updateMaintainAspectRatio():void
+		{
+			throw new Error("to be override!");
 		}
 	}
 }
