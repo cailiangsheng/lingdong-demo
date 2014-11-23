@@ -51,8 +51,10 @@ package com.lingdong.demo.view.resources
 			}
 		}
 		
-		private function update(event:Event = null):void
+		override protected function update(event:Event = null):void
 		{
+			super.update(event);
+			
 			if (image)
 			{
 				updateBitmapData();
@@ -62,7 +64,6 @@ package com.lingdong.demo.view.resources
 		
 		public function DemoImageDisplay()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, update);
 		}
 		
 		private var _imageUI:Image;

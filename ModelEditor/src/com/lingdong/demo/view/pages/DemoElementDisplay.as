@@ -12,7 +12,7 @@ package com.lingdong.demo.view.pages
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 
-	public class DemoElementDisplay extends UIComponent
+	public class DemoElementDisplay extends DemoComponentDisplay
 	{
 		private var _element:DemoElement;
 		
@@ -35,6 +35,11 @@ package com.lingdong.demo.view.pages
 				this.dispose();
 				
 				_element = value;
+				
+				if (_element)
+				{
+					super.resource = _element.resource;
+				}
 				
 				this.stage && update();
 				
@@ -86,30 +91,6 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		public function get resourceWidth():Number
-		{
-			return this.resourceUI.width;
-		}
-		
-		public function get resourceHeight():Number
-		{
-			return this.resourceUI.height;
-		}
-		
-		private var _resourceUI:DemoResourceDisplay;
-		
-		private function get resourceUI():DemoResourceDisplay
-		{
-			if (!_resourceUI)
-			{
-				_resourceUI = DemoResourceDisplay.getDisplay(element.resource.type);
-				_resourceUI.resource = element.resource;
-				this.addChild(_resourceUI);
-			}
-			
-			return _resourceUI;
-		}
-		
 		private function updateX(event:Event = null):void
 		{
 			this.x = element.x * this.parent.width;
@@ -122,13 +103,13 @@ package com.lingdong.demo.view.pages
 		
 		private function updateWidth(event:Event = null):void
 		{
-			resourceUI.width = Math.abs(element.width * this.parent.width / this.scaleX);
+			this.width = Math.abs(element.width * this.parent.width / this.scaleX);
 			this.scaleX *= sign(this.scaleX) * sign(element.width);
 		}
 		
 		private function updateHeight(event:Event = null):void
 		{
-			resourceUI.height = Math.abs(element.height * this.parent.height / this.scaleY);
+			this.height = Math.abs(element.height * this.parent.height / this.scaleY);
 			this.scaleY *= sign(this.scaleY) * sign(element.height);
 		}
 		
@@ -146,7 +127,7 @@ package com.lingdong.demo.view.pages
 			this.rotation = element.rotation;
 		}
 		
-		private function dispose():void
+		override protected function dispose():void
 		{
 			this.x = 0;
 			this.y = 0;
@@ -154,14 +135,7 @@ package com.lingdong.demo.view.pages
 			this.scaleY = 1;
 			this.rotation = 0;
 			
-			if (_resourceUI)
-			{
-				_resourceUI.resource = null;
-				this.removeChild(_resourceUI);
-				
-				DemoPoolUtil.free(_resourceUI);
-				_resourceUI = null;
-			}
+			super.dispose();
 		}
 	}
 }

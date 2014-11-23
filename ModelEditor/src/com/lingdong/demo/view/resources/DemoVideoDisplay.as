@@ -49,11 +49,12 @@ package com.lingdong.demo.view.resources
 		
 		public function DemoVideoDisplay()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, update);
 		}
 		
-		private function update(event:Event = null):void
+		override protected function update(event:Event = null):void
 		{
+			super.update(event);
+			
 			if (video)
 			{
 				updateURL();

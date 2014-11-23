@@ -54,43 +54,13 @@ package com.lingdong.demo.view.resources
 		
 		public function DemoBackgroundDisplay()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 		
-		private function onAddedToStage(event:Event):void
+		override protected function updateSize(event:ResizeEvent=null):void
 		{
-			this.parent.addEventListener(ResizeEvent.RESIZE, updateSize);
-			
-			update();
-		}
-		
-		private function onRemovedFromStage(event:Event):void
-		{
-			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
-		}
-		
-		private function updateSize(event:ResizeEvent = null):void
-		{
-			if (!event || this.parent.width != event.oldWidth)
-			{
-				this.width = this.parent.width;
-			}
-			
-			if (!event || this.parent.height != event.oldHeight)
-			{
-				this.height = this.parent.height;
-			}
+			super.updateSize(event);
 			
 			updateColor();
-		}
-		
-		private function update(event:Event = null):void
-		{
-			if (this.background)
-			{
-				updateSize();
-			}
 		}
 		
 		override public function set width(value:Number):void

@@ -54,7 +54,6 @@ package com.lingdong.demo.view.resources
 		
 		public function DemoTextDisplay()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, update);
 		}
 		
 		private var _textUI:Label;
@@ -72,8 +71,10 @@ package com.lingdong.demo.view.resources
 			return _textUI;
 		}
 		
-		private function update(event:Event = null):void
+		override protected function update(event:Event = null):void
 		{
+			super.update(event);
+			
 			if (text)
 			{
 				updateColor();

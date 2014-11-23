@@ -45,8 +45,8 @@ package com.lingdong.demo.view.pages
 			var elementDisplay:DemoElementDisplay = item.targetObject as DemoElementDisplay;
 			elementDisplay.element.x = item.x / this.width;
 			elementDisplay.element.y = item.y / this.height;
-			elementDisplay.element.width = elementDisplay.resourceWidth * item.scaleX / this.width;
-			elementDisplay.element.height = elementDisplay.resourceHeight * item.scaleY / this.height;
+			elementDisplay.element.width = elementDisplay.width * item.scaleX / this.width;
+			elementDisplay.element.height = elementDisplay.height * item.scaleY / this.height;
 			elementDisplay.element.rotation = item.rotation;
 		}
 		
