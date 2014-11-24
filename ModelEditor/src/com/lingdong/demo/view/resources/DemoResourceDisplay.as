@@ -50,12 +50,12 @@ package com.lingdong.demo.view.resources
 		
 		public function get hasBorder():Boolean
 		{
-			return this.getStyle("borderAlpha");
+			return this.getStyle("borderVisible");
 		}
 		
 		public function set hasBorder(value:Boolean):void
 		{
-			this.setStyle("borderAlpha", value ? 1 : 0);
+			this.setStyle("borderVisible", value);
 		}
 		
 		public function get hasBackground():Boolean

@@ -70,7 +70,7 @@ package com.lingdong.demo.view.resources
 		{
 			if (this.background)
 			{
-				this.setStyle("borderAlpha", 1);
+				this.setStyle("borderVisible", true);
 				this.setStyle("borderColor", 0x000000);
 				this.setStyle("backgroundAlpha", 1);
 				this.setStyle("backgroundColor", this.background.color);

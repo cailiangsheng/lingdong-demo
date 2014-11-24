@@ -43,11 +43,11 @@ package com.lingdong.demo.view.pages
 		private function transformElement(item:TransformItem):void
 		{
 			var elementDisplay:DemoElementDisplay = item.targetObject as DemoElementDisplay;
-			elementDisplay.element.x = item.x / this.width;
-			elementDisplay.element.y = item.y / this.height;
-			elementDisplay.element.width = elementDisplay.width * item.scaleX / this.width;
-			elementDisplay.element.height = elementDisplay.height * item.scaleY / this.height;
-			elementDisplay.element.rotation = item.rotation;
+			elementDisplay.element.x = elementDisplay.x / this.width;
+			elementDisplay.element.y = elementDisplay.y / this.height;
+			elementDisplay.element.scaleX = elementDisplay.scaleX;
+			elementDisplay.element.scaleY = elementDisplay.scaleY;
+			elementDisplay.element.rotation = elementDisplay.rotation;
 		}
 		
 		public function DemoPageDesignDisplay()

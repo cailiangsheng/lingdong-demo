@@ -9,6 +9,8 @@ package com.lingdong.demo.model.pages
 	
 	[Event(name="xChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="yChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
+	[Event(name="scaleXChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
+	[Event(name="scaleYChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="widthChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="heightChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="depthChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
@@ -46,6 +48,39 @@ package com.lingdong.demo.model.pages
 				_y = value;
 				
 				this.dispatchElementEvent(DemoElementEvent.Y_CHANGE);
+			}
+		}
+		private var _scaleX:Number;
+		
+		public function get scaleX():Number
+		{
+			return _scaleX;
+		}
+		
+		public function set scaleX(value:Number):void
+		{
+			if (_scaleX != value)
+			{
+				_scaleX = value;
+				
+				this.dispatchElementEvent(DemoElementEvent.SCALE_X_CHANGE);
+			}
+		}
+		
+		private var _scaleY:Number;
+		
+		public function get scaleY():Number
+		{
+			return _scaleY;
+		}
+		
+		public function set scaleY(value:Number):void
+		{
+			if (_scaleY != value)
+			{
+				_scaleY = value;
+				
+				this.dispatchElementEvent(DemoElementEvent.SCALE_Y_CHANGE);
 			}
 		}
 		
@@ -140,6 +175,8 @@ package com.lingdong.demo.model.pages
 			this.y = config.y;
 			this.width = config.width;
 			this.height = config.height;
+			this.scaleX = sign(this.width);
+			this.scaleY = sign(this.height);
 			this.depth = config.depth;
 			this.rotation = config.rotation;
 			
@@ -151,4 +188,9 @@ package com.lingdong.demo.model.pages
 			this.dispatchEvent(new DemoElementEvent(name));
 		}
 	}
+}
+
+function sign(value:Number):Number
+{
+	return value >= 0 ? 1 : -1;
 }

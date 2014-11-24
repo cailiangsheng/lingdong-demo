@@ -16,13 +16,13 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<controls:DemoComponentsList label="背景" width="100%" height="100%" resources="{DemoBackground.instances}" />
-	
 	<controls:DemoComponentsList label="文字" width="100%" height="100%" resources="{DemoText.instances}" />
 	
 	<controls:DemoComponentsList label="图片" width="100%" height="100%" resources="{DemoImage.instances}"/>
 	
 	<controls:DemoComponentsList label="视频" width="100%" height="100%" resources="{DemoVideo.instances}" />
+	
+	<controls:DemoComponentsList label="背景" width="100%" height="100%" resources="{DemoBackground.instances}" />
 	
 	<controls:DemoComponentsList label="声音" width="100%" height="100%" />
 	

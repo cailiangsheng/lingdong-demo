@@ -4,6 +4,7 @@ package com.lingdong.demo.view.pages
 	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.resources.DemoResource;
 	import com.lingdong.demo.util.DemoPoolUtil;
+	import com.lingdong.demo.view.resources.DemoComponentDisplay;
 	import com.lingdong.demo.view.resources.DemoResourceDisplay;
 	
 	import flash.events.Event;
@@ -11,7 +12,6 @@ package com.lingdong.demo.view.pages
 	import mx.core.IVisualElement;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
-	import com.lingdong.demo.view.resources.DemoComponentDisplay;
 
 	public class DemoElementDisplay extends DemoComponentDisplay
 	{
@@ -28,6 +28,8 @@ package com.lingdong.demo.view.pages
 			{
 				_element && _element.removeEventListener(DemoElementEvent.X_CHANGE, updateX);
 				_element && _element.removeEventListener(DemoElementEvent.Y_CHANGE, updateY);
+				_element && _element.removeEventListener(DemoElementEvent.SCALE_X_CHANGE, updateScaleX);
+				_element && _element.removeEventListener(DemoElementEvent.SCALE_Y_CHANGE, updateScaleY);
 				_element && _element.removeEventListener(DemoElementEvent.WIDTH_CHANGE, updateWidth);
 				_element && _element.removeEventListener(DemoElementEvent.HEIGHT_CHANGE, updateHeight);
 				_element && _element.removeEventListener(DemoElementEvent.DEPTH_CHANGE, updateDepth);
@@ -46,6 +48,8 @@ package com.lingdong.demo.view.pages
 				
 				_element && _element.addEventListener(DemoElementEvent.X_CHANGE, updateX);
 				_element && _element.addEventListener(DemoElementEvent.Y_CHANGE, updateY);
+				_element && _element.addEventListener(DemoElementEvent.SCALE_X_CHANGE, updateScaleX);
+				_element && _element.addEventListener(DemoElementEvent.SCALE_Y_CHANGE, updateScaleY);
 				_element && _element.addEventListener(DemoElementEvent.WIDTH_CHANGE, updateWidth);
 				_element && _element.addEventListener(DemoElementEvent.HEIGHT_CHANGE, updateHeight);
 				_element && _element.addEventListener(DemoElementEvent.DEPTH_CHANGE, updateDepth);
@@ -77,6 +81,8 @@ package com.lingdong.demo.view.pages
 			{
 				updateX();
 				updateY();
+				updateScaleX();
+				updateScaleY();
 				updateWidth();
 				updateHeight();
 			}
@@ -102,30 +108,33 @@ package com.lingdong.demo.view.pages
 			this.y = element.y * this.parent.height;
 		}
 		
+		private function updateScaleX(event:Event = null):void
+		{
+			this.scaleX = element.scaleX;
+		}
+		
+		private function updateScaleY(event:Event = null):void
+		{
+			this.scaleY = element.scaleY;
+		}
+		
 		private function updateWidth(event:Event = null):void
 		{
-			this.width = Math.abs(element.width * this.parent.width / this.scaleX);
-			this.scaleX *= sign(this.scaleX) * sign(element.width);
+			this.width = element.width * this.parent.width;
 		}
 		
 		private function updateHeight(event:Event = null):void
 		{
-			this.height = Math.abs(element.height * this.parent.height / this.scaleY);
-			this.scaleY *= sign(this.scaleY) * sign(element.height);
-		}
-		
-		private static function sign(value:Number):int
-		{
-			return value >= 0 ? 1 : -1;
-		}
-		
-		private function updateDepth(event:Event = null):void
-		{
+			this.height = element.height * this.parent.height;
 		}
 		
 		private function updateRotation(event:Event = null):void
 		{
 			this.rotation = element.rotation;
+		}
+		
+		private function updateDepth(event:Event = null):void
+		{
 		}
 		
 		override protected function dispose():void
