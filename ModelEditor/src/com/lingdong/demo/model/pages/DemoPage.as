@@ -5,6 +5,7 @@ package com.lingdong.demo.model.pages
 	import com.lingdong.demo.model.resources.DemoBackground;
 	import com.lingdong.demo.model.resources.DemoImage;
 	import com.lingdong.demo.model.resources.DemoResource;
+	import com.lingdong.demo.model.resources.DemoBitmap;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -34,9 +35,9 @@ package com.lingdong.demo.model.pages
 			}
 		}
 		
-		private var _thumbnail:DemoImage;
+		private var _thumbnail:DemoBitmap;
 		
-		public function get thumbnail():DemoImage
+		public function get thumbnail():DemoBitmap
 		{
 			return _thumbnail;
 		}
@@ -67,8 +68,7 @@ package com.lingdong.demo.model.pages
 		
 		public function DemoPage()
 		{
-			background = new DemoBackground();
-			_thumbnail = new DemoImage();
+			_thumbnail = new DemoBitmap();
 			_elements = new DemoElements();
 		}
 		
@@ -79,7 +79,16 @@ package com.lingdong.demo.model.pages
 				this.id = config.id;
 				this.index = config.index;
 				
-				this.background.readConfig(config.background);
+				if (config.background)
+				{
+					this.background = new DemoBackground();
+					this.background.readConfig(config.background);
+				}
+				else
+				{
+					this.background = DemoBackground.instance;
+				}
+				
 				this.thumbnail.readConfig(config.thumbnail);
 				
 				if (config.child)

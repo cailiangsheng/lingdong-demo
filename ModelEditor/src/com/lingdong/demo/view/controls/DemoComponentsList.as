@@ -90,10 +90,6 @@ package com.lingdong.demo.view.controls
 		
 		private function onResourcesChange(event:CollectionEvent):void
 		{
-			this.dispose();
-			this.update();
-			return;
-			
 			switch (event.kind)
 			{
 				case CollectionEventKind.ADD:
@@ -121,6 +117,8 @@ package com.lingdong.demo.view.controls
 		
 		private function update(event:Event = null):void
 		{
+			this.dispose();
+			
 			for each (var resource:DemoResource in this.resources)
 			{
 				addComponent(resource);

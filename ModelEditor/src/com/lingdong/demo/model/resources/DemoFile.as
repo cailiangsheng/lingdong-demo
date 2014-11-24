@@ -43,6 +43,7 @@ package com.lingdong.demo.model.resources
 		
 		public function DemoFile()
 		{
+			addResource(this);
 		}
 		
 		private function dispatchFileEvent(name:String):void

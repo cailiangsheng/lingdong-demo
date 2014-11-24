@@ -18,32 +18,6 @@ package com.lingdong.demo.model.resources
 	[Event(name="verticalAlignChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	public class DemoText extends DemoResource implements IDemoConfig
 	{
-		private static var _instances:ArrayCollection;
-		
-		public static function get instances():ArrayCollection
-		{
-			if (!_instances)
-			{
-				_instances = new ArrayCollection()
-				
-				var fonts:Array = Font.enumerateFonts(true);
-				for each (var font:Object in fonts)
-				{
-					var text:DemoText = new DemoText();
-					text.fontStyle = font.fontName;
-					text.content = font.fontName + "\nAaBbCc";
-					text.fontSize = 24;
-					text.color = 0x000000;
-					text.textAlign = TextAlign.CENTER;
-					text.verticalAlign = VerticalAlign.MIDDLE;
-					
-					_instances.addItem(text);
-				}
-			}
-			
-			return _instances;
-		}
-		
 		private var _content:String;
 		
 		public function get content():String
@@ -151,9 +125,13 @@ package com.lingdong.demo.model.resources
 			this.dispatchEvent(new DemoTextEvent(type));
 		}
 		
+		override public function get type():String
+		{
+			return TEXT;
+		}
+		
 		public function DemoText()
 		{
-			super._type = TEXT;
 		}
 		
 		override public function readConfig(config:Object):void

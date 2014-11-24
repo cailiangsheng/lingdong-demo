@@ -10,11 +10,11 @@ package com.lingdong.demo.model.resources
 	{
 		public static const DEFAULT_COLOR:uint = 0xffffff;
 		
-		private static var _instances:ArrayCollection;
+		public static var _instance:DemoBackground;
 		
-		public static function get instances():ArrayCollection
+		public static function get instance():DemoBackground
 		{
-			return _instances ||= new ArrayCollection();
+			return _instance ||= new DemoBackground();
 		}
 		
 		private var _color:uint = DEFAULT_COLOR;
@@ -34,9 +34,13 @@ package com.lingdong.demo.model.resources
 			}
 		}
 		
+		override public function get type():String
+		{
+			return BACKGROUND;
+		}
+		
 		public function DemoBackground()
 		{
-			super._type = BACKGROUND;
 		}
 		
 		override public function readConfig(config:Object):void
@@ -46,11 +50,6 @@ package com.lingdong.demo.model.resources
 			if (config)
 			{
 				this.color = color;
-			}
-			
-			if (this.url)
-			{
-				instances.addItem(this);
 			}
 		}
 	}

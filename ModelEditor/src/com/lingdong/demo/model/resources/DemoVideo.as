@@ -6,18 +6,13 @@ package com.lingdong.demo.model.resources
 
 	public class DemoVideo extends DemoFile implements IDemoConfig
 	{
-		private static var _instances:ArrayCollection;
-		
-		public static function get instances():ArrayCollection
+		override public function get type():String
 		{
-			return _instances ||= new ArrayCollection();
+			return VIDEO;
 		}
 		
 		public function DemoVideo()
 		{
-			super._type = VIDEO;
-			
-			instances.addItem(this);
 		}
 		
 		override public function readConfig(config:Object):void
