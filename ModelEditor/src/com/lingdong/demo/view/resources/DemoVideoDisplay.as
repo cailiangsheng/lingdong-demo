@@ -69,6 +69,7 @@ package com.lingdong.demo.view.resources
 			{
 				_videoUI = DemoPoolUtil.alloc(VideoDisplay);
 				_videoUI.maintainAspectRatio = super.maintainAspectRatio;
+				_videoUI.setStyle("contentBackgroundAlpha", 0);
 				_videoUI.percentWidth = 100;
 				_videoUI.percentHeight = 100;
 				
