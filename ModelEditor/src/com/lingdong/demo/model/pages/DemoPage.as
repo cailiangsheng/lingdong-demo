@@ -11,7 +11,6 @@ package com.lingdong.demo.model.pages
 	import flash.events.EventDispatcher;
 	
 	[Event(name="backgroundChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
-	[Event(name="elementsChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
 	[Event(name="childChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
 	public class DemoPage extends EventDispatcher implements IDemoConfig
 	{

@@ -50,7 +50,7 @@ package com.lingdong.demo.model.pages
 				this.dispatchElementEvent(DemoElementEvent.Y_CHANGE);
 			}
 		}
-		private var _scaleX:Number;
+		private var _scaleX:Number = 1;
 		
 		public function get scaleX():Number
 		{
@@ -67,7 +67,7 @@ package com.lingdong.demo.model.pages
 			}
 		}
 		
-		private var _scaleY:Number;
+		private var _scaleY:Number = 1;
 		
 		public function get scaleY():Number
 		{
@@ -173,10 +173,10 @@ package com.lingdong.demo.model.pages
 		{
 			this.x = config.x;
 			this.y = config.y;
-			this.width = config.width;
-			this.height = config.height;
-			this.scaleX = sign(this.width);
-			this.scaleY = sign(this.height);
+			this.width = Math.abs(config.width);
+			this.height = Math.abs(config.height);
+			this.scaleX = sign(config.width);
+			this.scaleY = sign(config.height);
 			this.depth = config.depth;
 			this.rotation = config.rotation;
 			

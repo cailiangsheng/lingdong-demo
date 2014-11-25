@@ -6,13 +6,17 @@ package com.lingdong.demo.view.controls
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import flashx.textLayout.container.ScrollPolicy;
 	
 	import mx.collections.ArrayCollection;
 	import mx.containers.VBox;
+	import mx.core.DragSource;
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
+	import mx.managers.DragManager;
 	
 	public class DemoComponentsList extends VBox
 	{
@@ -134,7 +138,21 @@ package com.lingdong.demo.view.controls
 			component.width = 160;
 			component.height = 120;
 			component.resource = resource;
+			component.addEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
 			this.addElement(component);
+		}
+		
+		private function onComponentMouseMove(event:MouseEvent):void
+		{
+			if (event.buttonDown)
+			{
+				var dragInitiator:DemoComponentDisplay = DemoComponentDisplay(event.currentTarget);
+				var topLeft:Point = dragInitiator.localToGlobal(new Point());
+				var offsetX:Number = event.stageX - topLeft.x;
+				var offsetY:Number = event.stageY - topLeft.y;
+				
+				DragManager.doDrag(dragInitiator, null, event, null, -offsetX + dragInitiator.width / 2, -offsetY + dragInitiator.height / 2);
+			}
 		}
 		
 		private function disposeComponentAt(index:int):DemoComponentDisplay
@@ -142,6 +160,7 @@ package com.lingdong.demo.view.controls
 			var component:DemoComponentDisplay = this.getChildAt(index) as DemoComponentDisplay;
 			component.buttonMode = false;
 			component.resource = null;
+			component.removeEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
 			DemoPoolUtil.free(component);
 			
 			return component;

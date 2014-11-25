@@ -1,6 +1,7 @@
 package com.lingdong.demo.view.pages
 {
 	import com.lingdong.demo.model.DemoModel;
+	import com.lingdong.demo.model.events.DemoElementsEvent;
 	import com.lingdong.demo.model.events.DemoPageEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.pages.DemoPage;
@@ -14,6 +15,7 @@ package com.lingdong.demo.view.pages
 	
 	import mx.core.Container;
 	import mx.core.ScrollPolicy;
+	import mx.events.CollectionEventKind;
 	import mx.events.FlexEvent;
 	import mx.events.ResizeEvent;
 	
@@ -31,7 +33,7 @@ package com.lingdong.demo.view.pages
 			if (_page != value)
 			{
 				_page && _page.removeEventListener(DemoPageEvent.BACKGROUND_CHANGE, updateBackground);
-				_page && _page.removeEventListener(DemoPageEvent.ELEMENTS_CHANGE, updateElements);
+				_page && _page.elements && _page.elements.removeEventListener(DemoElementsEvent.ELEMENTS_CHANGE, updateElements);
 				
 				this.dispose();
 				
@@ -40,7 +42,7 @@ package com.lingdong.demo.view.pages
 				this.stage && update();
 				
 				_page && _page.addEventListener(DemoPageEvent.BACKGROUND_CHANGE, updateBackground);
-				_page && _page.addEventListener(DemoPageEvent.ELEMENTS_CHANGE, updateElements);
+				_page && _page.elements && _page.elements.addEventListener(DemoElementsEvent.ELEMENTS_CHANGE, updateElements);
 			}
 		}
 		
@@ -124,31 +126,64 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		protected function updateElements(event:Event = null):void
+		private function updateElements(event:DemoElementsEvent = null):void
 		{
-			clearElements();
-			
-			if (!page) return;
-			
-			for each (var element:DemoElement in page.elements.source)
+			if (event)
 			{
-				var elementUI:DemoElementDisplay = DemoPoolUtil.alloc(DemoElementDisplay);
-				elementUI.element = element;
-				elementUIs.push(elementUI);
-				this.addChild(elementUI);
+				switch (event.kind)
+				{
+					case CollectionEventKind.ADD:
+						for each (var element:DemoElement in event.items)
+						{
+							addElementDisplay(element);
+						}
+						break;
+					case CollectionEventKind.REMOVE:
+						for each (element in event.items)
+						{
+							var elementUI:DemoElementDisplay = getElement(element);
+							removeElementDisplay(elementUI);
+						}
+						break;
+				}
+			}
+			else
+			{
+				clearElements();
+				
+				if (!page) return;
+				
+				for each (element in page.elements.source)
+				{
+					addElementDisplay(element);
+				}
 			}
 		}
 		
-		protected function clearElements():void
+		protected function addElementDisplay(element:DemoElement):DemoElementDisplay
+		{
+			var elementUI:DemoElementDisplay = DemoPoolUtil.alloc(DemoElementDisplay);
+			elementUI.element = element;
+			elementUIs.push(elementUI);
+			this.addChild(elementUI);
+			return elementUI;
+		}
+		
+		private function clearElements():void
 		{
 			for each (var elementUI:DemoElementDisplay in elementUIs)
 			{
-				this.removeChild(elementUI);
-				elementUI.element = null;
-				DemoPoolUtil.free(elementUI);
+				removeElementDisplay(elementUI);
 			}
 			
 			elementUIs.length = 0;
+		}
+		
+		protected function removeElementDisplay(elementUI:DemoElementDisplay):void
+		{
+			this.removeChild(elementUI);
+			elementUI.element = null;
+			DemoPoolUtil.free(elementUI);
 		}
 		
 		private function dispose():void
