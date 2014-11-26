@@ -138,21 +138,38 @@ package com.lingdong.demo.view.controls
 			component.width = 160;
 			component.height = 120;
 			component.resource = resource;
-			component.addEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
+			component.addEventListener(MouseEvent.MOUSE_DOWN, onComponentMouseDown);
 			this.addElement(component);
 		}
 		
-		private function onComponentMouseMove(event:MouseEvent):void
+		private var dragImage:DemoComponentDisplay;
+		
+		private function onComponentMouseDown(event:MouseEvent):void
 		{
-			if (event.buttonDown)
+			if (!dragImage)
 			{
 				var dragInitiator:DemoComponentDisplay = DemoComponentDisplay(event.currentTarget);
 				var topLeft:Point = dragInitiator.localToGlobal(new Point());
 				var offsetX:Number = event.stageX - topLeft.x;
 				var offsetY:Number = event.stageY - topLeft.y;
 				
-				DragManager.doDrag(dragInitiator, null, event, null, -offsetX + dragInitiator.width / 2, -offsetY + dragInitiator.height / 2);
+				dragImage = DemoPoolUtil.alloc(DemoComponentDisplay);
+				dragImage.width = dragInitiator.width;
+				dragImage.height = dragInitiator.height;
+				dragImage.resource = dragInitiator.resource;
+				this.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+				
+				DragManager.doDrag(dragInitiator, null, event, dragImage, -offsetX + dragImage.width / 2, -offsetY + dragImage.height / 2);
 			}
+		}
+		
+		private function onStageMouseUp(event:MouseEvent):void
+		{
+			this.stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+			
+			dragImage.resource = null;
+			DemoPoolUtil.free(dragImage);
+			dragImage = null;
 		}
 		
 		private function disposeComponentAt(index:int):DemoComponentDisplay
@@ -160,7 +177,7 @@ package com.lingdong.demo.view.controls
 			var component:DemoComponentDisplay = this.getChildAt(index) as DemoComponentDisplay;
 			component.buttonMode = false;
 			component.resource = null;
-			component.removeEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
+			component.removeEventListener(MouseEvent.MOUSE_DOWN, onComponentMouseDown);
 			DemoPoolUtil.free(component);
 			
 			return component;
