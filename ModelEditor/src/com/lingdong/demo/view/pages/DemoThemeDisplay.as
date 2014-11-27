@@ -39,7 +39,7 @@ package com.lingdong.demo.view.pages
 				
 				_theme = value;
 				
-				this.stage && this.update();
+				update();
 				
 				_theme && _theme.addEventListener(DemoThemeEvent.SHOW_STYLE_CHANGE, updateShowStyle);
 				_theme && _theme.pages.addEventListener(DemoPagesEvent.PAGES_CHANGE, updatePages);
@@ -85,31 +85,40 @@ package com.lingdong.demo.view.pages
 		
 		private function updateShowStyle(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			super.showStyle = theme.showStyle;
 		}
 		
 		private function updatePages(event:DemoPagesEvent = null):void
 		{
+			if (!this.stage) return;
+			
 			if (event)
 			{
-				// to do
 				switch (event.kind)
 				{
 					case CollectionEventKind.ADD:
+						for each (var page:DemoPage in event.items)
+						{
+							addPage(page);
+						}
 						break;
 					case CollectionEventKind.REMOVE:
-						break;
-					case CollectionEventKind.MOVE:
+						for each (page in event.items)
+						{
+							var pageUI:DemoPageDisplay = getPage(page);
+							this.containerUI.removeElement(pageUI);
+							disposePage(pageUI);
+						}
 						break;
 				}
 			}
-			else
+			else if (this.containerUI.numElements == 0)
 			{
-				for each (var page:DemoPage in theme.pages.source)
+				for each (page in theme.pages.source)
 				{
-					var pageComponent:DemoPageDisplay = allocPageDisplay();
-					pageComponent.page = page;
-					containerUI.addElement(pageComponent);
+					addPage(page);
 				}
 			}
 		}
@@ -119,26 +128,38 @@ package com.lingdong.demo.view.pages
 			return DemoPoolUtil.alloc(DemoPageDisplay);
 		}
 		
-		override protected function dispose():Vector.<IVisualElement>
+		private function addPage(page:DemoPage):void
+		{
+			var pageComponent:DemoPageDisplay = allocPageDisplay();
+			pageComponent.page = page;
+			containerUI.addElement(pageComponent);
+		}
+		
+		private function dispose():Vector.<IVisualElement>
 		{
 			if (_containerUI)
 			{
-				var currentElements:Vector.<IVisualElement> = super.dispose();
+				var pages:Vector.<DemoPageDisplay> = Vector.<DemoPageDisplay>(super.disposeContainer());
 				
-				for each (var element:IVisualElement in currentElements)
+				for each (var page:DemoPageDisplay in pages)
 				{
-					var pageUI:DemoPageDisplay = DemoPageDisplay(element);
-					pageUI.page = null;
-					DemoPoolUtil.free(pageUI);
+					disposePage(page);
 				}
 			}
 			
 			return null;
 		}
 		
+		private function disposePage(page:DemoPageDisplay):void
+		{
+			var pageUI:DemoPageDisplay = DemoPageDisplay(page);
+			pageUI.page = null;
+			DemoPoolUtil.free(pageUI);
+		}
+		
 		public function getPages():Vector.<DemoPageDisplay>
 		{
-			return Vector.<DemoPageDisplay>(super.getContents());
+			return Vector.<DemoPageDisplay>(super.getContainerElements());
 		}
 		
 		public function getPage(page:DemoPage):DemoPageDisplay

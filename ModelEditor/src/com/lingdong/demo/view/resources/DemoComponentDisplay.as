@@ -24,7 +24,7 @@ package com.lingdong.demo.view.resources
 				
 				_resource = value;
 				
-				this.stage && update();
+				update();
 			}
 		}
 		
@@ -51,6 +51,8 @@ package com.lingdong.demo.view.resources
 		
 		private function update(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.resource && this.resourceUI;
 		}
 		

@@ -39,7 +39,7 @@ package com.lingdong.demo.view.pages
 				
 				_page = value;
 				
-				this.stage && update();
+				update();
 				
 				_page && _page.addEventListener(DemoPageEvent.BACKGROUND_CHANGE, updateBackground);
 				_page && _page.elements && _page.elements.addEventListener(DemoElementsEvent.ELEMENTS_CHANGE, updateElements);
@@ -105,6 +105,8 @@ package com.lingdong.demo.view.pages
 		
 		private function updateBackground(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			if (page.background)
 			{
 				updateSize();
@@ -128,6 +130,8 @@ package com.lingdong.demo.view.pages
 		
 		private function updateElements(event:DemoElementsEvent = null):void
 		{
+			if (!this.stage) return;
+			
 			if (event)
 			{
 				switch (event.kind)
@@ -147,12 +151,8 @@ package com.lingdong.demo.view.pages
 						break;
 				}
 			}
-			else
+			else if (elementUIs.length == 0)
 			{
-				clearElements();
-				
-				if (!page) return;
-				
 				for each (element in page.elements.source)
 				{
 					addElementDisplay(element);

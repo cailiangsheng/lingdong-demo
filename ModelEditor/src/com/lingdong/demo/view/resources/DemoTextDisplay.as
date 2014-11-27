@@ -45,7 +45,7 @@ package com.lingdong.demo.view.resources
 				
 				_text = value;
 				
-				this.stage && update();
+				update();
 				
 				_text && _text.addEventListener(DemoTextEvent.COLOR_CHANGE, updateColor);
 				_text && _text.addEventListener(DemoTextEvent.CONTENT_CHANGE, updateContent);
@@ -97,31 +97,43 @@ package com.lingdong.demo.view.resources
 		
 		private function updateColor(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.textUI.setStyle("color", text.color);
 		}
 		
 		private function updateContent(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.textUI.text = text.content;
 		}
 		
 		private function updateFontSize(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.textUI.setStyle("fontSize", text.fontSize);
 		}
 		
 		private function updateFontStyle(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.textUI.setStyle("fontFamily", text.fontStyle);
 		}
 		
 		private function updateTextAlign(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.textUI.setStyle("textAlign", text.textAlign);
 		}
 		
 		private function updateVerticalAlign(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.textUI.setStyle("verticalAlign", text.verticalAlign);
 		}
 		

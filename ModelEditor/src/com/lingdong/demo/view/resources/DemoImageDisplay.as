@@ -42,7 +42,7 @@ package com.lingdong.demo.view.resources
 				
 				_image = value;
 				
-				this.stage && update();
+				update();
 				
 				_image && _image.addEventListener(DemoFileEvent.URL_CHANGE, updateURL);
 			}
@@ -89,6 +89,8 @@ package com.lingdong.demo.view.resources
 		
 		private function updateURL(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.imageUI.source = this.image.url;
 		}
 		

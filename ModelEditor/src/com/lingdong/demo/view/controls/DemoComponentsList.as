@@ -31,15 +31,15 @@ package com.lingdong.demo.view.controls
 		{
 			if (_resources != value)
 			{
-				_resources && _resources.removeEventListener(CollectionEvent.COLLECTION_CHANGE, onResourcesChange);
+				_resources && _resources.removeEventListener(CollectionEvent.COLLECTION_CHANGE, updateResources);
 				
 				this.dispose();
 				
 				_resources = value;
 				
-				this.stage && this.update();
+				update();
 				
-				_resources && _resources.addEventListener(CollectionEvent.COLLECTION_CHANGE, onResourcesChange);
+				_resources && _resources.addEventListener(CollectionEvent.COLLECTION_CHANGE, updateResources);
 			}
 		}
 		
@@ -92,41 +92,50 @@ package com.lingdong.demo.view.controls
 			return viewportHeight;
 		}
 		
-		private function onResourcesChange(event:CollectionEvent):void
+		private function updateResources(event:CollectionEvent = null):void
 		{
-			switch (event.kind)
+			if (!this.stage) return;
+			
+			if (event)
 			{
-				case CollectionEventKind.ADD:
-					for each (var resource:DemoResource in event.items)
-					{
-						addComponent(resource);
-					}
-					break;
-				case CollectionEventKind.MOVE:
-					var components:Vector.<DemoComponentDisplay> = new Vector.<DemoComponentDisplay>();
-					for each (resource in event.items)
-					{
-						var index:int = resources.getItemIndex(resource);
-						var component:DemoComponentDisplay = disposeComponentAt(index);
-						components.push(component);
-					}
-					
-					for each (component in components)
-					{
-						this.removeElement(component);
-					}
-					break;
+				switch (event.kind)
+				{
+					case CollectionEventKind.ADD:
+						for each (var resource:DemoResource in event.items)
+						{
+							addComponent(resource);
+						}
+						break;
+					case CollectionEventKind.MOVE:
+						var components:Vector.<DemoComponentDisplay> = new Vector.<DemoComponentDisplay>();
+						for each (resource in event.items)
+						{
+							var index:int = resources.getItemIndex(resource);
+							var component:DemoComponentDisplay = disposeComponentAt(index);
+							components.push(component);
+						}
+						
+						for each (component in components)
+						{
+							this.removeElement(component);
+						}
+						break;
+				}
+			}
+			else
+			{
+				this.dispose();
+				
+				for each (resource in this.resources)
+				{
+					addComponent(resource);
+				}
 			}
 		}
 		
 		private function update(event:Event = null):void
 		{
-			this.dispose();
-			
-			for each (var resource:DemoResource in this.resources)
-			{
-				addComponent(resource);
-			}
+			updateResources();
 		}
 		
 		private function addComponent(resource:DemoResource):void

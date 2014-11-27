@@ -44,7 +44,7 @@ package com.lingdong.demo.view.pages
 					super.resource = _element.resource;
 				}
 				
-				this.stage && update();
+				update();
 				
 				_element && _element.addEventListener(DemoElementEvent.X_CHANGE, updateX);
 				_element && _element.addEventListener(DemoElementEvent.Y_CHANGE, updateY);
@@ -100,36 +100,50 @@ package com.lingdong.demo.view.pages
 		
 		private function updateX(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.x = element.x * this.parent.width;
 		}
 		
 		private function updateY(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.y = element.y * this.parent.height;
 		}
 		
 		private function updateScaleX(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.scaleX = element.scaleX;
 		}
 		
 		private function updateScaleY(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.scaleY = element.scaleY;
 		}
 		
 		private function updateWidth(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.width = element.width * this.parent.width;
 		}
 		
 		private function updateHeight(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.height = element.height * this.parent.height;
 		}
 		
 		private function updateRotation(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.rotation = element.rotation;
 		}
 		

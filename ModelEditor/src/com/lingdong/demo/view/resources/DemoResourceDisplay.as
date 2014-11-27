@@ -91,14 +91,13 @@ package com.lingdong.demo.view.resources
 		
 		protected function update(event:Event = null):void
 		{
-			if (this.resource)
-			{
-				updateSize();
-			}
+			updateSize();
 		}
 		
 		protected function updateSize(event:ResizeEvent = null):void
 		{
+			if (!this.stage) return;
+			
 			if (!event || this.parent.width != event.oldWidth)
 			{
 				this.width = this.parent.width;

@@ -47,7 +47,7 @@ package com.lingdong.demo.view.pages
 			{
 				_showStyle = value;
 				
-				this.stage && update();
+				update();
 			}
 		}
 		
@@ -82,6 +82,8 @@ package com.lingdong.demo.view.pages
 		
 		private function update(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			if (_containerUI)
 			{
 				var selectedIndex:int = _containerUI.selectedIndex;
@@ -96,7 +98,7 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		public function getContents():Vector.<IVisualElement>
+		public function getContainerElements():Vector.<IVisualElement>
 		{
 			var elements:Vector.<IVisualElement> = null;
 			
@@ -116,7 +118,7 @@ package com.lingdong.demo.view.pages
 		
 		protected function disposeContainer():Vector.<IVisualElement>
 		{
-			var elements:Vector.<IVisualElement> = getContents();
+			var elements:Vector.<IVisualElement> = getContainerElements();
 			
 			if (_containerUI)
 			{
@@ -129,11 +131,6 @@ package com.lingdong.demo.view.pages
 			}
 			
 			return elements;
-		}
-		
-		protected function dispose():Vector.<IVisualElement>
-		{
-			return disposeContainer();
 		}
 		
 		private var _selectedIndex:int;

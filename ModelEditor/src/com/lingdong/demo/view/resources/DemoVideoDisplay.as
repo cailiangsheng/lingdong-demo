@@ -41,7 +41,7 @@ package com.lingdong.demo.view.resources
 				
 				_video = value;
 				
-				this.stage && update();
+				update();
 				
 				_video && _video.removeEventListener(DemoFileEvent.URL_CHANGE, updateURL);
 			}
@@ -55,7 +55,7 @@ package com.lingdong.demo.view.resources
 		{
 			super.update(event);
 			
-			if (video)
+			if (this.video)
 			{
 				updateURL();
 			}
@@ -127,6 +127,8 @@ package com.lingdong.demo.view.resources
 		
 		private function updateURL(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.videoUI.source = video.url;
 		}
 		

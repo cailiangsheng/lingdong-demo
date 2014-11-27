@@ -44,7 +44,7 @@ package com.lingdong.demo.view.resources
 				
 				_background = value;
 				
-				this.stage && update();
+				update();
 				
 				_background && _background.addEventListener(DemoBackgroundEvent.COLOR_CHANGE, updateColor);
 			}
@@ -58,7 +58,10 @@ package com.lingdong.demo.view.resources
 		{
 			super.update(event);
 			
-			updateColor();
+			if (this.background)
+			{
+				updateColor();
+			}
 		}
 		
 		override public function set hasBorder(value:Boolean):void
@@ -68,13 +71,12 @@ package com.lingdong.demo.view.resources
 		
 		private function updateColor(event:Event = null):void
 		{
-			if (this.background)
-			{
-				this.setStyle("borderVisible", true);
-				this.setStyle("borderColor", 0x000000);
-				this.setStyle("backgroundAlpha", 1);
-				this.setStyle("backgroundColor", this.background.color);
-			}
+			if (!this.stage) return;
+			
+			this.setStyle("borderVisible", true);
+			this.setStyle("borderColor", 0x000000);
+			this.setStyle("backgroundAlpha", 1);
+			this.setStyle("backgroundColor", this.background.color);
 		}
 	}
 }

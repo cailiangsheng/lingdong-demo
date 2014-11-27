@@ -33,7 +33,7 @@ package com.lingdong.demo.view.resources
 				
 				_bitmap = value;
 				
-				this.stage && update();
+				update();
 				
 				_bitmap && _bitmap.addEventListener(DemoBitmapEvent.BITMAP_DATA_CHANGE, updateBitmapData);
 			}
@@ -70,6 +70,8 @@ package com.lingdong.demo.view.resources
 		
 		private function updateBitmapData(event:Event = null):void
 		{
+			if (!this.stage) return;
+			
 			this.bitmapUI.source = this.bitmap.bitmapData;
 		}
 		
