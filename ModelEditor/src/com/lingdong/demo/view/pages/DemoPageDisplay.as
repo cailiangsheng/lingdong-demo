@@ -181,7 +181,17 @@ package com.lingdong.demo.view.pages
 		
 		protected function removeElementDisplay(elementUI:DemoElementDisplay):void
 		{
-			this.removeChild(elementUI);
+			var index:int = elementUIs.indexOf(elementUI);
+			if (index >= 0)
+			{
+				elementUIs.splice(index, 1);
+			}
+			
+			if (this.contains(elementUI))
+			{
+				this.removeChild(elementUI);
+			}
+			
 			elementUI.element = null;
 			DemoPoolUtil.free(elementUI);
 		}
@@ -211,7 +221,6 @@ package com.lingdong.demo.view.pages
 				for each (var elementDisplay:DemoElementDisplay in elementUIs)
 				{
 					if (elementDisplay.element == element) return elementDisplay;
-				
 				}
 			}
 			

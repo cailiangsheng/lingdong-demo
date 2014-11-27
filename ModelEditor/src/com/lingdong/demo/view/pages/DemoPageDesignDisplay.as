@@ -26,14 +26,15 @@ package com.lingdong.demo.view.pages
 				_transformManager.arrowKeysMove = true;
 				_transformManager.allowMultiSelect = true;
 				_transformManager.hideCenterHandle = true;
-				_transformManager.allowDelete = false;
-				_transformManager.handleFillColor = 0xFFFFFF;
+				_transformManager.allowDelete = true;
+				_transformManager.handleFillColor = 0xffffff;
 				_transformManager.handleSize = 8;
-				_transformManager.lineColor = 16746265;
+				_transformManager.lineColor = 0xff8719;
 				_transformManager.lockRotation = false;
 				_transformManager.addEventListener(TransformEvent.MOVE, onTransform);
 				_transformManager.addEventListener(TransformEvent.ROTATE, onTransform);
 				_transformManager.addEventListener(TransformEvent.SCALE, onTransform);
+				_transformManager.addEventListener(TransformEvent.DELETE, onDelete);
 			}
 			
 			return _transformManager;
@@ -55,6 +56,15 @@ package com.lingdong.demo.view.pages
 			elementDisplay.element.scaleX = elementDisplay.scaleX;
 			elementDisplay.element.scaleY = elementDisplay.scaleY;
 			elementDisplay.element.rotation = elementDisplay.rotation;
+		}
+		
+		private function onDelete(event:TransformEvent):void
+		{
+			for each(var item:TransformItem in event.items)
+			{
+				var elementDisplay:DemoElementDisplay = item.targetObject as DemoElementDisplay;
+				this.page.elements.removeElement(elementDisplay.element);
+			}
 		}
 		
 		public function DemoPageDesignDisplay()
