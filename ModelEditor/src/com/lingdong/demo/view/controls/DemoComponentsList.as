@@ -155,6 +155,15 @@ package com.lingdong.demo.view.controls
 		
 		private function onComponentMouseDown(event:MouseEvent):void
 		{
+			var component:DemoComponentDisplay = DemoComponentDisplay(event.currentTarget);
+			component.addEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
+		}
+		
+		private function onComponentMouseMove(event:MouseEvent):void
+		{
+			var component:DemoComponentDisplay = DemoComponentDisplay(event.currentTarget);
+			component.removeEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
+			
 			if (!dragImage)
 			{
 				var dragInitiator:DemoComponentDisplay = DemoComponentDisplay(event.currentTarget);
