@@ -94,8 +94,8 @@ package com.lingdong.demo.view.pages
 			else
 			{
 				var element:DemoElement = new DemoElement(component.resource);
-				element.width = component.width / this.width;
-				element.height = component.height / this.height;
+				element.width = component.contentWidth / this.width;
+				element.height = component.contentHeight / this.height;
 				element.x = event.localX / this.width - element.width / 2;
 				element.y = event.localY / this.height - element.height / 2;
 				this.page.elements.addElement(element);

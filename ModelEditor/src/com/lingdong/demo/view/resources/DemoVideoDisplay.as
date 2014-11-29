@@ -12,6 +12,7 @@ package com.lingdong.demo.view.resources
 	
 	import mx.controls.VideoDisplay;
 	import mx.core.UIComponent;
+	import mx.core.mx_internal;
 
 	public class DemoVideoDisplay extends DemoFileDisplay
 	{
@@ -43,6 +44,16 @@ package com.lingdong.demo.view.resources
 				
 				_video && _video.addEventListener(DemoFileEvent.URL_CHANGE, updateURL);
 			}
+		}
+		
+		override public function get contentWidth():Number
+		{
+			return _videoUI ? _videoUI.mx_internal::videoPlayer.width : this.width;
+		}
+		
+		override public function get contentHeight():Number
+		{
+			return _videoUI ? _videoUI.mx_internal::videoPlayer.height : this.height;
 		}
 		
 		public function DemoVideoDisplay()

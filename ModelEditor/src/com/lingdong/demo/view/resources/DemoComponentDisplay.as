@@ -110,5 +110,15 @@ package com.lingdong.demo.view.resources
 				}
 			}
 		}
+		
+		public function get contentWidth():Number
+		{
+			return _resourceUI ? _resourceUI.contentWidth : this.width;
+		}
+		
+		public function get contentHeight():Number
+		{
+			return _resourceUI ? _resourceUI.contentHeight : this.height;
+		}
 	}
 }

@@ -56,6 +56,16 @@ package com.lingdong.demo.view.resources
 			}
 		}
 		
+		override public function get contentWidth():Number
+		{
+			return _imageUI ? _imageUI.contentWidth : this.width;
+		}
+		
+		override public function get contentHeight():Number
+		{
+			return _imageUI ? _imageUI.contentHeight : this.height;
+		}
+		
 		public function DemoImageDisplay()
 		{
 		}

@@ -68,6 +68,16 @@ package com.lingdong.demo.view.resources
 			this.setStyle("backgroundAlpha", value ? 1 : 0);
 		}
 		
+		public function get contentWidth():Number
+		{
+			return this.width;
+		}
+		
+		public function get contentHeight():Number
+		{
+			return this.height;
+		}
+		
 		public function DemoResourceDisplay()
 		{
 			this.hasBorder = false;

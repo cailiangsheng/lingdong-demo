@@ -198,8 +198,8 @@ package com.lingdong.demo.view.controls
 				var offsetY:Number = event.stageY - topLeft.y;
 				
 				dragImage = DemoPoolUtil.alloc(DemoComponentDisplay);
-				dragImage.width = dragInitiator.width;
-				dragImage.height = dragInitiator.height;
+				dragImage.width = dragInitiator.contentWidth;
+				dragImage.height = dragInitiator.contentHeight;
 				dragImage.resource = dragInitiator.resource;
 				this.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 				
