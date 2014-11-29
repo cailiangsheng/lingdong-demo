@@ -86,19 +86,22 @@ package com.lingdong.demo.view.resources
 		{
 			if (!this.stage) return;
 			
-			if (isNaN(this.file.progress))
+			if (this.file.isUploading)
 			{
-				this.dispose();
-			}
-			else if (this.file.progress > 0)
-			{
-				this.progressUI.label = "正在上传: " + (this.file.progress).toFixed(2) + "%";
-				this.progressUI.setProgress(this.file.progress, 100);
+				if (this.file.progress > 0)
+				{
+					this.progressUI.label = "正在上传: " + (this.file.progress).toFixed(2) + "%";
+					this.progressUI.setProgress(this.file.progress, 100);
+				}
+				else
+				{
+					this.progressUI.label = "准备上传";
+					this.progressUI.setProgress(0, 100);
+				}
 			}
 			else
 			{
-				this.progressUI.label = "准备上传";
-				this.progressUI.setProgress(0, 100);
+				this.dispose();
 			}
 		}
 		

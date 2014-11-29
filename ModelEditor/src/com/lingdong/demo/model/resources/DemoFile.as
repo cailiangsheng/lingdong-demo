@@ -44,11 +44,6 @@ package com.lingdong.demo.model.resources
 			{
 				_url = value;
 				
-				if (_url)
-				{
-					this.progress = NaN;
-				}
-				
 				dispatchFileEvent(DemoFileEvent.URL_CHANGE);
 			}
 		}
@@ -70,7 +65,12 @@ package com.lingdong.demo.model.resources
 		
 		override public function get isValid():Boolean
 		{
-			return Boolean(this.url);
+			return !this.isUploading;
+		}
+		
+		public function get isUploading():Boolean
+		{
+			return !isNaN(this.progress);
 		}
 		
 		public function DemoFile()
@@ -110,6 +110,8 @@ package com.lingdong.demo.model.resources
 			
 			var config:Object = JSON.parse(event.data);
 			readUploadConfig(config);
+			
+			this.progress = NaN;
 		}
 		
 		protected function readUploadConfig(config:Object):void
