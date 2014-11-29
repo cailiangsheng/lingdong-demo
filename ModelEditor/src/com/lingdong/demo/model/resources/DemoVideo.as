@@ -8,7 +8,7 @@ package com.lingdong.demo.model.resources
 
 	public class DemoVideo extends DemoFile implements IDemoConfig
 	{
-		public static var videoFilter:FileFilter = new FileFilter("Videos", "*.mp4;*.flv");
+		public static var videoFilter:FileFilter = new FileFilter("Video(*.mp4;*.flv)", "*.mp4;*.flv");
 		
 		override public function get type():String
 		{

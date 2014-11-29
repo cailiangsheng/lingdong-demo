@@ -6,7 +6,7 @@ package com.lingdong.demo.model.resources
 
 	public class DemoImage extends DemoFile implements IDemoConfig
 	{
-		public static var imageFilter:FileFilter = new FileFilter("Images", "*.jpg;*.gif;*.png");
+		public static var imageFilter:FileFilter = new FileFilter("Image(*.jpg;*.gif;*.png)", "*.jpg;*.gif;*.png");
 		
 		override public function get type():String
 		{

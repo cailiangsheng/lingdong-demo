@@ -41,7 +41,7 @@ package com.lingdong.demo.view.resources
 				
 				update();
 				
-				_video && _video.removeEventListener(DemoFileEvent.URL_CHANGE, updateURL);
+				_video && _video.addEventListener(DemoFileEvent.URL_CHANGE, updateURL);
 			}
 		}
 		
