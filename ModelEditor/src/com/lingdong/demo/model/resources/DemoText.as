@@ -130,6 +130,11 @@ package com.lingdong.demo.model.resources
 			return TEXT;
 		}
 		
+		override public function get isValid():Boolean
+		{
+			return this.content;
+		}
+		
 		public function DemoText()
 		{
 		}

@@ -68,6 +68,11 @@ package com.lingdong.demo.model.resources
 			}
 		}
 		
+		override public function get isValid():Boolean
+		{
+			return this.url;
+		}
+		
 		public function DemoFile()
 		{
 			addResource(this);

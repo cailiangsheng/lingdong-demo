@@ -5,6 +5,7 @@
 			  width="200" height="100%" xmlns:controls="com.lingdong.demo.view.controls.*">
 	<fx:Script>
 		<![CDATA[
+			import com.lingdong.demo.model.resources.DemoBackground;
 			import com.lingdong.demo.model.resources.DemoImage;
 			import com.lingdong.demo.model.resources.DemoResource;
 			import com.lingdong.demo.model.resources.DemoVideo;
@@ -14,6 +15,12 @@
 			{
 				var image:DemoImage = new DemoImage();
 				image.upload();
+			}
+			
+			private function uploadBackground():void
+			{
+				var background:DemoBackground = new DemoBackground();
+				background.upload();
 			}
 			
 			private function uploadVideo():void
@@ -44,8 +51,10 @@
 		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.videos}" />
 	</mx:VBox>
 	
-	<mx:VBox label="背景" width="100%" height="100%" horizontalAlign="center" verticalGap="0" paddingTop="10">
-		<s:Button label="上传背景" />
+	<mx:VBox label="背景" width="100%" height="100%" 
+			 horizontalAlign="center" verticalGap="0" paddingTop="10" 
+			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<s:Button label="上传背景" click="uploadBackground()" />
 		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.backgrounds}" />
 	</mx:VBox>
 	

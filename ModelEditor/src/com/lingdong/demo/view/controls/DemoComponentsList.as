@@ -155,7 +155,10 @@ package com.lingdong.demo.view.controls
 		private function onComponentMouseDown(event:MouseEvent):void
 		{
 			var component:DemoComponentDisplay = DemoComponentDisplay(event.currentTarget);
-			component.addEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
+			if (component.resource.isValid)
+			{
+				component.addEventListener(MouseEvent.MOUSE_MOVE, onComponentMouseMove);
+			}
 		}
 		
 		private function onComponentMouseMove(event:MouseEvent):void

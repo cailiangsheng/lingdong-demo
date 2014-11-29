@@ -1,5 +1,6 @@
 package com.lingdong.demo.view.resources
 {
+	import com.lingdong.demo.model.resources.DemoBackground;
 	import com.lingdong.demo.model.resources.DemoResource;
 	import com.lingdong.demo.util.DemoPoolUtil;
 	
@@ -74,7 +75,7 @@ package com.lingdong.demo.view.resources
 		
 		public function get maintainAspectRatio():Boolean
 		{
-			return _maintainAspectRatio;
+			return _maintainAspectRatio && !(this.resource is DemoBackground);
 		}
 		
 		public function set maintainAspectRatio(value:Boolean):void

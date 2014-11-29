@@ -44,6 +44,11 @@ package com.lingdong.demo.model.resources
 			return null;
 		}
 		
+		public function get isValid():Boolean
+		{
+			return false;
+		}
+		
 		public function DemoResource()
 		{
 		}

@@ -5,6 +5,7 @@ package com.lingdong.demo.view.pages
 	import com.greensock.transform.TransformManager;
 	import com.lingdong.demo.model.events.DemoElementsEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
+	import com.lingdong.demo.model.resources.DemoBackground;
 	import com.lingdong.demo.model.resources.DemoResource;
 	import com.lingdong.demo.view.resources.DemoComponentDisplay;
 	
@@ -85,12 +86,20 @@ package com.lingdong.demo.view.pages
 		private function onDragDrop(event:DragEvent):void
 		{
 			var component:DemoComponentDisplay = DemoComponentDisplay(event.dragInitiator);
-			var element:DemoElement = new DemoElement(component.resource);
-			element.width = component.width / this.width;
-			element.height = component.height / this.height;
-			element.x = event.localX / this.width - element.width / 2;
-			element.y = event.localY / this.height - element.height / 2;
-			this.page.elements.addElement(element);
+			var background:DemoBackground = component.resource as DemoBackground;
+			if (background)
+			{
+				this.page.background = background;
+			}
+			else
+			{
+				var element:DemoElement = new DemoElement(component.resource);
+				element.width = component.width / this.width;
+				element.height = component.height / this.height;
+				element.x = event.localX / this.width - element.width / 2;
+				element.y = event.localY / this.height - element.height / 2;
+				this.page.elements.addElement(element);
+			}
 		}
 		
 		override protected function removeElementDisplay(elementUI:DemoElementDisplay):void
@@ -103,7 +112,9 @@ package com.lingdong.demo.view.pages
 		override protected function addElementDisplay(element:DemoElement):DemoElementDisplay
 		{
 			var elementUI:DemoElementDisplay = super.addElementDisplay(element);
+			
 			this.transformManager.addItem(elementUI);
+			
 			return elementUI;
 		}
 	}

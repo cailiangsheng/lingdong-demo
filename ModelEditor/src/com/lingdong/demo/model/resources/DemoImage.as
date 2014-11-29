@@ -33,7 +33,7 @@ package com.lingdong.demo.model.resources
 		
 		override protected function readUploadConfig(config:Object):void
 		{
-			this.url = config.thubImageUrl;
+			this.url = config.url;//config.thubImageUrl;
 			this.fileId = config.fileId;
 		}
 	}

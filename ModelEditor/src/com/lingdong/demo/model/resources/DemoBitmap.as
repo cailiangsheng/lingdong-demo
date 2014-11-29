@@ -32,6 +32,11 @@ package com.lingdong.demo.model.resources
 			return BITMAP;
 		}
 		
+		override public function get isValid():Boolean
+		{
+			return this.url || this.bitmapData;
+		}
+		
 		public function DemoBitmap()
 		{
 		}
