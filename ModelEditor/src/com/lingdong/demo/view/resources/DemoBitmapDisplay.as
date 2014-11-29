@@ -1,27 +1,23 @@
 package com.lingdong.demo.view.resources
 {
 	import com.lingdong.demo.model.resources.DemoBitmap;
+	import com.lingdong.demo.model.resources.DemoImage;
 
 	public class DemoBitmapDisplay extends DemoImageDisplay
 	{
-		override public function get resource():DemoResource
+		override public function set image(value:DemoImage):void
 		{
-			return this.bitmap;
-		}
-		
-		override public function set resource(value:DemoResource):void
-		{
-			this.bitmap = value as DemoBitmap;
+			this.bitmap = value;
 		}
 		
 		private var _bitmap:DemoBitmap;
 		
-		public function get bitmap():DemoImage
+		public function get bitmap():DemoBitmap
 		{
 			return _bitmap;
 		}
 		
-		public function set bitmap(value:DemoImage):void
+		public function set bitmap(value:DemoBitmap):void
 		{
 			super.image = value;
 			

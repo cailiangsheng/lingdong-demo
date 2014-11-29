@@ -106,12 +106,11 @@ package com.lingdong.demo.view.controls
 							addComponent(resource);
 						}
 						break;
-					case CollectionEventKind.MOVE:
+					case CollectionEventKind.REMOVE:
 						var components:Vector.<DemoComponentDisplay> = new Vector.<DemoComponentDisplay>();
 						for each (resource in event.items)
 						{
-							var index:int = resources.getItemIndex(resource);
-							var component:DemoComponentDisplay = disposeComponentAt(index);
+							var component:DemoComponentDisplay = disposeComponentAt(event.location);
 							components.push(component);
 						}
 						

@@ -5,7 +5,22 @@
 			  width="200" height="100%" xmlns:controls="com.lingdong.demo.view.controls.*">
 	<fx:Script>
 		<![CDATA[
+			import com.lingdong.demo.model.resources.DemoImage;
 			import com.lingdong.demo.model.resources.DemoResource;
+			import com.lingdong.demo.model.resources.DemoVideo;
+			import com.lingdong.demo.service.DemoService;
+
+			private function uploadImage():void
+			{
+				var image:DemoImage = new DemoImage();
+				image.upload();
+			}
+			
+			private function uploadVideo():void
+			{
+				var video:DemoVideo = new DemoVideo();
+				video.upload();
+			}
 		]]>
 	</fx:Script>
 	
@@ -15,11 +30,24 @@
 	
 	<controls:DemoComponentsList label="文字" width="100%" height="100%" resources="{DemoResource.texts}" />
 	
-	<controls:DemoComponentsList label="图片" width="100%" height="100%" resources="{DemoResource.images}"/>
+	<mx:VBox label="图片" width="100%" height="100%" 
+			 horizontalAlign="center" verticalGap="0" paddingTop="10" 
+			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<s:Button label="上传图片" click="uploadImage()" />
+		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.images}"/>
+	</mx:VBox>
 	
-	<controls:DemoComponentsList label="视频" width="100%" height="100%" resources="{DemoResource.videos}" />
+	<mx:VBox label="视频" width="100%" height="100%" 
+			 horizontalAlign="center" verticalGap="0" paddingTop="10" 
+			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<s:Button label="上传视频" click="uploadVideo()"/>
+		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.videos}" />
+	</mx:VBox>
 	
-	<controls:DemoComponentsList label="背景" width="100%" height="100%" resources="{DemoResource.backgrounds}" />
+	<mx:VBox label="背景" width="100%" height="100%" horizontalAlign="center" verticalGap="0" paddingTop="10">
+		<s:Button label="上传背景" />
+		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.backgrounds}" />
+	</mx:VBox>
 	
 	<controls:DemoComponentsList label="声音" width="100%" height="100%" />
 	

@@ -73,6 +73,20 @@ package com.lingdong.demo.model.resources
 			}
 		}
 		
+		public static function removeResource(resource:DemoResource):void
+		{
+			if (resource)
+			{
+				var clazz:Class = Object(resource).constructor;
+				var list:ArrayCollection = getResourceList(clazz);
+				var index:int = list.getItemIndex(resource);
+				if (index >= 0)
+				{
+					list.removeItemAt(index);
+				}
+			}
+		}
+		
 		public static function get backgrounds():ArrayCollection
 		{
 			return getResourceList(DemoBackground);

@@ -1,7 +1,8 @@
 package com.lingdong.demo.view.resources
 {
-	import com.lingdong.demo.model.events.DemoFileEvent;
 	import com.lingdong.demo.model.events.DemoBitmapEvent;
+	import com.lingdong.demo.model.events.DemoFileEvent;
+	import com.lingdong.demo.model.resources.DemoFile;
 	import com.lingdong.demo.model.resources.DemoImage;
 	import com.lingdong.demo.model.resources.DemoResource;
 	import com.lingdong.demo.util.DemoPoolUtil;
@@ -13,14 +14,9 @@ package com.lingdong.demo.view.resources
 	
 	import spark.primitives.BitmapImage;
 
-	public class DemoImageDisplay extends DemoResourceDisplay
+	public class DemoImageDisplay extends DemoFileDisplay
 	{
-		override public function get resource():DemoResource
-		{
-			return this.image;
-		}
-		
-		override public function set resource(value:DemoResource):void
+		override public function set file(value:DemoFile):void
 		{
 			this.image = value as DemoImage;
 		}
@@ -34,6 +30,8 @@ package com.lingdong.demo.view.resources
 		
 		public function set image(value:DemoImage):void
 		{
+			super.file = value;
+			
 			if (_image != value)
 			{
 				_image && _image.removeEventListener(DemoFileEvent.URL_CHANGE, updateURL);
@@ -70,6 +68,7 @@ package com.lingdong.demo.view.resources
 			{
 				_imageUI = DemoPoolUtil.alloc(Image);
 				_imageUI.setStyle("horizontalAlign", "middle");
+				_imageUI.setStyle("verticalAlign", "middle");
 				_imageUI.maintainAspectRatio = super.maintainAspectRatio;
 				_imageUI.percentWidth = 100;
 				_imageUI.percentHeight = 100;

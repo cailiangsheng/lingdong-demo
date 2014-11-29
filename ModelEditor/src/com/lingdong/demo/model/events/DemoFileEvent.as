@@ -6,6 +6,7 @@ package com.lingdong.demo.model.events
 	{
 		public static const FILE_ID_CHANGE:String = "fileIdChange";
 		public static const URL_CHANGE:String = "urlChange";
+		public static const PROGRESS_CHANGE:String = "progressChange";
 		
 		public function DemoFileEvent(type:String)
 		{

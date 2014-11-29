@@ -29,6 +29,8 @@ package com.lingdong.demo.service
 				doUploadFile(fileReference, onProgress, onCompleteData, onError);
 			});
 			
+			fileReference.addEventListener(Event.CANCEL, onError);
+			
 			fileReference.browse(typeFilter);
 		}
 		

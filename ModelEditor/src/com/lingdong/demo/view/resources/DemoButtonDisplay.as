@@ -1,16 +1,12 @@
 package com.lingdong.demo.view.resources
 {
 	import com.lingdong.demo.model.resources.DemoButton;
+	import com.lingdong.demo.model.resources.DemoImage;
 	import com.lingdong.demo.model.resources.DemoResource;
 
 	public class DemoButtonDisplay extends DemoImageDisplay
 	{
-		override public function get resource():DemoResource
-		{
-			return this.button;
-		}
-		
-		override public function set resource(value:DemoResource):void
+		override public function set image(value:DemoImage):void
 		{
 			this.button = value as DemoButton;
 		}

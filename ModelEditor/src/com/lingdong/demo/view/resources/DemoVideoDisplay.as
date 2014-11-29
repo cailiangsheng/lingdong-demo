@@ -1,6 +1,7 @@
 package com.lingdong.demo.view.resources
 {
 	import com.lingdong.demo.model.events.DemoFileEvent;
+	import com.lingdong.demo.model.resources.DemoFile;
 	import com.lingdong.demo.model.resources.DemoResource;
 	import com.lingdong.demo.model.resources.DemoVideo;
 	import com.lingdong.demo.util.DemoPoolUtil;
@@ -12,14 +13,9 @@ package com.lingdong.demo.view.resources
 	import mx.controls.VideoDisplay;
 	import mx.core.UIComponent;
 
-	public class DemoVideoDisplay extends DemoResourceDisplay
+	public class DemoVideoDisplay extends DemoFileDisplay
 	{
-		override public function get resource():DemoResource
-		{
-			return this.video;
-		}
-		
-		override public function set resource(value:DemoResource):void
+		override public function set file(value:DemoFile):void
 		{
 			this.video = value as DemoVideo;
 		}
@@ -33,6 +29,8 @@ package com.lingdong.demo.view.resources
 		
 		public function set video(value:DemoVideo):void
 		{
+			super.file = value;
+			
 			if (_video != value)
 			{
 				_video && _video.removeEventListener(DemoFileEvent.URL_CHANGE, updateURL);
@@ -108,7 +106,14 @@ package com.lingdong.demo.view.resources
 		
 		private function onVideoMouseMove(event:MouseEvent):void
 		{
-			this.videoUI.playing ? this.controllerUI.showPauseIcon() : this.controllerUI.showPlayIcon();
+			if (this.videoUI.source)
+			{
+				this.videoUI.playing ? this.controllerUI.showPauseIcon() : this.controllerUI.showPlayIcon();
+			}
+			else
+			{
+				this.controllerUI.showNothing();
+			}
 		}
 		
 		private function onVideoMouseOut(event:MouseEvent):void
