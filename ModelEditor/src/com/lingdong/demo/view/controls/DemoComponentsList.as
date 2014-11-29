@@ -16,6 +16,7 @@ package com.lingdong.demo.view.controls
 	import mx.core.DragSource;
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
+	import mx.events.ResizeEvent;
 	import mx.managers.DragManager;
 	
 	public class DemoComponentsList extends VBox
@@ -37,7 +38,7 @@ package com.lingdong.demo.view.controls
 				
 				_resources = value;
 				
-				update();
+				updateResources();
 				
 				_resources && _resources.addEventListener(CollectionEvent.COLLECTION_CHANGE, updateResources);
 			}
@@ -45,17 +46,41 @@ package com.lingdong.demo.view.controls
 		
 		public function DemoComponentsList(gap:int = 10)
 		{
-			this.percentHeight = 100;
-			this.percentWidth = 100;
-			
 			this.horizontalScrollPolicy = ScrollPolicy.AUTO;
 			this.verticalScrollPolicy = ScrollPolicy.AUTO;
 			
-			this.setStyle("paddingTop", gap);
 			this.setStyle("paddingBottom", gap);
 			this.setStyle("verticalGap", gap);
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, update);
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		}
+		
+		private function onAddedToStage(event:Event):void
+		{
+			this.parent.addEventListener(ResizeEvent.RESIZE, updateSize);
+			
+			updateResources();
+		}
+		
+		private function onRemovedFromStage(event:Event):void
+		{
+			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
+		}
+		
+		private function updateSize(event:ResizeEvent = null):void
+		{
+			if (!this.stage) return;
+			
+			if (!event || this.parent.width != event.oldWidth)
+			{
+				this.width = this.parent.width;
+			}
+			
+			if (!event || this.parent.height != event.oldHeight)
+			{
+				this.height = this.parent.height - this.y;
+			}
 		}
 		
 		override public function validateDisplayList():void
@@ -128,11 +153,8 @@ package com.lingdong.demo.view.controls
 					addComponent(resource);
 				}
 			}
-		}
-		
-		private function update(event:Event = null):void
-		{
-			updateResources();
+			
+			updateSize();
 		}
 		
 		private function addComponent(resource:DemoResource):void

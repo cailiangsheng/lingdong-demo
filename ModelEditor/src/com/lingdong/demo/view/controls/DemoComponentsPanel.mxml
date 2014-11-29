@@ -35,27 +35,27 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<controls:DemoComponentsList label="文字" width="100%" height="100%" resources="{DemoResource.texts}" />
+	<controls:DemoComponentsList label="文字" paddingTop="10" width="100%" height="100%" resources="{DemoResource.texts}" />
 	
 	<mx:VBox label="图片" width="100%" height="100%" 
-			 horizontalAlign="center" verticalGap="0" paddingTop="10" 
+			 horizontalAlign="center" verticalGap="10" paddingTop="10" 
 			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<s:Button label="上传图片" click="uploadImage()" />
-		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.images}"/>
+		<controls:DemoComponentsList paddingTop="0" width="100%" height="100%" resources="{DemoResource.images}"/>
 	</mx:VBox>
 	
 	<mx:VBox label="视频" width="100%" height="100%" 
-			 horizontalAlign="center" verticalGap="0" paddingTop="10" 
+			 horizontalAlign="center" verticalGap="10" paddingTop="10" 
 			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<s:Button label="上传视频" click="uploadVideo()"/>
-		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.videos}" />
+		<controls:DemoComponentsList paddingTop="0" width="100%" height="100%" resources="{DemoResource.videos}" />
 	</mx:VBox>
 	
 	<mx:VBox label="背景" width="100%" height="100%" 
-			 horizontalAlign="center" verticalGap="0" paddingTop="10" 
+			 horizontalAlign="center" verticalGap="10" paddingTop="10" 
 			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<s:Button label="上传背景" click="uploadBackground()" />
-		<controls:DemoComponentsList width="100%" height="100%" resources="{DemoResource.backgrounds}" />
+		<controls:DemoComponentsList paddingTop="0" width="100%" height="100%" resources="{DemoResource.backgrounds}" />
 	</mx:VBox>
 	
 	<controls:DemoComponentsList label="声音" width="100%" height="100%" />
