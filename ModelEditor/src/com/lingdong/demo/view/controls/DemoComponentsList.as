@@ -121,10 +121,8 @@ package com.lingdong.demo.view.controls
 						break;
 				}
 			}
-			else
+			else if (this.numElements == 0)
 			{
-				this.dispose();
-				
 				for each (resource in this.resources)
 				{
 					addComponent(resource);
