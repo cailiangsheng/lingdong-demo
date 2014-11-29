@@ -13,7 +13,9 @@ package com.lingdong.demo.view.controls
 	
 	import mx.collections.ArrayCollection;
 	import mx.containers.VBox;
+	import mx.controls.scrollClasses.ScrollBar;
 	import mx.core.DragSource;
+	import mx.core.IVisualElement;
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	import mx.events.ResizeEvent;
@@ -130,6 +132,8 @@ package com.lingdong.demo.view.controls
 						{
 							addComponent(resource);
 						}
+						this.validateDisplayList();
+						this.scrollToLocation(event.location);
 						break;
 					case CollectionEventKind.REMOVE:
 						var components:Vector.<DemoComponentDisplay> = new Vector.<DemoComponentDisplay>();
@@ -235,6 +239,28 @@ package com.lingdong.demo.view.controls
 			}
 			
 			this.removeAllElements();
+		}
+		
+		private function scrollToLocation(location:int):void
+		{
+			if (location >= 0 && location < this.numElements)
+			{
+				var viewportWidth:Number = getViewportWidth();
+				var viewportHeight:Number = getViewportHeight();
+				var activeChild:IVisualElement = this.getElementAt(location);
+				
+				if (activeChild.x < this.horizontalScrollPosition || 
+					activeChild.x + activeChild.width > this.horizontalScrollPosition + viewportWidth)
+				{
+					this.horizontalScrollPosition = activeChild.x + activeChild.width / 2 - viewportWidth / 2;
+				}
+				
+				if (activeChild.y < this.verticalScrollPosition ||
+					activeChild.y + activeChild.height > this.verticalScrollPosition + viewportHeight)
+				{
+					this.verticalScrollPosition = activeChild.y + activeChild.height / 2 - viewportHeight / 2;
+				}
+			}
 		}
 	}
 }
