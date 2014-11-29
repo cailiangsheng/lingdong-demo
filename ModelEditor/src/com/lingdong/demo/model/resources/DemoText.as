@@ -132,7 +132,7 @@ package com.lingdong.demo.model.resources
 		
 		override public function get isValid():Boolean
 		{
-			return this.content;
+			return Boolean(this.content);
 		}
 		
 		public function DemoText()

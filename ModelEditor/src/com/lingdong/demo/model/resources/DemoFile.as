@@ -70,7 +70,7 @@ package com.lingdong.demo.model.resources
 		
 		override public function get isValid():Boolean
 		{
-			return this.url;
+			return Boolean(this.url);
 		}
 		
 		public function DemoFile()

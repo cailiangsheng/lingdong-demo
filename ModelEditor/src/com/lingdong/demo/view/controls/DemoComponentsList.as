@@ -195,6 +195,10 @@ package com.lingdong.demo.view.controls
 		private function disposeComponentAt(index:int):DemoComponentDisplay
 		{
 			var component:DemoComponentDisplay = this.getChildAt(index) as DemoComponentDisplay;
+			component.x = 0;
+			component.y = 0;
+			component.maintainAspectRatio = false;
+			component.hasBorder = false;
 			component.buttonMode = false;
 			component.resource = null;
 			component.removeEventListener(MouseEvent.MOUSE_DOWN, onComponentMouseDown);
