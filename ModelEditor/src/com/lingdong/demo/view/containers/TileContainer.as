@@ -158,9 +158,9 @@ package com.lingdong.demo.view.containers
 				
 				_selectedIndex = value;
 				
-				scrollToSelectedChild();
+				validateDisplayList();
 				
-				this.invalidateDisplayList();
+				scrollToSelectedChild();
 				
 				this.dispatchEvent(event);
 			}
