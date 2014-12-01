@@ -147,6 +147,8 @@ package com.lingdong.demo.model.resources
 				this.content = config.content;
 				this.fontSize = config.fontSize;
 				this.fontStyle = config.fontStyle;
+				this.textAlign = config.textAlign;
+				this.verticalAlign = config.verticalAlign;
 			}
 		}
 		
@@ -158,6 +160,16 @@ package com.lingdong.demo.model.resources
 				config.content = this.content;
 				config.fontSize = this.fontSize;
 				config.fontStyle = this.fontStyle;
+				
+				if (this.textAlign)
+				{
+					config.textAlign = this.textAlign;
+				}
+				
+				if (this.verticalAlign)
+				{
+					config.verticalAlign = this.verticalAlign;
+				}
 			}
 		}
 	}
