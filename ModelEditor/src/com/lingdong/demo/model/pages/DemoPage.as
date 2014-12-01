@@ -64,6 +64,7 @@ package com.lingdong.demo.model.pages
 		
 		public function DemoPage()
 		{
+			_background = DemoBackground.instance;
 			_thumbnail = new DemoBitmap();
 			_elements = new DemoElements();
 		}
@@ -76,10 +77,6 @@ package com.lingdong.demo.model.pages
 				{
 					this.background = new DemoBackground();
 					this.background.readConfig(config.background);
-				}
-				else
-				{
-					this.background = DemoBackground.instance;
 				}
 				
 				this.thumbnail.readConfig(config.thumbnail);

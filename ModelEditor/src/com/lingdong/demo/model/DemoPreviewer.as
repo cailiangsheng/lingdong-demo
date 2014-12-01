@@ -31,7 +31,7 @@ package com.lingdong.demo.model
 		
 		public function get activePage():DemoPage
 		{
-			return _activePage;
+			return _activePage ? _activePage : this.activeTheme.pages.getPageAt(0);
 		}
 		
 		public function set activePage(value:DemoPage):void
