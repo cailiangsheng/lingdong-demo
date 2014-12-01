@@ -17,8 +17,17 @@ package com.lingdong.demo.model.resources
 		{
 			if (config)
 			{
-				this.fileId = config.id;
 				this.url = config.backgroudImage;
+			}
+		}
+		
+		override public function writeConfig(config:Object, fileIds:Array):void
+		{
+			super.writeConfig(config, fileIds);
+			
+			if (config)
+			{
+				config.backgroudImage = this.url;
 			}
 		}
 	}

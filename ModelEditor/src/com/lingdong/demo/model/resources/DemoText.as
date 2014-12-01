@@ -149,5 +149,16 @@ package com.lingdong.demo.model.resources
 				this.fontStyle = config.fontStyle;
 			}
 		}
+		
+		override public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				config.color = this.color;
+				config.content = this.content;
+				config.fontSize = this.fontSize;
+				config.fontStyle = this.fontStyle;
+			}
+		}
 	}
 }

@@ -23,8 +23,22 @@ package com.lingdong.demo.model.resources
 		{
 			if (config)
 			{
-				this.fileId = config.id;
+				this.fileId = config.name;
 				this.url = config.videoUrl;
+			}
+		}
+		
+		override public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				config.name = this.fileId;
+				config.videoUrl = this.url;
+				
+				if (fileIds && this.fileId)
+				{
+					fileIds.push(this.fileId);
+				}
 			}
 		}
 		

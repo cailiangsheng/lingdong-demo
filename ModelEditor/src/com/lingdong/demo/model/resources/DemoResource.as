@@ -58,6 +58,11 @@ package com.lingdong.demo.model.resources
 			throw new Error("to be override");
 		}
 		
+		public function writeConfig(config:Object, fileIds:Array):void
+		{
+			throw new Error("to be override");
+		}
+		
 		private static var _resources:Dictionary = new Dictionary();
 		
 		private static function getResourceList(clazz:Class):ArrayCollection

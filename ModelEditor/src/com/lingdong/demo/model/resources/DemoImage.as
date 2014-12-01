@@ -21,8 +21,29 @@ package com.lingdong.demo.model.resources
 		{
 			if (config)
 			{
-				this.fileId = config.id;
+				this.fileId = config.name;
 				this.url = config.urlBig;
+			}
+		}
+		
+		override public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				if (this.url)
+				{
+					config.urlBig = this.url;
+				}
+				
+				if (this.fileId)
+				{
+					config.name = this.fileId;
+					
+					if (fileIds)
+					{
+						fileIds.push(this.fileId);
+					}
+				}
 			}
 		}
 		
@@ -33,8 +54,8 @@ package com.lingdong.demo.model.resources
 		
 		override protected function readUploadConfig(config:Object):void
 		{
+			this.fileId = config.name;
 			this.url = config.url;//config.thubImageUrl;
-			this.fileId = config.fileId;
 		}
 	}
 }

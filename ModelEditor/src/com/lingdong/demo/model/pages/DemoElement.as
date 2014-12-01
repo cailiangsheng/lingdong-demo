@@ -13,7 +13,6 @@ package com.lingdong.demo.model.pages
 	[Event(name="scaleYChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="widthChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="heightChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
-	[Event(name="depthChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	[Event(name="rotationChange", type="com.lingdong.demo.model.events.DemoElementEvent")]
 	public class DemoElement extends EventDispatcher implements IDemoConfig
 	{
@@ -118,23 +117,6 @@ package com.lingdong.demo.model.pages
 			}
 		}
 		
-		private var _depth:int;
-		
-		public function get depth():int
-		{
-			return _depth;
-		}
-		
-		public function set depth(value:int):void
-		{
-			if (_depth != value)
-			{
-				_depth = value;
-				
-				this.dispatchElementEvent(DemoElementEvent.DEPTH_CHANGE);
-			}
-		}
-		
 		private var _rotation:Number;
 		
 		public function get rotation():Number
@@ -177,10 +159,23 @@ package com.lingdong.demo.model.pages
 			this.height = Math.abs(config.height);
 			this.scaleX = sign(config.width);
 			this.scaleY = sign(config.height);
-			this.depth = config.depth;
 			this.rotation = config.rotation;
 			
 			this.resource.readConfig(config);
+		}
+		
+		public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				config.x = this.x;
+				config.y = this.y;
+				config.width = this.width * this.scaleX;
+				config.height = this.height * this.scaleY;
+				config.rotation = this.rotation;
+				
+				this.resource.writeConfig(config, fileIds);
+			}
 		}
 		
 		private function dispatchElementEvent(name:String):void

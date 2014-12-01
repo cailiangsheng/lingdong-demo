@@ -11,6 +11,7 @@ package com.lingdong.demo.model
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
+	import mx.managers.CursorManager;
 	import mx.utils.URLUtil;
 	
 	public class DemoModel extends EventDispatcher
@@ -52,10 +53,10 @@ package com.lingdong.demo.model
 			_designer = new DemoDesigner();
 			_previewer = new DemoPreviewer();
 			
-			this.update(this.requestedThemeId);
+			this.fetchTheme(this.themeIdRequested);
 		}
 		
-		public function get requestedThemeId():String
+		public function get themeIdRequested():String
 		{
 			var location:Object = DemoBrowserUtil.location;
 			var str:String = String(location.search).substr(1);
@@ -63,10 +64,19 @@ package com.lingdong.demo.model
 			return param.themeId;
 		}
 		
-		public function update(themeId:String):void
+		private var themeIdFetched:String;
+		private var themeIdFetching:String;
+		
+		public function get themeId():String
 		{
-			if (themeId)
+			return this.themeIdFetched;
+		}
+		
+		public function fetchTheme(themeId:String):void
+		{
+			if (themeId && !this.themeIdFetching)
 			{
+				this.themeIdFetching = themeId;
 				DemoService.themeService.fetchTheme(themeId, onFetchTheme, onFetchError);
 			}
 		}
@@ -77,8 +87,11 @@ package com.lingdong.demo.model
 			if (themeConfigJson)
 			{
 				var themeConfig:Object = JSON.parse(themeConfigJson);
-				theme.readConfig(themeConfig);
+				this.theme.readConfig(themeConfig);
 			}
+			
+			this.themeIdFetched = this.themeIdFetching;
+			this.themeIdFetching = null;
 			
 			this.designer.activeTheme = theme;
 		}
@@ -86,7 +99,50 @@ package com.lingdong.demo.model
 		private function onFetchError(result:Object):void
 		{
 			trace("Failed to fetch theme!");
+			
+			this.themeIdFetching = null;
+			
 			this.designer.activeTheme = theme;
+		}
+		
+		private var _saving:Boolean;
+		
+		private function get saving():Boolean
+		{
+			return _saving;
+		}
+		
+		private function set saving(value:Boolean):void
+		{
+			if (_saving != value)
+			{
+				_saving = value;
+				
+				_saving ? CursorManager.setBusyCursor() : CursorManager.removeBusyCursor();
+			}
+		}
+		
+		public function saveTheme():void
+		{
+			if (saving) return;
+			
+			saving = true;
+			
+			var themeConfig:Object = {};
+			var fileIds:Array = [];
+			this.theme.writeConfig(themeConfig, fileIds);
+			
+			DemoService.themeService.saveTheme(themeId, themeConfig, fileIds, onSaveTheme, onSaveError);
+		}
+		
+		private function onSaveTheme(result:Object):void
+		{
+			saving = false;
+		}
+		
+		private function onSaveError(result:Object):void
+		{
+			saving = false;
 		}
 	}
 }

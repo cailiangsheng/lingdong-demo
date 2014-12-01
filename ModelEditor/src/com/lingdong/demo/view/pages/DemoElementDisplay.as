@@ -32,7 +32,6 @@ package com.lingdong.demo.view.pages
 				_element && _element.removeEventListener(DemoElementEvent.SCALE_Y_CHANGE, updateScaleY);
 				_element && _element.removeEventListener(DemoElementEvent.WIDTH_CHANGE, updateWidth);
 				_element && _element.removeEventListener(DemoElementEvent.HEIGHT_CHANGE, updateHeight);
-				_element && _element.removeEventListener(DemoElementEvent.DEPTH_CHANGE, updateDepth);
 				_element && _element.removeEventListener(DemoElementEvent.ROTATION_CHANGE, updateRotation);
 				
 				this.dispose();
@@ -52,7 +51,6 @@ package com.lingdong.demo.view.pages
 				_element && _element.addEventListener(DemoElementEvent.SCALE_Y_CHANGE, updateScaleY);
 				_element && _element.addEventListener(DemoElementEvent.WIDTH_CHANGE, updateWidth);
 				_element && _element.addEventListener(DemoElementEvent.HEIGHT_CHANGE, updateHeight);
-				_element && _element.addEventListener(DemoElementEvent.DEPTH_CHANGE, updateDepth);
 				_element && _element.addEventListener(DemoElementEvent.ROTATION_CHANGE, updateRotation);
 			}	
 		}
@@ -93,7 +91,6 @@ package com.lingdong.demo.view.pages
 			if (this.element)
 			{
 				updateSize();
-				updateDepth();
 				updateRotation();
 			}
 		}
@@ -145,10 +142,6 @@ package com.lingdong.demo.view.pages
 			if (!this.stage) return;
 			
 			this.rotation = element.rotation;
-		}
-		
-		private function updateDepth(event:Event = null):void
-		{
 		}
 		
 		override protected function dispose():void

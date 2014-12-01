@@ -16,9 +16,6 @@ package com.lingdong.demo.model.pages
 	[Event(name="showStyleChange", type="com.lingdong.demo.model.events.DemoThemeEvent")]
 	public class DemoTheme extends EventDispatcher implements IDemoConfig
 	{
-		public var id:String;
-		public var name:String;
-		
 		private var _showStyle:String = DemoShowStyle.DEFAULT;
 		
 		public function get showStyle():String
@@ -53,8 +50,6 @@ package com.lingdong.demo.model.pages
 		{
 			if (config)
 			{
-				this.id = config.id;
-				this.name = config.name;
 				this.showStyle = config.showStyle;
 				
 				this.pages.removeAllPages();
@@ -64,6 +59,23 @@ package com.lingdong.demo.model.pages
 					page.readConfig(pageConfig);
 					
 					this.pages.addPage(page);
+				}
+			}
+		}
+		
+		public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				config.showStyle = this.showStyle;
+				
+				var pagesConfig:Array = [];
+				config.pages = pagesConfig;
+				for each (var page:DemoPage in this.pages.source)
+				{
+					var pageConfig:Object = {};
+					page.writeConfig(pageConfig, fileIds);
+					pagesConfig.push(pageConfig);
 				}
 			}
 		}

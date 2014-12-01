@@ -3,9 +3,9 @@ package com.lingdong.demo.model.pages
 	import com.lingdong.demo.model.IDemoConfig;
 	import com.lingdong.demo.model.events.DemoPageEvent;
 	import com.lingdong.demo.model.resources.DemoBackground;
+	import com.lingdong.demo.model.resources.DemoBitmap;
 	import com.lingdong.demo.model.resources.DemoImage;
 	import com.lingdong.demo.model.resources.DemoResource;
-	import com.lingdong.demo.model.resources.DemoBitmap;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -14,9 +14,6 @@ package com.lingdong.demo.model.pages
 	[Event(name="childChange", type="com.lingdong.demo.model.events.DemoPageEvent")]
 	public class DemoPage extends EventDispatcher implements IDemoConfig
 	{
-		public var id:String;
-		public var index:uint;
-		
 		private var _background:DemoBackground;
 		
 		public function get background():DemoBackground
@@ -75,9 +72,6 @@ package com.lingdong.demo.model.pages
 		{
 			if (config)
 			{
-				this.id = config.id;
-				this.index = config.index;
-				
 				if (config.background)
 				{
 					this.background = new DemoBackground();
@@ -111,6 +105,37 @@ package com.lingdong.demo.model.pages
 							this.elements.addElement(element);
 						}
 					}
+				}
+			}
+		}
+		
+		public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				var backgroundConfig:Object = {};
+				config.background = backgroundConfig;
+				this.background.writeConfig(backgroundConfig, fileIds);
+				
+				var thumbnailConfig:Object = {};
+				config.thumbnail = thumbnailConfig;
+				this.thumbnail.writeConfig(thumbnailConfig, fileIds);
+				
+				if (this.child)
+				{
+					var childConfig:Object = {};
+					this.child.writeConfig(childConfig, fileIds);
+					config.child = JSON.stringify(childConfig);
+				}
+				
+				var elementsConfig:Array = [];
+				config.elements = elementsConfig;
+				for each (var element:DemoElement in this.elements.source)
+				{
+					var elementConfig:Object = {};
+					elementConfig.type = element.resource.type;
+					element.writeConfig(elementConfig, fileIds);
+					elementsConfig.push(elementConfig);
 				}
 			}
 		}

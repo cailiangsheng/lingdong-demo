@@ -7,9 +7,20 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:Button label="重置"/>
-	<s:Button label="保存"/>
-	<s:Button label="预览"/>
+	<fx:Script>
+		<![CDATA[
+			import com.lingdong.demo.model.DemoModel;
+			
+			private function saveTheme():void
+			{
+				DemoModel.instance.saveTheme();
+			}
+		]]>
+	</fx:Script>
+	
+	<s:Button label="重置" />
+	<s:Button label="保存" click="saveTheme()" />
+	<s:Button label="预览" />
 	
 	<s:Spacer width="100%" />
 	

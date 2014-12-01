@@ -52,5 +52,15 @@ package com.lingdong.demo.model.resources
 				this.color = color;
 			}
 		}
+		
+		override public function writeConfig(config:Object, fileIds:Array):void
+		{
+			super.writeConfig(config, fileIds);
+			
+			if (config)
+			{
+				config.color = this.color;
+			}
+		}
 	}
 }

@@ -10,7 +10,6 @@ package com.lingdong.demo.model.events
 		public static const SCALE_Y_CHANGE:String = "scaleYChange";
 		public static const WIDTH_CHANGE:String = "widthChange";
 		public static const HEIGHT_CHANGE:String = "heightChange";
-		public static const DEPTH_CHANGE:String = "depthChange";
 		public static const ROTATION_CHANGE:String = "rotationChange";
 		
 		public function DemoElementEvent(type:String)
