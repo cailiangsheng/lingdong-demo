@@ -56,6 +56,12 @@ package com.lingdong.demo.model
 			this.fetchTheme(this.themeIdRequested);
 		}
 		
+		public function reset():void
+		{
+			this.designer.activePage = null;
+			this.designer.activeTheme = _theme = new DemoTheme();
+		}
+		
 		public function get themeIdRequested():String
 		{
 			var location:Object = DemoBrowserUtil.location;

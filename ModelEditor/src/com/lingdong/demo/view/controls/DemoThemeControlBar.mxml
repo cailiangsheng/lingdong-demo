@@ -15,14 +15,20 @@
 			{
 				DemoModel.instance.saveTheme();
 			}
+			
+			private function resetTheme():void
+			{
+				DemoModel.instance.reset();
+			}
 		]]>
 	</fx:Script>
 	
-	<s:Button label="重置" />
-	<s:Button label="保存" click="saveTheme()" />
+	<s:Button label="模板" />
+	<s:Button label="效果" />
 	<s:Button label="预览" />
 	
 	<s:Spacer width="100%" />
 	
-	<s:Button label="返回"/>
+	<s:Button label="重置" click="resetTheme()"/>
+	<s:Button label="保存" click="saveTheme()" />
 </s:HGroup>
