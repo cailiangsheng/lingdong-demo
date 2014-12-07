@@ -15,6 +15,7 @@ package com.lingdong.demo.view.pages
 	
 	import mx.core.Container;
 	import mx.core.ScrollPolicy;
+	import mx.core.UIComponent;
 	import mx.events.CollectionEventKind;
 	import mx.events.FlexEvent;
 	import mx.events.ResizeEvent;
@@ -53,7 +54,7 @@ package com.lingdong.demo.view.pages
 			if (!_backgroundUI)
 			{
 				_backgroundUI = DemoPoolUtil.alloc(DemoBackgroundDisplay);
-				this.addChild(_backgroundUI);
+				this.addChildAt(_backgroundUI, 0);
 			}
 			
 			return _backgroundUI;
@@ -89,8 +90,8 @@ package com.lingdong.demo.view.pages
 		protected function updateSize(event:Event = null):void
 		{
 			var size:Point = DemoModel.instance.pageSize.getFitSize(this.parent);
-			this.width = size.x;
-			this.height = size.y;
+			this.elementLayer.width = this.width = size.x;
+			this.elementLayer.height = this.height = size.y;
 			this.scrollRect = new Rectangle(0, 0, this.width, this.height);
 		}
 		
@@ -160,12 +161,25 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
+		private var _elementLayer:UIComponent;
+		
+		private function get elementLayer():UIComponent
+		{
+			if (!_elementLayer)
+			{
+				_elementLayer = DemoPoolUtil.alloc(UIComponent);
+				this.addChild(_elementLayer);
+			}
+			
+			return _elementLayer;
+		}
+		
 		protected function addElementDisplay(element:DemoElement):DemoElementDisplay
 		{
 			var elementUI:DemoElementDisplay = DemoPoolUtil.alloc(DemoElementDisplay);
 			elementUI.element = element;
 			elementUIs.push(elementUI);
-			this.addChild(elementUI);
+			this.elementLayer.addChild(elementUI);
 			return elementUI;
 		}
 		
@@ -187,9 +201,9 @@ package com.lingdong.demo.view.pages
 				elementUIs.splice(index, 1);
 			}
 			
-			if (this.contains(elementUI))
+			if (this.elementLayer.contains(elementUI))
 			{
-				this.removeChild(elementUI);
+				this.elementLayer.removeChild(elementUI);
 			}
 			
 			elementUI.element = null;
