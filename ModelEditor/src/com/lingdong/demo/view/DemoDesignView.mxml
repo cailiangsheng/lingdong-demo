@@ -33,6 +33,8 @@
 				
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_PAGE_CHANGE, onActivePageChange);
+				
+				DemoModel.instance.initialize();
 			}
 			
 			private function onActiveThemeChange(event:Event):void
@@ -78,6 +80,11 @@
 			{
 				this.designer.activePage = thumbnailUI.activePage;
 			}
+			
+			private function goBack():void
+			{
+				this.designer.activateParent();
+			}
 		]]>
 	</fx:Script>
 	
@@ -99,7 +106,7 @@
 			</s:VGroup>
 			
 			<s:VGroup width="200" height="100%" horizontalAlign="right">
-				<s:Button label="返回"/>
+				<s:Button label="返回" click="goBack()" />
 				<controls:DemoPropertiesPanel />
 			</s:VGroup>
 		</s:HGroup>

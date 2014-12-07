@@ -49,17 +49,21 @@ package com.lingdong.demo.model
 		public function DemoModel()
 		{
 			_pageSize = new DemoPageSize();
-			_theme = new DemoTheme();
+			_theme = new DemoTheme(null);
 			_designer = new DemoDesigner();
 			_previewer = new DemoPreviewer();
-			
-			this.fetchTheme(this.themeIdRequested);
+		}
+		
+		public function initialize():void
+		{
+//			this.fetchTheme(this.themeIdRequested);
+			this.reset();
 		}
 		
 		public function reset():void
 		{
 			this.designer.activePage = null;
-			this.designer.activeTheme = _theme = new DemoTheme();
+			this.designer.activeTheme = _theme = new DemoTheme(null);
 		}
 		
 		public function get themeIdRequested():String
@@ -120,8 +124,6 @@ package com.lingdong.demo.model
 		
 		private function onFetchError(result:Object):void
 		{
-			trace("Failed to fetch theme!");
-			
 			this.themeIdFetching = null;
 			
 			this.designer.activeTheme = theme;

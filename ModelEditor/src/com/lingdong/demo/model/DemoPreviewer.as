@@ -47,5 +47,35 @@ package com.lingdong.demo.model
 		public function DemoPreviewer()
 		{
 		}
+		
+		public function activateChild(page:DemoPage = null):void
+		{
+			page ||= this.activePage;
+			
+			if (page && page.child)
+			{
+				this.activeTheme = page.child;
+				this.activePage = this.activeTheme.pages.getPageAt(0);
+			}
+		}
+		
+		public function activateParent(page:DemoPage = null):void
+		{
+			page ||= this.activePage;
+			
+			var currentTheme:DemoTheme = page ? page.parent : this.activeTheme;
+			var parentPage:DemoPage = currentTheme.parent;
+			if (parentPage)
+			{
+				var parentTheme:DemoTheme = parentPage.parent;
+				
+				this.activeTheme = parentTheme;
+				this.activePage = parentPage;
+			}
+			else
+			{
+				// TO DO
+			}
+		}
 	}
 }

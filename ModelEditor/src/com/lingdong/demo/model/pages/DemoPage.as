@@ -62,8 +62,21 @@ package com.lingdong.demo.model.pages
 			}
 		}
 		
-		public function DemoPage()
+		private var _parent:DemoTheme;
+		
+		public function get parent():DemoTheme
 		{
+			return _parent;
+		}
+		
+		public function get isChildPage():Boolean
+		{
+			return parent && parent.parent;
+		}
+		
+		public function DemoPage(parent:DemoTheme)
+		{
+			_parent = parent;
 			_background = DemoBackground.instance;
 			_thumbnail = new DemoBitmap();
 			_elements = new DemoElements();
@@ -84,7 +97,7 @@ package com.lingdong.demo.model.pages
 				if (config.child)
 				{
 					var childConfig:Object = JSON.parse(config.child);
-					this.child = new DemoTheme();
+					this.child = new DemoTheme(this);
 					this.child.readConfig(childConfig);
 				}
 				

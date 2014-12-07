@@ -86,7 +86,7 @@ package com.lingdong.demo.view.pages
 			this.parent.removeEventListener(ResizeEvent.RESIZE, updateSize);
 		}
 		
-		private function updateSize(event:Event = null):void
+		protected function updateSize(event:Event = null):void
 		{
 			var size:Point = DemoModel.instance.pageSize.getFitSize(this.parent);
 			this.width = size.x;
@@ -94,7 +94,7 @@ package com.lingdong.demo.view.pages
 			this.scrollRect = new Rectangle(0, 0, this.width, this.height);
 		}
 		
-		private function update(event:Event = null):void
+		protected function update(event:Event = null):void
 		{
 			if (page)
 			{
@@ -196,7 +196,7 @@ package com.lingdong.demo.view.pages
 			DemoPoolUtil.free(elementUI);
 		}
 		
-		private function dispose():void
+		protected function dispose():void
 		{
 			removeBackground();
 			clearElements();

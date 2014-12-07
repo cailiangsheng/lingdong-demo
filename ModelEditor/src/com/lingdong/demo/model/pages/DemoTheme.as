@@ -39,10 +39,18 @@ package com.lingdong.demo.model.pages
 			return _pages;
 		}
 		
-		public function DemoTheme()
+		private var _parent:DemoPage;
+		
+		public function get parent():DemoPage
 		{
+			return _parent;
+		}
+		
+		public function DemoTheme(parent:DemoPage)
+		{
+			_parent = parent;
 			_pages = new DemoPages();
-			_pages.addPage(new DemoPage());
+			_pages.addPage(new DemoPage(this));
 		}
 		
 		public function readConfig(config:Object):void
@@ -54,7 +62,7 @@ package com.lingdong.demo.model.pages
 				this.pages.removeAllPages();
 				for each (var pageConfig:Object in config.pages)
 				{
-					var page:DemoPage = new DemoPage();
+					var page:DemoPage = new DemoPage(this);
 					page.readConfig(pageConfig);
 					
 					this.pages.addPage(page);

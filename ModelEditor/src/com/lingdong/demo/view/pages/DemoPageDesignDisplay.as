@@ -3,16 +3,23 @@ package com.lingdong.demo.view.pages
 	import com.greensock.events.TransformEvent;
 	import com.greensock.transform.TransformItem;
 	import com.greensock.transform.TransformManager;
+	import com.lingdong.demo.model.DemoModel;
 	import com.lingdong.demo.model.events.DemoElementsEvent;
+	import com.lingdong.demo.model.events.DemoPageEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
+	import com.lingdong.demo.model.pages.DemoPage;
 	import com.lingdong.demo.model.resources.DemoBackground;
 	import com.lingdong.demo.model.resources.DemoResource;
+	import com.lingdong.demo.util.DemoPoolUtil;
 	import com.lingdong.demo.view.resources.DemoComponentDisplay;
 	
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
+	
+	import spark.components.Button;
 
 	public class DemoPageDesignDisplay extends DemoPageDisplay
 	{
@@ -116,6 +123,88 @@ package com.lingdong.demo.view.pages
 			this.transformManager.addItem(elementUI);
 			
 			return elementUI;
+		}
+		
+		override public function set page(value:DemoPage):void
+		{
+			if (super.page != value)
+			{
+				if (super.page)
+				{
+					super.page.removeEventListener(DemoPageEvent.CHILD_CHANGE, updateChild);
+				}
+				
+				this.dispose();
+				
+				super.page = value;
+				
+				updateChild();
+				
+				if (super.page)
+				{
+					super.page.addEventListener(DemoPageEvent.CHILD_CHANGE, updateChild);
+				}
+			}
+		}
+		
+		override protected function update(event:Event=null):void
+		{
+			super.update(event);
+			
+			updateChild(event);
+		}
+		
+		private function updateChild(event:Event = null):void
+		{
+			if (this.page && !this.page.isChildPage)
+			{
+				this.buttonUI.label = "详情" + (this.page.child && this.page.child.pages.numPages > 0 ? ">>" : "+");
+				this.setChildIndex(this.buttonUI, this.numChildren - 1);
+			}
+		}
+		
+		override protected function updateSize(event:Event=null):void
+		{
+			super.updateSize(event);
+			
+			if (this.page && !this.page.isChildPage)
+			{
+				this.buttonUI.width = 80;
+				this.buttonUI.height = 30;
+				this.buttonUI.x = this.width - this.buttonUI.width - 20;
+				this.buttonUI.y = this.height - this.buttonUI.height - 20;
+			}
+		}
+		
+		private var _buttonUI:Button;
+		
+		private function get buttonUI():Button
+		{
+			if (!_buttonUI)
+			{
+				_buttonUI = DemoPoolUtil.alloc(Button);
+				_buttonUI.addEventListener(MouseEvent.CLICK, onButtonClick);
+				this.addChild(_buttonUI);
+			}
+			
+			return _buttonUI;
+		}
+		
+		private function onButtonClick(event:MouseEvent):void
+		{
+			DemoModel.instance.designer.activateChild(this.page);
+		}
+		
+		override protected function dispose():void
+		{
+			super.dispose();
+			
+			if (_buttonUI)
+			{
+				this.removeChild(_buttonUI);
+				DemoPoolUtil.free(_buttonUI);
+				_buttonUI = null;
+			}
 		}
 	}
 }

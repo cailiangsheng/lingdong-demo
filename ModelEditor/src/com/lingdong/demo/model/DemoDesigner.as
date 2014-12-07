@@ -3,6 +3,7 @@ package com.lingdong.demo.model
 	import com.lingdong.demo.model.events.DemoModelEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.pages.DemoPage;
+	import com.lingdong.demo.model.pages.DemoTheme;
 
 	public class DemoDesigner extends DemoPreviewer
 	{
@@ -10,7 +11,7 @@ package com.lingdong.demo.model
 		{
 			if (this.activeTheme)
 			{
-				var page:DemoPage = new DemoPage();
+				var page:DemoPage = new DemoPage(this.activeTheme);
 				
 				this.activeTheme.pages.addPage(page);
 				
@@ -29,6 +30,18 @@ package com.lingdong.demo.model
 				this.activeTheme.pages.removePage(this.activePage);
 				this.activePage = this.activeTheme.pages.getPageAt(prevPageIndex);;
 			}
+		}
+		
+		override public function activateChild(page:DemoPage = null):void
+		{
+			page ||= this.activePage;
+			
+			if (page && !page.child)
+			{
+				page.child = new DemoTheme(page);
+			}
+			
+			super.activateChild(page);
 		}
 	}
 }
