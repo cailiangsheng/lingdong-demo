@@ -1,6 +1,9 @@
 package com.lingdong.demo.service
 {
-	public class DemoLoginService extends DemoService
+	import com.lingdong.demo.model.events.DemoLoginEvent;
+
+	[Event(name="loginError", type="com.lingdong.demo.model.events.DemoLoginEvent")]
+	public class DemoLoginService extends DemoBaseService
 	{
 		public static const LOGIN:String = "login";
 		
@@ -44,15 +47,25 @@ package com.lingdong.demo.service
 					},
 					function(result:Object):void
 					{
-						loginedPassword = null;
+						loginedPassword = "";
 						onError && onError(result);
+						dispacthLoginErrorEvent();
 					}
 				);
 			}
 			else
 			{
-				DemoService.dispatchSecurityErrorEvent();
+				onError && onError(null);
+				dispacthLoginErrorEvent();
 			}
+		}
+		
+		private function dispacthLoginErrorEvent():void
+		{
+			var event:DemoLoginEvent = new DemoLoginEvent(DemoLoginEvent.LOGIN_ERROR);
+			event.userName = this.loginedUserName;
+			event.password = this.loginedPassword;
+			this.dispatchEvent(event);
 		}
 	}
 }

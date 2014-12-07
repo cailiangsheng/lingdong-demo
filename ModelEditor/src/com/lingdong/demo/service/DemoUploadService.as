@@ -9,7 +9,7 @@ package com.lingdong.demo.service
 	import flash.net.FileReference;
 	import flash.net.URLRequest;
 
-	public class DemoUploadService extends DemoService
+	public class DemoUploadService extends DemoBaseService
 	{
 		public static const UPLOAD_FILE:String = "uploadFile";
 		public static const UPLOAD_DATAFIELD_NAME:String = "fileu";

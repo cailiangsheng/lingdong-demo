@@ -65,7 +65,23 @@ package com.lingdong.demo.model
 		}
 		
 		private var themeIdFetched:String;
-		private var themeIdFetching:String;
+		
+		private var _themeIdFetching:String;
+		
+		private function get themeIdFetching():String
+		{
+			return _themeIdFetching;
+		}
+		
+		private function set themeIdFetching(value:String):void
+		{
+			if (_themeIdFetching != value)
+			{
+				_themeIdFetching = value;
+				
+				_themeIdFetching ? CursorManager.setBusyCursor() : CursorManager.removeBusyCursor();
+			}
+		}
 		
 		public function get themeId():String
 		{

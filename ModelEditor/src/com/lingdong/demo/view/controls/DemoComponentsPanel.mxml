@@ -9,7 +9,6 @@
 			import com.lingdong.demo.model.resources.DemoImage;
 			import com.lingdong.demo.model.resources.DemoResource;
 			import com.lingdong.demo.model.resources.DemoVideo;
-			import com.lingdong.demo.service.DemoService;
 
 			private function uploadImage():void
 			{

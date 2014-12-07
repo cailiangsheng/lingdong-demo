@@ -5,7 +5,6 @@ package com.lingdong.demo.model.pages
 	import com.lingdong.demo.model.events.DemoThemeEvent;
 	import com.lingdong.demo.model.traits.DemoPageSize;
 	import com.lingdong.demo.model.traits.DemoShowStyle;
-	import com.lingdong.demo.service.DemoService;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

@@ -1,6 +1,6 @@
 package com.lingdong.demo.service
 {
-	public class DemoSessionService extends DemoService
+	public class DemoSessionService extends DemoBaseService
 	{
 		public function DemoSessionService()
 		{
@@ -15,18 +15,14 @@ package com.lingdong.demo.service
 				validateSession(function(result:Object):void
 				{
 					super_call(path, param, onComplete, onError);
-				});
+				},
+				onError);
 			});
 		}
 		
-		private function validateSession(onValidate:Function):void
+		private function validateSession(onValidate:Function, onError:Function):void
 		{
-			DemoService.loginService.relogin(onValidate, onSessionError);
-		}
-		
-		private function onSessionError(result:Object):void
-		{
-			DemoService.dispatchSecurityErrorEvent();
+			DemoService.loginService.relogin(onValidate, onError);
 		}
 	}
 }
