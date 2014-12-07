@@ -60,15 +60,11 @@ package com.lingdong.demo.view.pages
 			return _backgroundUI;
 		}
 		
-		protected var elementUIs:Vector.<DemoElementDisplay>;
-		
 		public function DemoPageDisplay()
 		{
 			this.horizontalScrollPolicy = ScrollPolicy.OFF;
 			this.verticalScrollPolicy = ScrollPolicy.OFF;
 			this.clipContent = true;
-			
-			elementUIs = new Vector.<DemoElementDisplay>();
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -152,7 +148,7 @@ package com.lingdong.demo.view.pages
 						break;
 				}
 			}
-			else if (elementUIs.length == 0)
+			else if (this.elementLayer.numChildren == 0)
 			{
 				for each (element in page.elements.source)
 				{
@@ -178,29 +174,21 @@ package com.lingdong.demo.view.pages
 		{
 			var elementUI:DemoElementDisplay = DemoPoolUtil.alloc(DemoElementDisplay);
 			elementUI.element = element;
-			elementUIs.push(elementUI);
 			this.elementLayer.addChild(elementUI);
 			return elementUI;
 		}
 		
 		private function clearElements():void
 		{
-			for each (var elementUI:DemoElementDisplay in elementUIs)
+			while (this.elementLayer.numChildren > 0)
 			{
+				var elementUI:DemoElementDisplay = this.elementLayer.getChildAt(0) as DemoElementDisplay;
 				removeElementDisplay(elementUI);
 			}
-			
-			elementUIs.length = 0;
 		}
 		
 		protected function removeElementDisplay(elementUI:DemoElementDisplay):void
 		{
-			var index:int = elementUIs.indexOf(elementUI);
-			if (index >= 0)
-			{
-				elementUIs.splice(index, 1);
-			}
-			
 			if (this.elementLayer.contains(elementUI))
 			{
 				this.elementLayer.removeChild(elementUI);
@@ -225,15 +213,21 @@ package com.lingdong.demo.view.pages
 		
 		public function getElements():Vector.<DemoElementDisplay>
 		{
-			return elementUIs
+			var elementUIs:Vector.<DemoElementDisplay> = new Vector.<DemoElementDisplay>();
+			for (var i:int = 0, n:int = this.elementLayer.numChildren; i < n; i++)
+			{
+				elementUIs.push(this.elementLayer.getChildAt(i) as DemoElementDisplay);
+			}
+			return elementUIs;
 		}
 		
 		public function getElement(element:DemoElement):DemoElementDisplay
 		{
 			if (element)
 			{
-				for each (var elementDisplay:DemoElementDisplay in elementUIs)
+				for (var i:int = 0, n:int = this.elementLayer.numChildren; i < n; i++)
 				{
+					var elementDisplay:DemoElementDisplay = this.elementLayer.getChildAt(i) as DemoElementDisplay;
 					if (elementDisplay.element == element) return elementDisplay;
 				}
 			}
