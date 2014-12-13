@@ -189,6 +189,8 @@ package com.lingdong.demo.view.pages
 		
 		protected function removeElementDisplay(elementUI:DemoElementDisplay):void
 		{
+			if (!elementUI) return;
+			
 			if (this.elementLayer.contains(elementUI))
 			{
 				this.elementLayer.removeChild(elementUI);

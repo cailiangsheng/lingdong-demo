@@ -49,21 +49,41 @@ package com.lingdong.demo.model
 		public function DemoModel()
 		{
 			_pageSize = new DemoPageSize();
-			_theme = new DemoTheme(null);
 			_designer = new DemoDesigner();
 			_previewer = new DemoPreviewer();
 		}
 		
 		public function initialize():void
 		{
-//			this.fetchTheme(this.themeIdRequested);
-			this.reset();
+			this.clear();
+			this.fetchTheme(this.themeIdRequested);
+		}
+		
+		public function clear():void
+		{
+			update(null);
 		}
 		
 		public function reset():void
 		{
+			update(this.lastThemeConfig);
+		}
+		
+		private function update(themeConfig:Object):void
+		{
+			var activePageIndex:int = this.designer.activePage ? this.designer.activeTheme.pages.getPageIndex(this.designer.activePage) : -1;
+			
 			this.designer.activePage = null;
-			this.designer.activeTheme = _theme = new DemoTheme(null);
+			
+			_theme = new DemoTheme(null);
+			
+			if (themeConfig)
+			{
+				this.theme.readConfig(themeConfig);
+			}
+			
+			this.designer.activeTheme = this.theme;
+			this.designer.activePage = this.theme.pages.getPageAt(activePageIndex);
 		}
 		
 		public function get themeIdRequested():String
@@ -73,6 +93,8 @@ package com.lingdong.demo.model
 			var param:Object = URLUtil.stringToObject(str, "&");
 			return param.themeId;
 		}
+		
+		private var lastThemeConfig:Object;
 		
 		private var themeIdFetched:String;
 		
@@ -113,13 +135,16 @@ package com.lingdong.demo.model
 			if (themeConfigJson)
 			{
 				var themeConfig:Object = JSON.parse(themeConfigJson);
-				this.theme.readConfig(themeConfig);
+				this.lastThemeConfig = themeConfig;
+			}
+			else
+			{
+				this.lastThemeConfig = {};
 			}
 			
 			this.themeIdFetched = this.themeIdFetching;
 			this.themeIdFetching = null;
-			
-			this.designer.activeTheme = theme;
+			this.reset();
 		}
 		
 		private function onFetchError(result:Object):void
@@ -129,30 +154,28 @@ package com.lingdong.demo.model
 			this.designer.activeTheme = theme;
 		}
 		
-		private var _saving:Boolean;
+		private var _themeConfigSaving:Object;
 		
-		private function get saving():Boolean
+		private function get themeConfigSaving():Object
 		{
-			return _saving;
+			return _themeConfigSaving;
 		}
 		
-		private function set saving(value:Boolean):void
+		private function set themeConfigSaving(value:Object):void
 		{
-			if (_saving != value)
+			if (_themeConfigSaving != value)
 			{
-				_saving = value;
+				_themeConfigSaving = value;
 				
-				_saving ? CursorManager.setBusyCursor() : CursorManager.removeBusyCursor();
+				_themeConfigSaving ? CursorManager.setBusyCursor() : CursorManager.removeBusyCursor();
 			}
 		}
 		
 		public function saveTheme():void
 		{
-			if (saving) return;
+			if (themeConfigSaving) return;
 			
-			saving = true;
-			
-			var themeConfig:Object = {};
+			var themeConfig:Object = this.themeConfigSaving = {};
 			var fileIds:Array = [];
 			this.theme.writeConfig(themeConfig, fileIds);
 			
@@ -161,12 +184,13 @@ package com.lingdong.demo.model
 		
 		private function onSaveTheme(result:Object):void
 		{
-			saving = false;
+			this.lastThemeConfig = this.themeConfigSaving;
+			this.themeConfigSaving = null;
 		}
 		
 		private function onSaveError(result:Object):void
 		{
-			saving = false;
+			this.themeConfigSaving = null;
 		}
 	}
 }

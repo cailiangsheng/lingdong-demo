@@ -12,7 +12,6 @@ package com.lingdong.demo.model.traits
 		public static const DEFAULT_HEIGHT:int = 300;
 		public static const DEFAULT_PADDING:int = 10;
 		public static const THUMBNAIL_SIZE:int = 60;
-		public static const SCROLLBAR_SIZE:int = 21;
 		
 		public var pageWidth:int = DEFAULT_WIDTH;
 		public var pageHeight:int = DEFAULT_HEIGHT;
@@ -20,27 +19,25 @@ package com.lingdong.demo.model.traits
 		
 		public function getFitSize(container:DisplayObjectContainer):Point
 		{
-			var containerWidth:Number = container.width - SCROLLBAR_SIZE;
-			var containerHeight:Number = container.height - SCROLLBAR_SIZE;
-			
-			return getSize(containerWidth, containerHeight, true);
+			return getSize(container.width, container.height, true);
 		}
 		
 		public function get thumbnailSize():Point
 		{
-			return getSize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, true);
+			return getSize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
 		}
 		
 		private function getSize(viewportWidth:Number, viewportHeight:Number, withPadding:Boolean):Point
 		{
+			var padding:int = withPadding ? pagePadding * 2 : 0;
+			
 			var size1:Point = new Point();
-			size1.y = viewportHeight * (pageHeight - pagePadding * 2) / pageHeight;
+			size1.y = viewportHeight - padding;
 			size1.x = size1.y * pageWidth / pageHeight;
 			
 			var size2:Point = new Point();
-			size2.x = viewportWidth * (pageWidth - pagePadding * 2) / pageWidth;
+			size2.x = viewportWidth - padding;
 			size2.y = size2.x * pageHeight / pageWidth;
-			
 			
 			return new Point(Math.min(size1.x, size2.x), Math.min(size1.y, size2.y));
 		}

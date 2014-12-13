@@ -23,8 +23,9 @@
 		]]>
 	</fx:Script>
 	
-	<s:Button label="模板" />
-	<s:Button label="效果" />
+	<!--s:Button label="模板" />
+	<s:Button label="效果" /-->
+	
 	<s:Button label="预览" />
 	
 	<s:Spacer width="100%" />

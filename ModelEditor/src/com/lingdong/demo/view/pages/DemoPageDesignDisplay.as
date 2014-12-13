@@ -72,6 +72,7 @@ package com.lingdong.demo.view.pages
 			{
 				var elementDisplay:DemoElementDisplay = item.targetObject as DemoElementDisplay;
 				this.page.elements.removeElement(elementDisplay.element);
+				this.removeElementDisplay(elementDisplay);
 			}
 		}
 		
