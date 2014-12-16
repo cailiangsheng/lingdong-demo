@@ -126,7 +126,7 @@ package com.lingdong.demo.model.resources
 					var text:DemoText = new DemoText();
 					text.fontStyle = font.fontName;
 					text.content = font.fontName + "\nAaBbCc";
-					text.fontSize = 24;
+					text.fontSize = 0.2;
 					text.color = 0x000000;
 					text.textAlign = TextAlign.CENTER;
 					text.verticalAlign = VerticalAlign.MIDDLE;

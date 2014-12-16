@@ -8,6 +8,7 @@ package com.lingdong.demo.view.resources
 	import flash.events.Event;
 	
 	import mx.core.UIComponent;
+	import mx.events.ResizeEvent;
 	
 	import spark.components.Label;
 
@@ -77,7 +78,6 @@ package com.lingdong.demo.view.resources
 		
 		override protected function updateMaintainAspectRatio():void
 		{
-			
 		}
 		
 		override protected function update(event:Event = null):void
@@ -92,6 +92,16 @@ package com.lingdong.demo.view.resources
 				updateFontStyle();
 				updateTextAlign();
 				updateVerticalAlign();
+			}
+		}
+		
+		override protected function updateSize(event:ResizeEvent = null):void
+		{
+			super.updateSize(event);
+			
+			if (text)
+			{
+				updateFontSize();
 			}
 		}
 		
@@ -113,7 +123,7 @@ package com.lingdong.demo.view.resources
 		{
 			if (!this.stage) return;
 			
-			this.textUI.setStyle("fontSize", text.fontSize);
+			this.textUI.setStyle("fontSize", text.fontSize * this.height);
 		}
 		
 		private function updateFontStyle(event:Event = null):void
