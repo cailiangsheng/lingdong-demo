@@ -202,6 +202,7 @@ package com.lingdong.demo.view.pages
 			
 			if (_buttonUI)
 			{
+				_buttonUI.removeEventListener(MouseEvent.CLICK, onButtonClick);
 				this.removeChild(_buttonUI);
 				DemoPoolUtil.free(_buttonUI);
 				_buttonUI = null;
