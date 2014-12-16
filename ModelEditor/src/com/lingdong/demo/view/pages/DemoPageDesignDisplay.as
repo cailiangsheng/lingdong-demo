@@ -168,6 +168,8 @@ package com.lingdong.demo.view.pages
 		{
 			super.updateSize(event);
 			
+			transformManager.updateSelection();
+			
 			if (this.page && !this.page.isChildPage)
 			{
 				this.buttonUI.width = 80;
