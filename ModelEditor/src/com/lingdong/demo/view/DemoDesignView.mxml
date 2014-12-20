@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" 
-		  xmlns:controls="com.lingdong.demo.view.controls.*" 
-		  xmlns:pages="com.lingdong.demo.view.pages.*" 
-		  xmlns:layouts="com.lingdong.demo.view.layouts.*"
-		  xmlns:view="com.lingdong.demo.view.*"
-		  width="100%" height="100%" 
-		  paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:controls="com.lingdong.demo.view.controls.*" 
+		 xmlns:pages="com.lingdong.demo.view.pages.*" 
+		 xmlns:layouts="com.lingdong.demo.view.layouts.*"
+		 xmlns:view="com.lingdong.demo.view.*"
+		 width="100%" height="100%" backgroundColor="0xf1f1f1" cornerRadius="10"
+		 title="{this.designer.activeTheme.parent ? '详情编辑' : '主页编辑'}">
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -81,41 +82,46 @@
 				this.designer.activePage = thumbnailUI.activePage;
 			}
 			
-			private function goBack():void
+			private function goback():void
 			{
 				this.designer.activateParent();
 			}
 		]]>
 	</fx:Script>
 	
-	<controls:DemoComponentsPanel />
-	
-	<s:VGroup width="100%" height="100%">
+	<s:HGroup width="100%" height="100%"
+			  paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
 		
-		<s:HGroup width="100%" height="100%">
-			
-			<s:VGroup width="100%" height="100%">
-				<controls:DemoThemeControlBar />
-				
-				<s:BorderContainer width="100%" height="100%" 
-								   borderStyle="inset" backgroundColor="0xcccccc">
-					<pages:DemoThemeDesignDisplay id="themeUI" 
-											selectedIndexChange="themeUI_selectedIndexChangeHandler(event)"
-											doubleClickEnabled="true" doubleClick="themeUI_doubleClickHandler(event)" />
-				</s:BorderContainer>
-			</s:VGroup>
-			
-			<s:VGroup width="200" height="100%" horizontalAlign="right">
-				<s:Button label="返回" click="goBack()" />
-				<controls:DemoPropertiesPanel />
-			</s:VGroup>
-		</s:HGroup>
-				
-		<controls:DemoPageControlBar />
+		<controls:DemoComponentsPanel />
 		
-		<s:BorderContainer width="100%" height="120" borderStyle="inset" backgroundColor="0xcccccc">
-			<pages:DemoThumbnailDisplay id="thumbnailUI" 
-										selectedIndexChange="thumbnailUI_selectedIndexChangeHandler(event)"/>
-		</s:BorderContainer>
-	</s:VGroup>
-</s:HGroup>
+		<s:VGroup width="100%" height="100%">
+			
+			<s:HGroup width="100%" height="100%">
+				
+				<s:VGroup width="100%" height="100%">
+					<controls:DemoThemeControlBar />
+					
+					<s:BorderContainer width="100%" height="100%" 
+									   borderStyle="inset" backgroundColor="0xcccccc">
+						<pages:DemoThemeDesignDisplay id="themeUI" 
+												selectedIndexChange="themeUI_selectedIndexChangeHandler(event)"
+												doubleClickEnabled="true" doubleClick="themeUI_doubleClickHandler(event)" />
+					</s:BorderContainer>
+				</s:VGroup>
+				
+				<s:VGroup width="200" height="100%" horizontalAlign="right">
+					<s:Button label="{this.designer.activeTheme.parent ? '返回' : '退出'}" click="goback()" />
+					<controls:DemoPropertiesPanel />
+				</s:VGroup>
+			</s:HGroup>
+					
+			<controls:DemoPageControlBar />
+			
+			<s:BorderContainer width="100%" height="120" borderStyle="inset" backgroundColor="0xcccccc">
+				<pages:DemoThumbnailDisplay id="thumbnailUI" 
+											selectedIndexChange="thumbnailUI_selectedIndexChangeHandler(event)"/>
+			</s:BorderContainer>
+		</s:VGroup>
+		
+	</s:HGroup>
+</s:Panel>

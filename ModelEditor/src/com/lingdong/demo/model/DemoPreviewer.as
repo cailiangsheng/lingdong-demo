@@ -5,6 +5,7 @@ package com.lingdong.demo.model
 	import com.lingdong.demo.model.pages.DemoTheme;
 	
 	import flash.events.EventDispatcher;
+	import flash.external.ExternalInterface;
 	
 	[Event(name="activeThemeChange", type="com.lingdong.demo.model.events.DemoModelEvent")]
 	[Event(name="activePageChange", type="com.lingdong.demo.model.events.DemoModelEvent")]
@@ -12,6 +13,7 @@ package com.lingdong.demo.model
 	{
 		private var _activeTheme:DemoTheme;
 		
+		[Bindable]
 		public function get activeTheme():DemoTheme
 		{
 			return _activeTheme;
@@ -72,9 +74,9 @@ package com.lingdong.demo.model
 				this.activeTheme = parentTheme;
 				this.activePage = parentPage;
 			}
-			else
+			else if (ExternalInterface.available)
 			{
-				// TO DO
+				ExternalInterface.call("window.history.back");
 			}
 		}
 	}
