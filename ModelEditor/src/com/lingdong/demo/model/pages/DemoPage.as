@@ -118,9 +118,12 @@ package com.lingdong.demo.model.pages
 		{
 			if (config)
 			{
-				var backgroundConfig:Object = {};
-				config.background = backgroundConfig;
-				this.background.writeConfig(backgroundConfig, fileIds);
+				if (!this.background.isDefault)
+				{
+					var backgroundConfig:Object = {};
+					config.background = backgroundConfig;
+					this.background.writeConfig(backgroundConfig, fileIds);
+				}
 				
 				var thumbnailConfig:Object = {};
 				config.thumbnail = thumbnailConfig;

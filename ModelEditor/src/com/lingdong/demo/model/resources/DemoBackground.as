@@ -17,6 +17,11 @@ package com.lingdong.demo.model.resources
 			return _instance ||= new DemoBackground();
 		}
 		
+		public function get isDefault():Boolean
+		{
+			return !this.url && this.color == DEFAULT_COLOR;
+		}
+		
 		private var _color:uint = DEFAULT_COLOR;
 		
 		public function get color():uint
@@ -47,9 +52,9 @@ package com.lingdong.demo.model.resources
 		{
 			super.readConfig(config);
 			
-			if (config)
+			if (config && config.hasOwnProperty("color"))
 			{
-				this.color = color;
+				this.color = config.color;
 			}
 		}
 		
@@ -57,7 +62,7 @@ package com.lingdong.demo.model.resources
 		{
 			super.writeConfig(config, fileIds);
 			
-			if (config)
+			if (config && this.color != DEFAULT_COLOR)
 			{
 				config.color = this.color;
 			}
