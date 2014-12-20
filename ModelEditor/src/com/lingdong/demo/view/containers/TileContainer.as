@@ -74,7 +74,7 @@ package com.lingdong.demo.view.containers
 		{
 			this.graphics.clear();
 			
-			if (this.selectedIndex >= 0)
+			if (this.selectedIndex >= 0 && this.selectedIndex < this.numChildren)
 			{
 				var focusWeight:int = 2;
 				var selectedChild:DisplayObject = this.getChildAt(this.selectedIndex);

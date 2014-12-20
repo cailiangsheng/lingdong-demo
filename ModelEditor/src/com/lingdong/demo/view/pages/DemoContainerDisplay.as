@@ -125,6 +125,7 @@ package com.lingdong.demo.view.pages
 				_containerUI.removeEventListener(IndexChangedEvent.CHANGE, updateSelectedIndex);
 				
 				_containerUI.removeAllElements();
+				_containerUI.selectedIndex = -1;
 				this.removeChild(_containerUI as DisplayObject);
 				DemoPoolUtil.free(_containerUI);
 				_containerUI = null;
