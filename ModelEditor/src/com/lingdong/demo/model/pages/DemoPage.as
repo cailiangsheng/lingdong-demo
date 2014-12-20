@@ -88,8 +88,7 @@ package com.lingdong.demo.model.pages
 			{
 				if (config.background)
 				{
-					this.background = new DemoBackground();
-					this.background.readConfig(config.background);
+					this.background = DemoResource.getBackground(config.background);
 				}
 				
 				this.thumbnail.readConfig(config.thumbnail);
@@ -104,16 +103,12 @@ package com.lingdong.demo.model.pages
 				this.elements.removeAllElements();
 				for each (var elementConfig:Object in config.elements)
 				{
-					var resource:DemoResource = DemoResource.getResource(elementConfig.type);
+					var resource:DemoResource = DemoResource.getResource(elementConfig);
 					if (resource)
 					{
 						var element:DemoElement = new DemoElement(resource);
-						if (element)
-						{
-							element.readConfig(elementConfig);
-							
-							this.elements.addElement(element);
-						}
+						element.readConfig(elementConfig);
+						this.elements.addElement(element);
 					}
 				}
 			}
@@ -144,6 +139,8 @@ package com.lingdong.demo.model.pages
 				{
 					var elementConfig:Object = {};
 					elementConfig.type = element.resource.type;
+					element.resource.writeConfig(elementConfig, fileIds);
+					
 					element.writeConfig(elementConfig, fileIds);
 					elementsConfig.push(elementConfig);
 				}

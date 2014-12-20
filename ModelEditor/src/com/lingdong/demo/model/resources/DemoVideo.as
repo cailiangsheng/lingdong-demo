@@ -52,5 +52,11 @@ package com.lingdong.demo.model.resources
 			this.url = config.url;
 			this.fileId = config.fileId;
 		}
+		
+		override public function compareResource(resource:DemoResource):Boolean
+		{
+			var video:DemoVideo = resource as DemoVideo;
+			return super.compareResource(resource) && video;
+		}
 	}
 }

@@ -160,8 +160,6 @@ package com.lingdong.demo.model.pages
 			this.scaleX = sign(config.width);
 			this.scaleY = sign(config.height);
 			this.rotation = config.rotation;
-			
-			this.resource.readConfig(config);
 		}
 		
 		public function writeConfig(config:Object, fileIds:Array):void
@@ -173,8 +171,6 @@ package com.lingdong.demo.model.pages
 				config.width = this.width * this.scaleX;
 				config.height = this.height * this.scaleY;
 				config.rotation = this.rotation;
-				
-				this.resource.writeConfig(config, fileIds);
 			}
 		}
 		

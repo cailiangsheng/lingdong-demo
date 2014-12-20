@@ -75,7 +75,6 @@ package com.lingdong.demo.model.resources
 		
 		public function DemoFile()
 		{
-			addResource(this);
 		}
 		
 		private function dispatchFileEvent(name:String):void
@@ -85,6 +84,8 @@ package com.lingdong.demo.model.resources
 		
 		public function upload():void
 		{
+			addResource(this);
+			
 			this.progress = 0;
 			
 			DemoService.uploadService.uploadFile(
@@ -122,6 +123,12 @@ package com.lingdong.demo.model.resources
 		private function onUploadError(event:Event):void
 		{
 			removeResource(this);
+		}
+		
+		override public function compareResource(resource:DemoResource):Boolean
+		{
+			var file:DemoFile = resource as DemoFile;
+			return file && this.url == file.url;
 		}
 	}
 }

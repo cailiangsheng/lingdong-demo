@@ -62,5 +62,11 @@ package com.lingdong.demo.model.resources
 				config.color = this.color;
 			}
 		}
+		
+		override public function compareResource(resource:DemoResource):Boolean
+		{
+			var background:DemoBackground = resource as DemoBackground;
+			return super.compareResource(resource) && background && this.color == background.color;
+		}
 	}
 }

@@ -57,5 +57,11 @@ package com.lingdong.demo.model.resources
 			this.fileId = config.name;
 			this.url = config.url;//config.thubImageUrl;
 		}
+		
+		override public function compareResource(resource:DemoResource):Boolean
+		{
+			var image:DemoImage = resource as DemoImage;
+			return super.compareResource(resource) && image;
+		}
 	}
 }

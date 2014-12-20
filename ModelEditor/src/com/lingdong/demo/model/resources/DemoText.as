@@ -172,5 +172,11 @@ package com.lingdong.demo.model.resources
 				}
 			}
 		}
+		
+		override public function compareResource(resource:DemoResource):Boolean
+		{
+			var text:DemoText = resource as DemoText;
+			return text && this.fontStyle == text.fontStyle;
+		}
 	}
 }
