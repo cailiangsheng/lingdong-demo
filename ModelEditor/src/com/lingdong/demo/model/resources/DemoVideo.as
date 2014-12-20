@@ -19,29 +19,6 @@ package com.lingdong.demo.model.resources
 		{
 		}
 		
-		override public function readConfig(config:Object):void
-		{
-			if (config)
-			{
-				this.fileId = config.name;
-				this.url = config.videoUrl;
-			}
-		}
-		
-		override public function writeConfig(config:Object, fileIds:Array):void
-		{
-			if (config)
-			{
-				config.name = this.fileId;
-				config.videoUrl = this.url;
-				
-				if (fileIds && this.fileId)
-				{
-					fileIds.push(this.fileId);
-				}
-			}
-		}
-		
 		override protected function get fileFilter():Array
 		{
 			return [videoFilter];
@@ -49,8 +26,8 @@ package com.lingdong.demo.model.resources
 		
 		override protected function readUploadConfig(config:Object):void
 		{
-			this.url = config.url;
 			this.fileId = config.fileId;
+			this.url = config.url;
 		}
 		
 		override public function compareResource(resource:DemoResource):Boolean

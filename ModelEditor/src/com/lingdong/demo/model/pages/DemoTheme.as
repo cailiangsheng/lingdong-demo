@@ -19,12 +19,21 @@ package com.lingdong.demo.model.pages
 		
 		public function get showStyle():String
 		{
+			if (this.parent && this.parent.parent)
+			{
+				return this.parent.parent.showStyle;
+			}
+			
 			return _showStyle;
 		}
 		
 		public function set showStyle(value:String):void
 		{
-			if (_showStyle != value)
+			if (this.parent && this.parent.parent)
+			{
+				this.parent.parent.showStyle = value;
+			}
+			else if (_showStyle != value)
 			{
 				_showStyle = value;
 				
@@ -57,7 +66,10 @@ package com.lingdong.demo.model.pages
 		{
 			if (config)
 			{
-				this.showStyle = config.showStyle;
+				if (!this.parent)
+				{
+					this.showStyle = config.showStyle;
+				}
 				
 				this.pages.removeAllPages();
 				for each (var pageConfig:Object in config.pages)
@@ -74,7 +86,10 @@ package com.lingdong.demo.model.pages
 		{
 			if (config)
 			{
-				config.showStyle = this.showStyle;
+				if (!this.parent)
+				{
+					config.showStyle = this.showStyle;
+				}
 				
 				var pagesConfig:Array = [];
 				config.pages = pagesConfig;

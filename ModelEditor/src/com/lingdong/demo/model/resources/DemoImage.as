@@ -17,36 +17,6 @@ package com.lingdong.demo.model.resources
 		{
 		}
 		
-		override public function readConfig(config:Object):void
-		{
-			if (config)
-			{
-				this.fileId = config.name;
-				this.url = config.urlBig;
-			}
-		}
-		
-		override public function writeConfig(config:Object, fileIds:Array):void
-		{
-			if (config)
-			{
-				if (this.url)
-				{
-					config.urlBig = this.url;
-				}
-				
-				if (this.fileId)
-				{
-					config.name = this.fileId;
-					
-					if (fileIds)
-					{
-						fileIds.push(this.fileId);
-					}
-				}
-			}
-		}
-		
 		override protected function get fileFilter():Array
 		{
 			return [imageFilter];
@@ -54,7 +24,7 @@ package com.lingdong.demo.model.resources
 		
 		override protected function readUploadConfig(config:Object):void
 		{
-			this.fileId = config.name;
+			this.fileId = config.fileId;
 			this.url = config.url;//config.thubImageUrl;
 		}
 		

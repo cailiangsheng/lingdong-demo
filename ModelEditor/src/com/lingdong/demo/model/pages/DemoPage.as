@@ -93,9 +93,9 @@ package com.lingdong.demo.model.pages
 				
 				this.thumbnail.readConfig(config.thumbnail);
 				
-				if (config.child)
+				if (config.subPages)
 				{
-					var childConfig:Object = JSON.parse(config.child);
+					var childConfig:Object = {pages: config.subPages};
 					this.child = new DemoTheme(this);
 					this.child.readConfig(childConfig);
 				}
@@ -130,19 +130,23 @@ package com.lingdong.demo.model.pages
 				{
 					var childConfig:Object = {};
 					this.child.writeConfig(childConfig, fileIds);
-					config.child = JSON.stringify(childConfig);
+					config.subPages = childConfig.pages;
 				}
 				
-				var elementsConfig:Array = [];
-				config.elements = elementsConfig;
-				for each (var element:DemoElement in this.elements.source)
+				if (this.elements.numElements > 0)
 				{
-					var elementConfig:Object = {};
-					elementConfig.type = element.resource.type;
-					element.resource.writeConfig(elementConfig, fileIds);
+					var elementsConfig:Array = [];
+					config.elements = elementsConfig;
+					for each (var element:DemoElement in this.elements.source)
+					{
+						var elementConfig:Object = {};
+						elementConfig.type = element.resource.type;
+						element.resource.writeConfig(elementConfig, fileIds);
+						
+						element.writeConfig(elementConfig, fileIds);
+						elementsConfig.push(elementConfig);
 					
-					element.writeConfig(elementConfig, fileIds);
-					elementsConfig.push(elementConfig);
+					}
 				}
 			}
 		}

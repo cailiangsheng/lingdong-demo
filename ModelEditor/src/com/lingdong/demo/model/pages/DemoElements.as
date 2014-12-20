@@ -17,6 +17,11 @@ package com.lingdong.demo.model.pages
 			return Vector.<DemoElement>(_elements.toArray());
 		}
 		
+		public function get numElements():int
+		{
+			return _elements.length;
+		}
+		
 		public function addElement(element:DemoElement):void
 		{
 			_elements.addItem(element);

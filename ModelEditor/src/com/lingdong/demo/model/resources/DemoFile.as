@@ -82,6 +82,30 @@ package com.lingdong.demo.model.resources
 			this.dispatchEvent(new DemoFileEvent(name));
 		}
 		
+		override public function readConfig(config:Object):void
+		{
+			if (config)
+			{
+				this.url = config.url;
+			}
+		}
+		
+		override public function writeConfig(config:Object, fileIds:Array):void
+		{
+			if (config)
+			{
+				if (this.url)
+				{
+					config.url = this.url;
+				}
+				
+				if (fileIds && this.fileId)
+				{
+					fileIds.push(this.fileId);
+				}
+			}
+		}
+		
 		public function upload():void
 		{
 			addResource(this);
