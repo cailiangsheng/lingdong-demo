@@ -1,13 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:NavigatorContent xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					xmlns:s="library://ns.adobe.com/flex/spark" 
-					xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%">
+					xmlns:mx="library://ns.adobe.com/flex/mx" 
+					width="100%" height="100%" show="updateProperties()">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
+	<fx:Script>
+		<![CDATA[
+			import com.lingdong.demo.model.events.DemoTextEvent;
+			import com.lingdong.demo.model.resources.DemoText;
+			
+			private var _text:DemoText;
+			
+			public function get text():DemoText
+			{
+				return _text;
+			}
+			
+			public function set text(value:DemoText):void
+			{
+				if (_text != value)
+				{
+					_text && _text.removeEventListener(DemoTextEvent.COLOR_CHANGE, updateColor);
+					_text && _text.removeEventListener(DemoTextEvent.CONTENT_CHANGE, updateContent);
+					_text && _text.removeEventListener(DemoTextEvent.FONT_STYLE_CHANGE, updateFontStyle);
+					_text && _text.removeEventListener(DemoTextEvent.TEXT_ALIGN_CHANGE, updateTextAlign);
+					_text && _text.removeEventListener(DemoTextEvent.VERTICAL_ALIGN_CHANGE, updateVerticalAlign);
+					
+					_text = value;
+					
+					updateProperties();
+					
+					_text && _text.addEventListener(DemoTextEvent.COLOR_CHANGE, updateColor);
+					_text && _text.addEventListener(DemoTextEvent.CONTENT_CHANGE, updateContent);
+					_text && _text.addEventListener(DemoTextEvent.FONT_STYLE_CHANGE, updateFontStyle);
+					_text && _text.addEventListener(DemoTextEvent.TEXT_ALIGN_CHANGE, updateTextAlign);
+					_text && _text.addEventListener(DemoTextEvent.VERTICAL_ALIGN_CHANGE, updateVerticalAlign);
+				}
+			}
+			
+			private function updateProperties():void
+			{
+				updateColor();
+				updateContent();
+				updateFontStyle();
+				updateTextAlign();
+				updateVerticalAlign();
+			}
+			
+			private function updateColor(event:Event = null):void
+			{
+				if (this.colorPicker)
+				{
+					colorPicker.selectedColor = this.text ? this.text.color : 0x000000;
+				}
+			}
+			
+			private function updateContent(event:Event = null):void
+			{
+				if (this.textArea)
+				{
+					textArea.text = this.text ? this.text.content : "";
+				}
+			}
+			
+			private function updateFontStyle(event:Event = null):void
+			{
+				
+			}
+			
+			private function updateTextAlign(event:Event = null):void
+			{
+				
+			}
+			
+			private function updateVerticalAlign(event:Event = null):void
+			{
+				
+			}
+			
+			private function changeColor():void
+			{
+				if (this.text)
+				{
+					this.text.color = colorPicker.selectedColor;
+				}
+			}
+			
+			private function changeComment():void
+			{
+				if (this.text)
+				{
+					this.text.content = textArea.text;
+				}
+			}
+		]]>
+	</fx:Script>
+	
 	<mx:Form width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
-		<mx:FormItem width="100%" label="内容:" />
-		<s:TextArea width="100%" height="100%" />
+		<mx:FormItem width="100%" label="颜色:">
+			<mx:ColorPicker id="colorPicker" change="changeColor()" />
+		</mx:FormItem>
+		
+		<mx:FormItem width="100%" label="文本:" />
+		<s:TextArea width="100%" height="100%" id="textArea" change="changeComment()" />
 	</mx:Form>
 </s:NavigatorContent>

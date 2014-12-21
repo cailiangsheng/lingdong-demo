@@ -49,7 +49,7 @@ package com.lingdong.demo.view.pages
 		
 		private var _backgroundUI:DemoBackgroundDisplay;
 		
-		private function get backgroundUI():DemoBackgroundDisplay
+		protected function get backgroundUI():DemoBackgroundDisplay
 		{
 			if (!_backgroundUI)
 			{
@@ -106,8 +106,7 @@ package com.lingdong.demo.view.pages
 			
 			if (page.background)
 			{
-				updateSize();
-				this.backgroundUI.background = page.background;
+				addBackground();
 			}
 			else
 			{
@@ -115,7 +114,13 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
-		private function removeBackground():void
+		protected function addBackground():void
+		{
+			updateSize();
+			this.backgroundUI.background = page.background;
+		}
+		
+		protected function removeBackground():void
 		{
 			if (_backgroundUI)
 			{

@@ -18,7 +18,7 @@ package com.lingdong.demo.model.resources
 	[Event(name="verticalAlignChange", type="com.lingdong.demo.model.events.DemoTextEvent")]
 	public class DemoText extends DemoResource implements IDemoConfig
 	{
-		private var _content:String;
+		private var _content:String = "";
 		
 		public function get content():String
 		{

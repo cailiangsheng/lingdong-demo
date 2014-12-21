@@ -17,6 +17,7 @@ package com.lingdong.demo.view.pages
 	import flash.events.MouseEvent;
 	
 	import mx.events.DragEvent;
+	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
 	import spark.components.Button;
@@ -39,6 +40,7 @@ package com.lingdong.demo.view.pages
 				_transformManager.handleSize = 8;
 				_transformManager.lineColor = 0xff8719;
 				_transformManager.lockRotation = false;
+				_transformManager.autoDeselect = false;
 				_transformManager.addEventListener(TransformEvent.MOVE, onTransform);
 				_transformManager.addEventListener(TransformEvent.ROTATE, onTransform);
 				_transformManager.addEventListener(TransformEvent.SCALE, onTransform);
@@ -95,6 +97,7 @@ package com.lingdong.demo.view.pages
 		{
 			this.addEventListener(DragEvent.DRAG_ENTER, onDragEnter);
 			this.addEventListener(DragEvent.DRAG_DROP, onDragDrop);
+			this.addEventListener(FlexEvent.HIDE, deselectAllElements);
 		}
 		
 		private function onDragEnter(event:DragEvent):void
@@ -140,6 +143,25 @@ package com.lingdong.demo.view.pages
 			this.transformManager.addItem(elementUI);
 			
 			return elementUI;
+		}
+		
+		override protected function addBackground():void
+		{
+			super.addBackground();
+			
+			super.backgroundUI.addEventListener(MouseEvent.CLICK, deselectAllElements);
+		}
+		
+		override protected function removeBackground():void
+		{
+			super.backgroundUI.removeEventListener(MouseEvent.CLICK, deselectAllElements);
+			
+			super.removeBackground();
+		}
+		
+		private function deselectAllElements(event:Event = null):void
+		{
+			this.transformManager.deselectAll();
 		}
 		
 		override public function set page(value:DemoPage):void
