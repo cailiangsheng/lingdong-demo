@@ -14,6 +14,7 @@ package com.lingdong.demo.view.pages
 	import com.lingdong.demo.view.resources.DemoComponentDisplay;
 	
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	
 	import mx.events.DragEvent;
@@ -32,10 +33,10 @@ package com.lingdong.demo.view.pages
 			{
 				_transformManager = new TransformManager();
 				_transformManager.forceSelectionToFront = false;
-				_transformManager.arrowKeysMove = true;
+				_transformManager.arrowKeysMove = false;
+				_transformManager.allowDelete = false;
 				_transformManager.allowMultiSelect = true;
 				_transformManager.hideCenterHandle = true;
-				_transformManager.allowDelete = true;
 				_transformManager.handleFillColor = 0xffffff;
 				_transformManager.handleSize = 8;
 				_transformManager.lineColor = 0xff8719;
@@ -97,7 +98,30 @@ package com.lingdong.demo.view.pages
 		{
 			this.addEventListener(DragEvent.DRAG_ENTER, onDragEnter);
 			this.addEventListener(DragEvent.DRAG_DROP, onDragDrop);
-			this.addEventListener(FlexEvent.HIDE, deselectAllElements);
+			
+			this.addEventListener(FlexEvent.SHOW, onShow);
+			this.addEventListener(FlexEvent.HIDE, onHide);
+			this.addEventListener(Event.ADDED_TO_STAGE, onShow);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onHide);
+		}
+		
+		private function onShow(event:Event):void
+		{
+			this.stage.addEventListener(FocusEvent.FOCUS_IN, onFocusChange);
+			this.stage.addEventListener(FocusEvent.FOCUS_OUT, onFocusChange);
+		}
+		
+		private function onHide(event:Event):void
+		{
+			this.stage.removeEventListener(FocusEvent.FOCUS_IN, onFocusChange);
+			this.stage.removeEventListener(FocusEvent.FOCUS_OUT, onFocusChange);
+			
+			deselectAllElements();
+		}
+		
+		private function onFocusChange(event:FocusEvent):void
+		{
+			this.transformManager.allowDelete = this.transformManager.arrowKeysMove = (this.stage.focus is DemoElementDisplay);
 		}
 		
 		private function onDragEnter(event:DragEvent):void
