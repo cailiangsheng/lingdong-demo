@@ -5,6 +5,7 @@ package com.lingdong.demo.view.pages
 	import com.greensock.transform.TransformManager;
 	import com.lingdong.demo.model.DemoModel;
 	import com.lingdong.demo.model.events.DemoElementsEvent;
+	import com.lingdong.demo.model.events.DemoModelEvent;
 	import com.lingdong.demo.model.events.DemoPageEvent;
 	import com.lingdong.demo.model.pages.DemoElement;
 	import com.lingdong.demo.model.pages.DemoPage;
@@ -103,6 +104,8 @@ package com.lingdong.demo.view.pages
 			this.addEventListener(FlexEvent.HIDE, onHide);
 			this.addEventListener(Event.ADDED_TO_STAGE, onShow);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, onHide);
+			
+			DemoModel.instance.designer.addEventListener(DemoModelEvent.ACTIVE_ELEMENT_CHANGE, updateActiveElement);
 		}
 		
 		private function onShow(event:Event):void
@@ -115,13 +118,40 @@ package com.lingdong.demo.view.pages
 		{
 			this.stage.removeEventListener(FocusEvent.FOCUS_IN, onFocusChange);
 			this.stage.removeEventListener(FocusEvent.FOCUS_OUT, onFocusChange);
-			
-			deselectAllElements();
 		}
 		
 		private function onFocusChange(event:FocusEvent):void
 		{
 			this.transformManager.allowDelete = this.transformManager.arrowKeysMove = (this.stage.focus is DemoElementDisplay);
+		}
+		
+		private function updateActiveElement(event:Event = null):void
+		{
+			var activeElement:DemoElement = DemoModel.instance.designer.activeElement;
+			if (activeElement)
+			{
+				var activeElementDisplay:DemoElementDisplay = this.getElement(activeElement);
+				if (activeElementDisplay && this.transformManager.selectedTargetObjects.indexOf(activeElementDisplay) == -1)
+				{
+					activeElementDisplay.addEventListener(FlexEvent.UPDATE_COMPLETE, onActiveElementUpdateComplete);
+				}
+			}
+			else
+			{
+				deselectAllElements();
+			}
+		}
+		
+		private function onActiveElementUpdateComplete(event:Event):void
+		{
+			var activeElementDisplay:DemoElementDisplay = DemoElementDisplay(event.target);
+			activeElementDisplay.removeEventListener(FlexEvent.UPDATE_COMPLETE, onActiveElementUpdateComplete);
+			
+			if (this.stage)
+			{
+				this.stage.focus = activeElementDisplay;
+				this.transformManager.selectItem(activeElementDisplay);
+			}
 		}
 		
 		private function onDragEnter(event:DragEvent):void
@@ -141,6 +171,8 @@ package com.lingdong.demo.view.pages
 			if (background)
 			{
 				this.page.background = background;
+				
+				DemoModel.instance.designer.activeElement = null;
 			}
 			else
 			{
@@ -150,6 +182,8 @@ package com.lingdong.demo.view.pages
 				element.x = event.localX / this.width - element.width / 2;
 				element.y = event.localY / this.height - element.height / 2;
 				this.page.elements.addElement(element);
+				
+				DemoModel.instance.designer.activeElement = element;
 			}
 		}
 		

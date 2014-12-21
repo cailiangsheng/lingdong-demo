@@ -235,7 +235,7 @@ package com.lingdong.demo.view.pages
 				for (var i:int = 0, n:int = this.elementLayer.numChildren; i < n; i++)
 				{
 					var elementDisplay:DemoElementDisplay = this.elementLayer.getChildAt(i) as DemoElementDisplay;
-					if (elementDisplay.element == element) return elementDisplay;
+					if (elementDisplay && elementDisplay.element == element) return elementDisplay;
 				}
 			}
 			
