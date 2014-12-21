@@ -36,6 +36,13 @@
 	
 	<controls:DemoComponentsList label="文字" paddingTop="10" width="100%" height="100%" resources="{DemoResource.texts}" />
 	
+	<mx:VBox label="背景" width="100%" height="100%" 
+			 horizontalAlign="center" verticalGap="10" paddingTop="10" 
+			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<s:Button label="上传背景" click="uploadBackground()" />
+		<controls:DemoComponentsList paddingTop="0" width="100%" height="100%" resources="{DemoResource.backgrounds}" />
+	</mx:VBox>
+	
 	<mx:VBox label="图片" width="100%" height="100%" 
 			 horizontalAlign="center" verticalGap="10" paddingTop="10" 
 			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
@@ -48,13 +55,6 @@
 			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<s:Button label="上传视频" click="uploadVideo()"/>
 		<controls:DemoComponentsList paddingTop="0" width="100%" height="100%" resources="{DemoResource.videos}" />
-	</mx:VBox>
-	
-	<mx:VBox label="背景" width="100%" height="100%" 
-			 horizontalAlign="center" verticalGap="10" paddingTop="10" 
-			 horizontalScrollPolicy="off" verticalScrollPolicy="off">
-		<s:Button label="上传背景" click="uploadBackground()" />
-		<controls:DemoComponentsList paddingTop="0" width="100%" height="100%" resources="{DemoResource.backgrounds}" />
 	</mx:VBox>
 	
 	<!--controls:DemoComponentsList label="声音" width="100%" height="100%" />

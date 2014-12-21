@@ -178,5 +178,17 @@ package com.lingdong.demo.model.resources
 			var text:DemoText = resource as DemoText;
 			return text && this.fontStyle == text.fontStyle;
 		}
+		
+		override public function clone():DemoResource
+		{
+			var text:DemoText = new DemoText();
+			text.color = this.color;
+			text.content = this.content;
+			text.fontSize = this.fontSize;
+			text.fontStyle = this.fontStyle;
+			text.textAlign = this.textAlign;
+			text.verticalAlign = this.verticalAlign;
+			return text;
+		}
 	}
 }

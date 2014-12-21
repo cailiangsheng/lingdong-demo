@@ -43,6 +43,7 @@ package com.lingdong.demo.view.pages
 				_transformManager.addEventListener(TransformEvent.ROTATE, onTransform);
 				_transformManager.addEventListener(TransformEvent.SCALE, onTransform);
 				_transformManager.addEventListener(TransformEvent.DELETE, onDelete);
+				_transformManager.addEventListener(TransformEvent.SELECTION_CHANGE, onSelectionChange);
 			}
 			
 			return _transformManager;
@@ -76,6 +77,20 @@ package com.lingdong.demo.view.pages
 			}
 		}
 		
+		private function onSelectionChange(event:TransformEvent):void
+		{
+			var selectedTargetObjects:Array = this.transformManager.selectedTargetObjects;
+			if (selectedTargetObjects && selectedTargetObjects.length > 0)
+			{
+				var elementDisplay:DemoElementDisplay = selectedTargetObjects[0] as DemoElementDisplay;
+				DemoModel.instance.designer.activeElement = elementDisplay.element;
+			}
+			else
+			{
+				DemoModel.instance.designer.activeElement = null;
+			}
+		}
+		
 		public function DemoPageDesignDisplay()
 		{
 			this.addEventListener(DragEvent.DRAG_ENTER, onDragEnter);
@@ -94,14 +109,15 @@ package com.lingdong.demo.view.pages
 		private function onDragDrop(event:DragEvent):void
 		{
 			var component:DemoComponentDisplay = DemoComponentDisplay(event.dragInitiator);
-			var background:DemoBackground = component.resource as DemoBackground;
+			var resource:DemoResource = component.resource.clone();
+			var background:DemoBackground = resource as DemoBackground;
 			if (background)
 			{
 				this.page.background = background;
 			}
 			else
 			{
-				var element:DemoElement = new DemoElement(component.resource);
+				var element:DemoElement = new DemoElement(resource);
 				element.width = component.contentWidth / this.width;
 				element.height = component.contentHeight / this.height;
 				element.x = event.localX / this.width - element.width / 2;

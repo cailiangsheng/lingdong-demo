@@ -35,5 +35,13 @@ package com.lingdong.demo.model.resources
 			var video:DemoVideo = resource as DemoVideo;
 			return super.compareResource(resource) && video;
 		}
+		
+		override public function clone():DemoResource
+		{
+			var video:DemoVideo = new DemoVideo();
+			video.fileId = this.fileId;
+			video.url = this.url;
+			return video;
+		}
 	}
 }

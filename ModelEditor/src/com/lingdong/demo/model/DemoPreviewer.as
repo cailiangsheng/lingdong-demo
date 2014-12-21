@@ -1,6 +1,6 @@
 package com.lingdong.demo.model
 {
-	import com.lingdong.demo.model.events.DemoThemeEvent;
+	import com.lingdong.demo.model.events.DemoModelEvent;
 	import com.lingdong.demo.model.pages.DemoPage;
 	import com.lingdong.demo.model.pages.DemoTheme;
 	
@@ -23,9 +23,13 @@ package com.lingdong.demo.model
 		{
 			if (_activeTheme != value)
 			{
+				this.activePage = null;
+				
 				_activeTheme = value;
 				
-				this.dispatchEvent(new DemoThemeEvent(DemoThemeEvent.ACTIVE_THEME_CHANGE));
+				this.dispatchEvent(new DemoModelEvent(DemoModelEvent.ACTIVE_THEME_CHANGE));
+				
+				this.activePage = this.activeTheme ? this.activeTheme.pages.getPageAt(0) : null;
 			}
 		}
 		
@@ -33,7 +37,7 @@ package com.lingdong.demo.model
 		
 		public function get activePage():DemoPage
 		{
-			return _activePage ? _activePage : (this.activeTheme ? this.activeTheme.pages.getPageAt(0) : null);
+			return _activePage;
 		}
 		
 		public function set activePage(value:DemoPage):void
@@ -42,7 +46,7 @@ package com.lingdong.demo.model
 			{
 				_activePage = value;
 				
-				this.dispatchEvent(new DemoThemeEvent(DemoThemeEvent.ACTIVE_PAGE_CHANGE));
+				this.dispatchEvent(new DemoModelEvent(DemoModelEvent.ACTIVE_PAGE_CHANGE));
 			}
 		}
 		

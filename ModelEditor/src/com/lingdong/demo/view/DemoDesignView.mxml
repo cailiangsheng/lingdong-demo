@@ -34,6 +34,7 @@
 				
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_THEME_CHANGE, onActiveThemeChange);
 				this.designer.addEventListener(DemoModelEvent.ACTIVE_PAGE_CHANGE, onActivePageChange);
+				this.designer.addEventListener(DemoModelEvent.ACTIVE_RESOURCE_CHANGE, onActiveResourceChange);
 				
 				DemoModel.instance.initialize();
 			}
@@ -48,6 +49,11 @@
 			{
 				themeUI.activePage = this.designer.activePage;
 				thumbnailUI.activePage = this.designer.activePage;
+			}
+			
+			private function onActiveResourceChange(event:Event):void
+			{
+				propertiesPanel.resource = this.designer.activeResource;
 			}
 			
 			private static function getDisplay(object:*, clazz:Class):*
@@ -111,7 +117,7 @@
 				
 				<s:VGroup width="200" height="100%" horizontalAlign="right">
 					<s:Button label="{this.designer.activeTheme.parent ? '返回' : '退出'}" click="goback()" />
-					<controls:DemoPropertiesPanel />
+					<controls:DemoPropertiesPanel id="propertiesPanel" />
 				</s:VGroup>
 			</s:HGroup>
 					

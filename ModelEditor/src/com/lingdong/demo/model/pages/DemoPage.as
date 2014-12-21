@@ -77,7 +77,7 @@ package com.lingdong.demo.model.pages
 		public function DemoPage(parent:DemoTheme)
 		{
 			_parent = parent;
-			_background = DemoBackground.instance;
+			_background = new DemoBackground();
 			_thumbnail = new DemoBitmap();
 			_elements = new DemoElements();
 		}

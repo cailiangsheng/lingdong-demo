@@ -73,8 +73,6 @@ package com.lingdong.demo.model
 		{
 			var activePageIndex:int = this.designer.activePage ? this.designer.activeTheme.pages.getPageIndex(this.designer.activePage) : -1;
 			
-			this.designer.activePage = null;
-			
 			_theme = new DemoTheme(null);
 			
 			if (themeConfig)

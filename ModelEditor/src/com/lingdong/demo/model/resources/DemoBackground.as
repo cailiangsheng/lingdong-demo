@@ -6,16 +6,10 @@ package com.lingdong.demo.model.resources
 	import mx.collections.ArrayCollection;
 
 	[Event(name="colorChange", type="com.lingdong.demo.model.events.DemoBackgroundEvent")]
+	[Event(name="commentChange", type="com.lingdong.demo.model.events.DemoBackgroundEvent")]
 	public class DemoBackground extends DemoImage implements IDemoConfig
 	{
 		public static const DEFAULT_COLOR:uint = 0xffffff;
-		
-		public static var _instance:DemoBackground;
-		
-		public static function get instance():DemoBackground
-		{
-			return _instance ||= new DemoBackground();
-		}
 		
 		public function get isDefault():Boolean
 		{
@@ -39,6 +33,23 @@ package com.lingdong.demo.model.resources
 			}
 		}
 		
+		private var _comment:String = "";
+		
+		public function get comment():String
+		{
+			return _comment;
+		}
+		
+		public function set comment(value:String):void
+		{
+			if (_comment != value)
+			{
+				_comment = value;
+				
+				this.dispatchEvent(new DemoBackgroundEvent(DemoBackgroundEvent.COMMENT_CHANGE));
+			}
+		}
+		
 		override public function get type():String
 		{
 			return BACKGROUND;
@@ -48,13 +59,30 @@ package com.lingdong.demo.model.resources
 		{
 		}
 		
+		override public function clone():DemoResource
+		{
+			var background:DemoBackground = new DemoBackground();
+			background.color = this.color;
+			background.fileId = this.fileId;
+			background.url = this.url;
+			return background;
+		}
+		
 		override public function readConfig(config:Object):void
 		{
 			super.readConfig(config);
 			
-			if (config && config.hasOwnProperty("color"))
+			if (config)
 			{
-				this.color = config.color;
+				if (config.hasOwnProperty("color"))
+				{
+					this.color = config.color;
+				}
+				
+				if (config.comment)
+				{
+					this.comment = config.comment;
+				}
 			}
 		}
 		
@@ -62,9 +90,17 @@ package com.lingdong.demo.model.resources
 		{
 			super.writeConfig(config, fileIds);
 			
-			if (config && this.color != DEFAULT_COLOR)
+			if (config)
 			{
-				config.color = this.color;
+				if (this.color != DEFAULT_COLOR)
+				{
+					config.color = this.color;
+				}
+				
+				if (this.comment)
+				{
+					config.comment = this.comment;
+				}
 			}
 		}
 		

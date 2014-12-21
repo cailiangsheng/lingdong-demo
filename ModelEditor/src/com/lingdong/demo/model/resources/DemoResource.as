@@ -52,7 +52,7 @@ package com.lingdong.demo.model.resources
 			if (resource)
 			{
 				resource.readConfig(config);
-				addResource(resource);
+				addNewResource(resource);
 			}
 			
 			return resource;
@@ -66,6 +66,12 @@ package com.lingdong.demo.model.resources
 		public function get isValid():Boolean
 		{
 			return false;
+		}
+		
+		public function clone():DemoResource
+		{
+			throw new Error("to be override");
+			return null;
 		}
 		
 		public function DemoResource()
@@ -100,17 +106,29 @@ package com.lingdong.demo.model.resources
 			return resource ? getResourceList(Object(resource).constructor) : null;
 		}
 		
+		private static function addNewResource(resource:DemoResource):void
+		{
+			var file:DemoFile = resource as DemoFile;
+			if (file && !file.url) return;
+			
+			var text:DemoText = resource as DemoText;
+			if (text)
+			{
+				resource = newTextResource(text.fontStyle);
+			}
+			else
+			{
+				resource = resource.clone();
+			}
+			
+			addResource(resource);
+		}
+		
 		internal static function addResource(resource:DemoResource):void
 		{
 			var list:ArrayCollection = getListForResource(resource);
 			if (list && getResourceIndex(resource) == -1)
 			{
-				var text:DemoText = resource as DemoText;
-				if (text)
-				{
-					resource = newTextResource(text.fontStyle);
-				}
-				
 				list.addItem(resource);
 			}
 		}

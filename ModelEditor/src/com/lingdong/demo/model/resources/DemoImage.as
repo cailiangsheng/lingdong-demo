@@ -33,5 +33,13 @@ package com.lingdong.demo.model.resources
 			var image:DemoImage = resource as DemoImage;
 			return super.compareResource(resource) && image;
 		}
+		
+		override public function clone():DemoResource
+		{
+			var image:DemoImage = new DemoImage();
+			image.fileId = this.fileId;
+			image.url = this.url;
+			return image;
+		}
 	}
 }
