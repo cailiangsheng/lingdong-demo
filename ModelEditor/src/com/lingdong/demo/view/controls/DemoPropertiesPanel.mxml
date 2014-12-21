@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 xmlns:properties="com.lingdong.demo.view.properties.*"
 		 width="100%" height="100%"
-		 title="属性" dropShadowVisible="false" >
+		 title="{views.selectedChild.label}" dropShadowVisible="false" >
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -48,6 +48,10 @@
 						return backgroundProps;
 					case DemoResource.TEXT:
 						return textProps;
+					case DemoResource.IMAGE:
+						return imageProps;
+					case DemoResource.VIDEO:
+						return videoProps;
 				}
 				
 				return emptyProps;
@@ -59,5 +63,7 @@
 		<s:NavigatorContent id="emptyProps" />
 		<properties:DemoBackgroundProps id="backgroundProps" background="{resource as DemoBackground}"/>
 		<properties:DemoTextProps id="textProps" text="{resource as DemoText}" />
+		<properties:DemoImageProps id="imageProps" />
+		<properties:DemoVideoProps id="videoProps" />
 	</mx:ViewStack>
 </s:Panel>
